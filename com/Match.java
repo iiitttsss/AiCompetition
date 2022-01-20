@@ -29,6 +29,7 @@ public class Match
      */
     public void init(Ai ai1, Ai ai2)
     {
+        this.getBulletManager().init();
         this.setAi1(ai1);
         this.setAi2(ai2);
         this.getSpaceship1().init(this.getAi1().createStructure());
@@ -52,13 +53,16 @@ public class Match
      */
     private void update()
     {
-        //TODO - add all the steps bellow
-        //AIs shoot (try-catch)
-        //AIs update thrusters (try-catch)
-        //spaceships move
-        //spaceships handle screed edges
-        //spaceship/bullets collisions - take damage
-        //simulation log
+        // TODO - add all the steps bellow
+
+        // - update active bullets
+        this.getBulletManager().updateActiveBullets();
+        // - AIs shoot (try-catch)
+        // - AIs update thrusters (try-catch)
+        // - spaceships move
+        // - spaceships handle screed edges
+        // - spaceship/bullets collisions - take damage | bullets deactivate as needed
+        // - simulation log
     }
 
     public Spaceship getSpaceship1()
