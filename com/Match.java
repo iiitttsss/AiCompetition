@@ -14,8 +14,14 @@ public class Match
     private Spaceship spaceship2;
     private BulletManager bulletManager;
 
-    public Match()
+    private int sizeX;
+    private int sizeY;
+
+    public Match(int sizeX, int sizeY)
     {
+        this.setSizeX(sizeX);
+        this.setSizeY(sizeY);
+
         this.setBulletManager(new BulletManager());
         this.setSpaceship1(new Spaceship());
         this.setSpaceship2(new Spaceship());
@@ -51,7 +57,7 @@ public class Match
     /**
      * Handle each iteration of the simulation
      */
-    private void update()
+    public void update()
     {
         // TODO - add all the steps bellow
 
@@ -59,10 +65,41 @@ public class Match
         this.getBulletManager().updateActiveBullets();
         // - AIs shoot (try-catch)
         // - AIs update thrusters (try-catch)
+        this.getSpaceship1().executeThrustCommands(this.getAi1().thrustCommands(0,0,null));
+        this.getSpaceship2().executeThrustCommands(this.getAi2().thrustCommands(0,0,null));
         // - spaceships move
+        this.getSpaceship1().updateMovement();
+        this.getSpaceship2().updateMovement();
         // - spaceships handle screed edges
+        this.handleBoarders();
         // - spaceship/bullets collisions - take damage | bullets deactivate as needed
         // - simulation log
+    }
+
+    private void handleBoarders()
+    {
+        this.getSpaceship1().handleReflectiveBorders(this.getSizeX(), this.getSizeY());
+        this.getSpaceship2().handleReflectiveBorders(this.getSizeX(), this.getSizeY());
+    }
+
+    public int getSizeX()
+    {
+        return sizeX;
+    }
+
+    public void setSizeX(int sizeX)
+    {
+        this.sizeX = sizeX;
+    }
+
+    public int getSizeY()
+    {
+        return sizeY;
+    }
+
+    public void setSizeY(int sizeY)
+    {
+        this.sizeY = sizeY;
     }
 
     public Spaceship getSpaceship1()

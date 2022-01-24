@@ -15,6 +15,7 @@ public class BulletManager
     public BulletManager()
     {
         this.setAllBullets(new ArrayList<>());
+        this.setActiveBullets(new ArrayList<>());
     }
 
     /**
