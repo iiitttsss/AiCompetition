@@ -35,5 +35,7 @@ public class RenderSimulation
         float lineLength = 75;
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * (float) Math.cos(spaceship.getDirection()), spaceship.getyPos() + lineLength * (float) Math.sin(spaceship.getDirection()));
+        pg.line(spaceship.getxPos(), spaceship.getyPos(),
+                spaceship.getxPos() + lineLength * spaceship.getxVel(), spaceship.getyPos() + lineLength * spaceship.getyVel());
     }
 }

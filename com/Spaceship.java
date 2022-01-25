@@ -18,6 +18,12 @@ public class Spaceship
     private float direction;
     private int energy; //the amount of energy the spaceship currently have
 
+    public final static float TURNING_MULTIPLIER = 0.01f;
+    public final static float ACCELERATION_MULTIPLIER = 0.01f;
+    public final static float FRICTION_MULTIPLIER = 0.001f;
+
+
+
     /**
      * called before the match begins
      *
@@ -26,7 +32,7 @@ public class Spaceship
     public void init(SpaceshipStructure structure)
     {
         this.setStructure(structure);
-        this.setDirection((float) (Math.random() * Math.PI * 2));
+        //this.setDirection((float) (Math.random() * Math.PI * 2));
         this.setxPos(400);
         this.setyPos(400);
         //TODO
@@ -56,62 +62,98 @@ public class Spaceship
         float yAcc = 0;
         // TODO - activate thrusters
         // IMPORTANT - check if there is enough energy
-        for (ThrustCommand tc : thrustCommands)
-        {
-            switch (tc.getWhichThruster())
-            {
+
+        for (ThrustCommand tc : thrustCommands) {
+            switch (tc.getWhichThruster()) {
                 case ThrustCommand.BACK_THRUSTER:
-                    System.out.println(this.getDirection());
                     xAcc += tc.getForceValue() * Math.cos(this.getDirection());
                     yAcc += tc.getForceValue() * Math.sin(this.getDirection());
                     break;
+                case ThrustCommand.FRONT_THRUSTER:
+                    xAcc += tc.getForceValue() * Math.cos(this.getDirection() + Math.PI);
+                    yAcc += tc.getForceValue() * Math.sin(this.getDirection() + Math.PI);
+                    break;
+                case ThrustCommand.RIGHT_THRUSTER:
+                    xAcc += tc.getForceValue() * Math.cos(this.getDirection() - Math.PI / 2);
+                    yAcc += tc.getForceValue() * Math.sin(this.getDirection() - Math.PI / 2);
+                    break;
+                case ThrustCommand.LEFT_THRUSTER:
+                    xAcc += tc.getForceValue() * Math.cos(this.getDirection() + Math.PI / 2);
+                    yAcc += tc.getForceValue() * Math.sin(this.getDirection() + Math.PI / 2);
+                    break;
+                case ThrustCommand.CLOCKWISE_THRUSTER:
+                        this.setDirection(this.getDirection() + TURNING_MULTIPLIER * tc.getForceValue());
+                    break;
+                case ThrustCommand.COUNTER_CLOCKWISE_THRUSTER:
+                    this.setDirection(this.getDirection() - TURNING_MULTIPLIER * tc.getForceValue());
+                    break;
             }
+        }
 
-            this.setxVel(this.getxVel() + xAcc);
-            this.setyVel(this.getyVel() + yAcc);
+        this.setxVel(this.getxVel() + ACCELERATION_MULTIPLIER * xAcc);
+        this.setyVel(this.getyVel() + ACCELERATION_MULTIPLIER * yAcc);
 
-            //friction
-            if (this.getxVel() > 1)
-            {
-                this.setxVel(1);
-            }
-            if (this.getxVel() < -1)
-            {
-                this.setxVel(-1);
-            }
-            if (this.getyVel() > 1)
-            {
-                this.setyVel(1);
-            }
-            if (this.getyVel() < -1)
-            {
-                this.setyVel(-1);
-            }
-//            float speed = (float) (getxVel() * getxVel() + getyVel() * getyVel());
-            //float direction = (float) Math.tan(getyVel() / getxVel());
-            //            this.setDirection(direction);
-//            final float FRICTION_COEFFICIENT = 0.01f;
-//            this.setxVel((float) (this.getxVel() + FRICTION_COEFFICIENT * speed * Math.cos(direction + Math.PI)));
-//            this.setyVel((float) (this.getyVel() + FRICTION_COEFFICIENT * speed * Math.sin(direction + Math.PI)));
+        //friction
+        float speed = (float) (getxVel() * getxVel() + getyVel() * getyVel());
+        float direction = calculateDirectionBasedOnVelocityComponents();
+        //System.out.println(this.getDirection() + " | " + direction);
+
+        System.out.println(speed);
+        //this.setDirection(direction);
+        this.setxVel((float) (this.getxVel() + FRICTION_MULTIPLIER * speed * Math.cos(direction + Math.PI)));
+        this.setyVel((float) (this.getyVel() + FRICTION_MULTIPLIER * speed * Math.sin(direction + Math.PI)));
 
 
+    }
+
+    /**
+     * @return - calculating the angle from the x and y velocities
+     */
+    private float calculateDirectionBasedOnVelocityComponents()
+    {
+        float dx = getxVel();
+        float dy = getyVel();
+        if (dx == 0) {
+            if (dy >= 0) {
+                return (float) (Math.PI / 2);
+            } else {
+                return (float) (3 * Math.PI / 2);
+            }
+        }
+        if (dy == 0) {
+            if (dx >= 0) {
+                return 0;
+            } else {
+                return (float) Math.PI;
+            }
+        }
+        float atan = (float) Math.atan(Math.abs(getyVel() / getxVel()));
+
+        if (dx > 0) {
+            if (dy > 0) {
+                return atan;//Q1
+            } else {
+                return (float) (2 * Math.PI - atan);//Q4
+            }
+        } else {
+            if (dy > 0) {
+                return (float) (Math.PI - atan);//Q2
+            } else {
+                return (float) (Math.PI + atan);//Q3
+            }
         }
     }
 
 
     public void handleReflectiveBorders(int xMax, int yMax)
     {
-        if (this.getxPos() < 0)
-        {
+        if (this.getxPos() < 0) {
             this.setxPos(this.getxPos() + xMax);
-        } else if (this.getxPos() >= xMax)
-        {
+        } else if (this.getxPos() >= xMax) {
             this.setxPos(this.getxPos() - xMax);
-        } else if (this.getyPos() < 0)
-        {
+        } else if (this.getyPos() < 0) {
             this.setyPos(this.getyPos() + yMax);
-        } else if (this.getyPos() >= yMax)
-        {
+        } else if (this.getyPos() >= yMax) {
             this.setyPos(this.getyPos() - yMax);
         }
     }

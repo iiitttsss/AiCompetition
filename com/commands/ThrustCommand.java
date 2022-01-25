@@ -6,8 +6,8 @@ public class ThrustCommand extends Command
     public static final int BACK_THRUSTER = 1;
     public static final int RIGHT_THRUSTER = 2;
     public static final int LEFT_THRUSTER = 3;
-    public static final int RIGHT_TURN_THRUSTER = 4;
-    public static final int LEFT_TURN_THRUSTER = 5;
+    public static final int CLOCKWISE_THRUSTER = 4;
+    public static final int COUNTER_CLOCKWISE_THRUSTER = 5;
 
     private int whichThruster;
     private int forceValue;
