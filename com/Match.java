@@ -63,16 +63,19 @@ public class Match
 
         // - update active bullets
         this.getBulletManager().updateActiveBullets();
-        // - AIs shoot (try-catch)
         // - AIs update thrusters (try-catch)
         this.getSpaceship1().executeThrustCommands(this.getAi1().thrustCommands(0,0,null));
         this.getSpaceship2().executeThrustCommands(this.getAi2().thrustCommands(0,0,null));
+        // - AIs shoot (try-catch)
+        this.getSpaceship1().executeShootCommands(this.getAi1().shootCommands(0,0,null), this.getBulletManager());
+        this.getSpaceship2().executeShootCommands(this.getAi2().shootCommands(0,0,null), this.getBulletManager());
         // - spaceships move
         this.getSpaceship1().updateMovement();
         this.getSpaceship2().updateMovement();
         // - spaceships handle screed edges
         this.handleBoarders();
         // - spaceship/bullets collisions - take damage | bullets deactivate as needed
+        getBulletManager().update();
         // - simulation log
     }
 

@@ -4,6 +4,7 @@
 package AiCompetition.com.bullets;
 
 import AiCompetition.com.Ai;
+import AiCompetition.com.Spaceship;
 
 import java.util.ArrayList;
 
@@ -47,11 +48,11 @@ public class BulletManager
     /**
      * update
      */
-    public void update(float deltaTime)
+    public void update()
     {
         for (Bullet bullet : this.getActiveBullets())
         {
-            bullet.update(deltaTime);
+            bullet.update();
         }
     }
 
@@ -67,7 +68,7 @@ public class BulletManager
      * @param speed  of the bullet
      * @return - returning the added bullet object
      */
-    public Bullet addBullet(Ai owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed)
+    public Bullet addBullet(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed)
     {
         Bullet currentBullet = null;
         boolean foundBullet = false;

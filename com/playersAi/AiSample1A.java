@@ -13,15 +13,20 @@ public class AiSample1A extends Ai
     @Override
     public ArrayList<ShootCommand> shootCommands(float enemyXpos, float enemyYpos, ArrayList<Bullet> bulletsPositions)
     {
-        return null;
+        ArrayList<ShootCommand> shootCommands = new ArrayList<>();
+        if(Math.random() < 0.01)
+        {
+            shootCommands.add(new ShootCommand(ShootCommand.LEFT_GUN, 5, 5));
+        }
+        return shootCommands;
     }
 
     @Override
     public ArrayList<ThrustCommand> thrustCommands(float enemyXpos, float enemyYpos, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        thrustCommands.add(new ThrustCommand(ThrustCommand.CLOCKWISE_THRUSTER, 1));
-        thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 1));
+        thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 2));
+         //thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
 
         return thrustCommands;
     }

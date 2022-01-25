@@ -5,6 +5,7 @@ package AiCompetition.com.render;
 
 import AiCompetition.com.Match;
 import AiCompetition.com.Spaceship;
+import AiCompetition.com.bullets.Bullet;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -19,8 +20,23 @@ public class RenderSimulation
         //spaceships
         renderSpaceships(pro, pg, match);
         //bullets
+        renderBullets(pro, pg, match);
         //UI - life, energy, energy per turn, name
+        renderUi(pro, pg, match);
         pg.endDraw();
+    }
+
+    private static void renderUi(PApplet pro, PGraphics pg, Match match)
+    {
+        pg.text("bullets: " + match.getBulletManager().getAllBullets().size() + "/" + match.getBulletManager().getActiveBullets().size(), 20, 20);
+    }
+
+    private static void renderBullets(PApplet pro, PGraphics pg, Match match)
+    {
+        for (Bullet b : match.getBulletManager().getActiveBullets())
+        {
+            pg.circle(b.getxPos(), b.getyPos(), b.getRadius() * 2);
+        }
     }
 
     private static void renderSpaceships(PApplet pro, PGraphics pg, Match match)

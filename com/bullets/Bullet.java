@@ -4,6 +4,7 @@
 package AiCompetition.com.bullets;
 
 import AiCompetition.com.Ai;
+import AiCompetition.com.Spaceship;
 
 public class Bullet
 {
@@ -13,16 +14,19 @@ public class Bullet
     private float yVel;
     private int radius;
     private int speed;
-    private Ai owner; // who shoot that bullet - can be used in order to prevent bullets hit their owners
+    private Spaceship owner; // who shoot that bullet - can be used in order to prevent bullets hit their owners
     private int id; // each bullet have a unique ID
     private boolean isActive;
 
     /**
      * update the bullet
      */
-    public void update(float deltaTime)
+    public void update()
     {
         //TODO
+        this.setxPos(this.getxPos() + xVel);
+        this.setyPos(this.getyPos() + yVel);
+
     }
 
     /**
@@ -35,8 +39,9 @@ public class Bullet
      * @param radius - the radius of the bullet
      * @param speed  of the bullet
      */
-    public void init(Ai owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed)
+    public void init(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed)
     {
+        this.setActive(true);
         this.setOwner(owner);
         this.setxPos(xPos);
         this.setyPos(yPos);
@@ -66,12 +71,12 @@ public class Bullet
         isActive = active;
     }
 
-    public Ai getOwner()
+    public Spaceship getOwner()
     {
         return owner;
     }
 
-    public void setOwner(Ai owner)
+    public void setOwner(Spaceship owner)
     {
         this.owner = owner;
     }
