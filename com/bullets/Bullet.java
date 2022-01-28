@@ -3,7 +3,6 @@
  */
 package AiCompetition.com.bullets;
 
-import AiCompetition.com.Ai;
 import AiCompetition.com.Spaceship;
 
 public class Bullet
@@ -14,9 +13,28 @@ public class Bullet
     private float yVel;
     private int radius;
     private int speed;
+    private int damage;
     private Spaceship owner; // who shoot that bullet - can be used in order to prevent bullets hit their owners
     private int id; // each bullet have a unique ID
     private boolean isActive;
+
+    /**
+     * called when hitting a spaceship
+     */
+    public void hitSpaceship()
+    {
+        this.setActive(false);
+    }
+
+    /**
+     * @param spaceship - the spaceship
+     * @return - returns true id the spaceship collide with the bullet
+     */
+    public boolean checkForCollisionWithSpaceship(Spaceship spaceship)
+    {
+        return (this.getxPos() - spaceship.getxPos()) * (this.getxPos() - spaceship.getxPos()) + (this.getyPos() - spaceship.getyPos()) * (this.getyPos() - spaceship.getyPos()) <=
+                (this.getRadius() + spaceship.getStructure().getRadius()) * (this.getRadius() + spaceship.getStructure().getRadius());
+    }
 
     /**
      * update the bullet
@@ -49,6 +67,16 @@ public class Bullet
         this.setyVel(yVel);
         this.setRadius(radius);
         this.setSpeed(speed);
+    }
+
+    public int getDamage()
+    {
+        return damage;
+    }
+
+    public void setDamage(int damage)
+    {
+        this.damage = damage;
     }
 
     public int getId()

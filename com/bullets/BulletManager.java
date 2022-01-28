@@ -3,7 +3,6 @@
  */
 package AiCompetition.com.bullets;
 
-import AiCompetition.com.Ai;
 import AiCompetition.com.Spaceship;
 
 import java.util.ArrayList;
@@ -17,6 +16,24 @@ public class BulletManager
     {
         this.setAllBullets(new ArrayList<>());
         this.setActiveBullets(new ArrayList<>());
+    }
+
+    /**
+     * called to handle collisions
+     * @param spaceship
+     */
+    public void checkForCollisionsWithSpaceship(Spaceship spaceship)
+    {
+        for(Bullet bullet : this.getActiveBullets())
+        {
+            // if the spaceship do not own the bullet and touch the bullet
+            if(bullet.getOwner() != spaceship && bullet.checkForCollisionWithSpaceship(spaceship))
+            {
+                spaceship.hitByBullet(bullet);
+                bullet.hitSpaceship();
+                System.out.println("Collision");
+            }
+        }
     }
 
     /**

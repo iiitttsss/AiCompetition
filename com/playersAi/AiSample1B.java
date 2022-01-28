@@ -8,7 +8,7 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class AiSample1A extends Ai
+public class AiSample1B extends Ai
 {
     @Override
     public ArrayList<ShootCommand> shootCommands(float enemyXPos, float enemyYPos, ArrayList<Bullet> bulletsPositions)
@@ -16,7 +16,7 @@ public class AiSample1A extends Ai
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         if(Math.random() < 0.01)
         {
-            shootCommands.add(new ShootCommand(ShootCommand.LEFT_GUN, 5, 5));
+            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5));
         }
         return shootCommands;
     }
@@ -25,7 +25,7 @@ public class AiSample1A extends Ai
     public ArrayList<ThrustCommand> thrustCommands(float enemyXPos, float enemyYPos, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 2));
+        //thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 2));
          //thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
 
         return thrustCommands;

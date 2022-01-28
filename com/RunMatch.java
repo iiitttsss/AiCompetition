@@ -1,6 +1,7 @@
 package AiCompetition.com;
 
 import AiCompetition.com.playersAi.AiSample1A;
+import AiCompetition.com.playersAi.AiSample1B;
 import AiCompetition.com.render.RenderSimulation;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -31,7 +32,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new AiSample1A(), new AiSample1A());
+        match.init(new AiSample1A(), new AiSample1B());
     }
 
     @Override

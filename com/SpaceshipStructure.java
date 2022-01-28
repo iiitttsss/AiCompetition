@@ -8,6 +8,22 @@ public class SpaceshipStructure
     private int energyPerTurn; //according to the structure, calculate how much energy this structure generate per turn
     private int maxEnergy;//according to the structure, calculate the maximum amount of energy that can be store
     //TODO init method that loads a structure and calculate all the relevant values
+    private int radius;
+
+    public SpaceshipStructure()
+    {
+        radius = 20;
+    }
+
+    public int getRadius()
+    {
+        return radius;
+    }
+
+    public void setRadius(int radius)
+    {
+        this.radius = radius;
+    }
 
     public int getEnergyPerTurn()
     {
