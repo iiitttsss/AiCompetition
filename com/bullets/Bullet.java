@@ -57,7 +57,7 @@ public class Bullet
      * @param radius - the radius of the bullet
      * @param speed  of the bullet
      */
-    public void init(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed)
+    public void init(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed, int damage)
     {
         this.setActive(true);
         this.setOwner(owner);
@@ -67,6 +67,7 @@ public class Bullet
         this.setyVel(yVel);
         this.setRadius(radius);
         this.setSpeed(speed);
+        this.setDamage(damage);
     }
 
     public int getDamage()

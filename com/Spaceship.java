@@ -43,6 +43,7 @@ public class Spaceship
         //this.setDirection((float) (Math.random() * Math.PI * 2));
         this.setxPos(400);
         this.setyPos(400);
+        this.setHitPoints(structure.getMaxHitPoints());
         //TODO
     }
 
@@ -79,7 +80,7 @@ public class Spaceship
             float bulletSpeed = (float) Math.sqrt(bulletXVel * bulletXVel + bulletYVel * bulletYVel);
 
 
-            bulletManager.addBullet(this, this.getxPos(), this.getyPos(), bulletXVel, bulletYVel, sc.getRadius(), (int) bulletSpeed);
+            bulletManager.addBullet(this, this.getxPos(), this.getyPos(), bulletXVel, bulletYVel, sc.getRadius(), (int) bulletSpeed, sc.getDamage());
         }
     }
 
