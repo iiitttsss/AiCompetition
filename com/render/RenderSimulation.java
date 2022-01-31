@@ -7,14 +7,13 @@ import AiCompetition.com.Global;
 import AiCompetition.com.Match;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.bullets.Bullet;
+import AiCompetition.com.util.Timer;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 
 public class RenderSimulation
 {
-
-
     private static int translateX;
     private static int translateY;
     private static float scale;
@@ -23,12 +22,13 @@ public class RenderSimulation
     {
         pg.beginDraw();
         //TODO
+        pg.background(150);
         pg.pushMatrix();
         translateToCenter(pro, pg, match);
 
         //background
-
         renderBackground(pro, pg, match);
+
         //spaceships
         renderSpaceships(pro, pg, match);
         //bullets
@@ -41,10 +41,10 @@ public class RenderSimulation
 
     private static void renderBackground(PApplet pro, PGraphics pg, Match match)
     {
-
-        RenderBackground.renderBackground(pro, pg, match, translateX, translateY, scale);
-
-        //pg.background(15);
+       // RenderBackground.renderBackground(pro, pg, match, translateX, translateY, scale);
+//        pg.background(150);
+//        pg.circle(100,100,100);
+        RenderBackgroundLines.renderBackground(pro, pg, match, translateX, translateY, scale);
 
     }
 
@@ -95,7 +95,6 @@ public class RenderSimulation
 
     private static void renderASpaceship(PApplet pro, PGraphics pg, Spaceship spaceship)
     {
-<<<<<<< HEAD
         pg.pushMatrix();
         pg.imageMode(PConstants.CENTER);
         pg.translate(spaceship.getxPos(), spaceship.getyPos());
@@ -113,9 +112,7 @@ public class RenderSimulation
     private static void renderASpaceshipDebug(PApplet pro, PGraphics pg, Spaceship spaceship)
     {
         pg.circle(spaceship.getxPos(), spaceship.getyPos(), 50);
-=======
-        pg.circle(spaceship.getxPos(), spaceship.getyPos(), spaceship.getStructure().getRadius() * 2);
->>>>>>> fd1d1fe7c70d0275955e88111985f33e2cc2d527
+        pg.circle(spaceship.getxPos(), spaceship.getyPos(), spaceship.getSpaceshipStructure().getRadius() * 2);
         float lineLength = 75;
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * (float) Math.cos(spaceship.getDirection()), spaceship.getyPos() + lineLength * (float) Math.sin(spaceship.getDirection()));

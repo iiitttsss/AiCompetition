@@ -26,7 +26,7 @@ public class AiSample1A extends Ai
     public ArrayList<ThrustCommand> thrustCommands(float enemyXPos, float enemyYPos, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        thrustCommands.add(new ThrustCommand((int) (Math.random() * 4), 4));
+        thrustCommands.add(new ThrustCommand((int) (Math.random() * 4), 10));
         //thrustCommands.add(new ThrustCommand((int)ThrustCommand.BACK_THRUSTER, 1));
 
         //thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));

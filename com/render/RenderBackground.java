@@ -2,6 +2,7 @@ package AiCompetition.com.render;
 
 import AiCompetition.com.Global;
 import AiCompetition.com.Match;
+import AiCompetition.com.util.Timer;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -51,8 +52,10 @@ public class RenderBackground
 
     public static void renderBackground(PApplet pro, PGraphics pg, Match match, int centerX, int centerY, float scale)
     {
+        Timer.start();
         boolean theSame = false;
         int[] newTranslatedBackgroundDirections = calculateNewBackgroundSize(pro, pg, match, centerX, centerY, scale);
+        Timer.time();
         if(translatedBackgroundDirections == null)
         {
             translatedBackgroundDirections = newTranslatedBackgroundDirections;
@@ -69,6 +72,7 @@ public class RenderBackground
                 }
             }
         }
+        Timer.time();
         if ((!theSame) || translatedBackground == null)
         {
             translatedBackgroundDirections = newTranslatedBackgroundDirections;
@@ -86,8 +90,12 @@ public class RenderBackground
             System.out.println();
         }
 
+        Timer.time();
         pg.imageMode(PConstants.CORNER);
+        Timer.time();
         pg.image(translatedBackground, backgroundX, backgroundY);
+        Timer.end();
+        System.out.println();
 
     }
 
