@@ -26,7 +26,7 @@ public class AiSample1B extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         //thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 2));
-         //thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
+         thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
 
         return thrustCommands;
     }

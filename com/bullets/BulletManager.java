@@ -31,7 +31,6 @@ public class BulletManager
             {
                 spaceship.hitByBullet(bullet);
                 bullet.hitSpaceship();
-                System.out.println("Collision");
             }
         }
     }
@@ -74,7 +73,7 @@ public class BulletManager
     }
 
     /**
-     * smart bullet adition - instead of creating and deleting Bullet objects, the BulletManager class keep all the
+     * smart bullet addition - instead of creating and deleting Bullet objects, the BulletManager class keep all the
      * in-active bullet objects a activate them as needed. If there are no inactive bullets, then it will create a new one
      *
      * @param xPos   - the x position of the new bullet
@@ -82,7 +81,7 @@ public class BulletManager
      * @param xVel   - the x velocity of the new bullet
      * @param yVel   - the y velocity of the new bullet
      * @param radius - the radius of the bullet
-     * @param speed  of the bullet
+     * @param speed of the bullet
      * @return - returning the added bullet object
      */
     public Bullet addBullet(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed)

@@ -7,6 +7,8 @@ import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
+import AiCompetition.com.render.CreateSpaceshipSprite;
+import processing.core.PImage;
 
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ public class Spaceship
     public final static float TURNING_MULTIPLIER = 0.01f;
     public final static float ACCELERATION_MULTIPLIER = 0.01f;
     public final static float FRICTION_MULTIPLIER = 0.001f;
-    private SpaceshipStructure structure;
+    private SpaceshipStructure spaceshipStructure;
     private float xPos;
     private float yPos;
     private float xVel;
@@ -23,26 +25,30 @@ public class Spaceship
     private float direction;
     private int energy; //the amount of energy the spaceship currently have
     private int hitPoints;
+    private PImage spriteBlue;
 
     /**
      * called when hit by a bullet
+     *
      * @param bullet - the bullet
      */
     public void hitByBullet(Bullet bullet)
     {
         this.setHitPoints(this.getHitPoints() - bullet.getDamage());
     }
+
     /**
      * called before the match begins
      *
-     * @param structure - the structure of the spaceship as created by the AI
+     * @param spaceshipStructure - the structure of the spaceship as created by the AI
      */
-    public void init(SpaceshipStructure structure)
+    public void init(SpaceshipStructure spaceshipStructure)
     {
-        this.setStructure(structure);
+        this.setSpaceshipStructure(spaceshipStructure);
+        this.setSpriteBlue(CreateSpaceshipSprite.createSpaceshipSprite(spaceshipStructure));
         //this.setDirection((float) (Math.random() * Math.PI * 2));
-        this.setxPos(400);
-        this.setyPos(400);
+        this.setxPos((float) (Math.random()*800));
+        this.setyPos((float) (Math.random()*800));
         //TODO
     }
 
@@ -53,9 +59,11 @@ public class Spaceship
     {
         // TODO - shoot bullets based on the command
         // IMPORTANT - check if there is enough energy
-        for (ShootCommand sc : shootCommands) {
+        for (ShootCommand sc : shootCommands)
+        {
             float direction = 0;
-            switch (sc.getWhichGun()) {
+            switch (sc.getWhichGun())
+            {
                 case ShootCommand.FRONT_GUN:
                     direction = this.getDirection();
                     break;
@@ -99,8 +107,10 @@ public class Spaceship
         // TODO - activate thrusters
         // IMPORTANT - check if there is enough energy
 
-        for (ThrustCommand tc : thrustCommands) {
-            switch (tc.getWhichThruster()) {
+        for (ThrustCommand tc : thrustCommands)
+        {
+            switch (tc.getWhichThruster())
+            {
                 case ThrustCommand.BACK_THRUSTER:
                     xAcc += tc.getForceValue() * Math.cos(this.getDirection());
                     yAcc += tc.getForceValue() * Math.sin(this.getDirection());
@@ -145,32 +155,44 @@ public class Spaceship
     {
         float dx = getxVel();
         float dy = getyVel();
-        if (dx == 0) {
-            if (dy >= 0) {
+        if (dx == 0)
+        {
+            if (dy >= 0)
+            {
                 return (float) (Math.PI / 2);
-            } else {
+            } else
+            {
                 return (float) (3 * Math.PI / 2);
             }
         }
-        if (dy == 0) {
-            if (dx >= 0) {
+        if (dy == 0)
+        {
+            if (dx >= 0)
+            {
                 return 0;
-            } else {
+            } else
+            {
                 return (float) Math.PI;
             }
         }
         float atan = (float) Math.atan(Math.abs(getyVel() / getxVel()));
 
-        if (dx > 0) {
-            if (dy > 0) {
+        if (dx > 0)
+        {
+            if (dy > 0)
+            {
                 return atan;//Q1
-            } else {
+            } else
+            {
                 return (float) (2 * Math.PI - atan);//Q4
             }
-        } else {
-            if (dy > 0) {
+        } else
+        {
+            if (dy > 0)
+            {
                 return (float) (Math.PI - atan);//Q2
-            } else {
+            } else
+            {
                 return (float) (Math.PI + atan);//Q3
             }
         }
@@ -178,13 +200,17 @@ public class Spaceship
 
     public void handleReflectiveBorders(int xMax, int yMax)
     {
-        if (this.getxPos() < 0) {
+        if (this.getxPos() < 0)
+        {
             this.setxPos(this.getxPos() + xMax);
-        } else if (this.getxPos() >= xMax) {
+        } else if (this.getxPos() >= xMax)
+        {
             this.setxPos(this.getxPos() - xMax);
-        } else if (this.getyPos() < 0) {
+        } else if (this.getyPos() < 0)
+        {
             this.setyPos(this.getyPos() + yMax);
-        } else if (this.getyPos() >= yMax) {
+        } else if (this.getyPos() >= yMax)
+        {
             this.setyPos(this.getyPos() - yMax);
         }
     }
@@ -197,6 +223,16 @@ public class Spaceship
     public void update(float deltaTime)
     {
         //TODO
+    }
+
+    public PImage getSpriteBlue()
+    {
+        return spriteBlue;
+    }
+
+    public void setSpriteBlue(PImage spriteBlue)
+    {
+        this.spriteBlue = spriteBlue;
     }
 
     public int getHitPoints()
@@ -219,14 +255,14 @@ public class Spaceship
         this.energy = energy;
     }
 
-    public SpaceshipStructure getStructure()
+    public SpaceshipStructure getSpaceshipStructure()
     {
-        return structure;
+        return spaceshipStructure;
     }
 
-    public void setStructure(SpaceshipStructure structure)
+    public void setSpaceshipStructure(SpaceshipStructure spaceshipStructure)
     {
-        this.structure = structure;
+        this.spaceshipStructure = spaceshipStructure;
     }
 
     public float getxPos()

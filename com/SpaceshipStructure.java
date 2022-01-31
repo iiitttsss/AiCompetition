@@ -9,10 +9,21 @@ public class SpaceshipStructure
     private int maxEnergy;//according to the structure, calculate the maximum amount of energy that can be store
     //TODO init method that loads a structure and calculate all the relevant values
     private int radius;
+    private int maxThrustForce;
 
     public SpaceshipStructure()
     {
-        radius = 20;
+        radius = 40;
+    }
+
+    public int getMaxThrustForce()
+    {
+        return maxThrustForce;
+    }
+
+    public void setMaxThrustForce(int maxThrustForce)
+    {
+        this.maxThrustForce = maxThrustForce;
     }
 
     public int getRadius()

@@ -2,6 +2,7 @@ package AiCompetition.com;
 
 import AiCompetition.com.playersAi.AiSample1A;
 import AiCompetition.com.playersAi.AiSample1B;
+import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -30,9 +31,12 @@ public class RunMatch extends PApplet
         Global.setPro(this);
         this.frameRate(60);
 
+        CreateSpaceshipSprite.loadSprites("src/AiCompetition/com/render/SpaceshipKit.png"); // TODO - need to move to the match generator because this line only need to be executed once
+
+
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new AiSample1A(), new AiSample1B());
+        match.init(new AiSample1A(), new AiSample1A());
     }
 
     @Override

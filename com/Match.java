@@ -73,7 +73,7 @@ public class Match
         this.getSpaceship1().updateMovement();
         this.getSpaceship2().updateMovement();
         // - spaceships handle screen edges
-        this.handleBoarders();
+//        this.handleBoarders();
         // - spaceship/bullets collisions - take damage | bullets deactivate as needed
         this.getBulletManager().update();
         this.getBulletManager().checkForCollisionsWithSpaceship(spaceship1);
