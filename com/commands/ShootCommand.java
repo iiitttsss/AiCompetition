@@ -11,12 +11,24 @@ public class ShootCommand extends Command
     private int whichGun;
     private int radius;
     private int speed;
+    private int damage;
 
-    public ShootCommand(int whichGun, int radius, int speed)
+    public ShootCommand(int whichGun, int radius, int speed, int damage)
     {
         this.setWhichGun(whichGun);
         this.setRadius(radius);
         this.setSpeed(speed);
+        this.setDamage(damage);
+    }
+
+    public int getDamage()
+    {
+        return damage;
+    }
+
+    public void setDamage(int damage)
+    {
+        this.damage = damage;
     }
 
     public int getWhichGun()

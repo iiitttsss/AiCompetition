@@ -84,7 +84,7 @@ public class BulletManager
      * @param speed of the bullet
      * @return - returning the added bullet object
      */
-    public Bullet addBullet(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed)
+    public Bullet addBullet(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed, int damage)
     {
         Bullet currentBullet = null;
         boolean foundBullet = false;
@@ -108,7 +108,7 @@ public class BulletManager
             this.getAllBullets().add(currentBullet);
         }
 
-        currentBullet.init(owner, xPos, yPos, xVel, yVel, radius, speed);
+        currentBullet.init(owner, xPos, yPos, xVel, yVel, radius, speed, damage);
         return currentBullet;
     }
 

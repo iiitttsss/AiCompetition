@@ -95,6 +95,7 @@ public class RenderSimulation
 
     private static void renderASpaceship(PApplet pro, PGraphics pg, Spaceship spaceship)
     {
+<<<<<<< HEAD
         pg.pushMatrix();
         pg.imageMode(PConstants.CENTER);
         pg.translate(spaceship.getxPos(), spaceship.getyPos());
@@ -112,10 +113,14 @@ public class RenderSimulation
     private static void renderASpaceshipDebug(PApplet pro, PGraphics pg, Spaceship spaceship)
     {
         pg.circle(spaceship.getxPos(), spaceship.getyPos(), 50);
+=======
+        pg.circle(spaceship.getxPos(), spaceship.getyPos(), spaceship.getStructure().getRadius() * 2);
+>>>>>>> fd1d1fe7c70d0275955e88111985f33e2cc2d527
         float lineLength = 75;
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * (float) Math.cos(spaceship.getDirection()), spaceship.getyPos() + lineLength * (float) Math.sin(spaceship.getDirection()));
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * spaceship.getxVel(), spaceship.getyPos() + lineLength * spaceship.getyVel());
+        pg.text("HP: " + spaceship.getHitPoints(), spaceship.getxPos(), spaceship.getyPos() - 50);
     }
 }

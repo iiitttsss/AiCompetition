@@ -47,8 +47,14 @@ public class Spaceship
         this.setSpaceshipStructure(spaceshipStructure);
         this.setSpriteBlue(CreateSpaceshipSprite.createSpaceshipSprite(spaceshipStructure));
         //this.setDirection((float) (Math.random() * Math.PI * 2));
+<<<<<<< HEAD
         this.setxPos((float) (Math.random()*800));
         this.setyPos((float) (Math.random()*800));
+=======
+        this.setxPos(400);
+        this.setyPos(400);
+        this.setHitPoints(structure.getMaxHitPoints());
+>>>>>>> fd1d1fe7c70d0275955e88111985f33e2cc2d527
         //TODO
     }
 
@@ -87,7 +93,7 @@ public class Spaceship
             float bulletSpeed = (float) Math.sqrt(bulletXVel * bulletXVel + bulletYVel * bulletYVel);
 
 
-            bulletManager.addBullet(this, this.getxPos(), this.getyPos(), bulletXVel, bulletYVel, sc.getRadius(), (int) bulletSpeed);
+            bulletManager.addBullet(this, this.getxPos(), this.getyPos(), bulletXVel, bulletYVel, sc.getRadius(), (int) bulletSpeed, sc.getDamage());
         }
     }
 
