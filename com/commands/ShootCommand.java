@@ -21,6 +21,12 @@ public class ShootCommand extends Command
         this.setDamage(damage);
     }
 
+    @Override
+    public int calculateCost()
+    {
+        return damage + speed * speed + radius;
+    }
+
     public int getDamage()
     {
         return damage;

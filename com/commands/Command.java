@@ -3,6 +3,9 @@
  */
 package AiCompetition.com.commands;
 
+import java.util.ArrayList;
+
 public abstract class Command
 {
+    public abstract int calculateCost();
 }

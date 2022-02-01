@@ -18,6 +18,12 @@ public class ThrustCommand extends Command
         this.setForceValue(forceValue);
     }
 
+    @Override
+    public int calculateCost()
+    {
+        return forceValue * forceValue;
+    }
+
     public int getWhichThruster()
     {
         return whichThruster;

@@ -60,7 +60,8 @@ public class Match
     public void update()
     {
         // TODO - add all the steps bellow
-
+        this.getSpaceship1().updateEnergy();
+        this.getSpaceship2().updateEnergy();
         // - update active bullets
         this.getBulletManager().updateActiveBullets();
         // - AIs update thrusters (try-catch)

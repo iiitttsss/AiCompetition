@@ -25,8 +25,8 @@ public class RenderBackgroundLines
 
         for (int i = 1; i <= 20; i *= 2)
         {
-            int mod = i * 200;
-            if (mod * scale > 50)
+            int mod = i * 300;
+            if (mod * scale > 100)
             {
                 createLines(pg, mod, i, startX, endX, startY, endY);
             }

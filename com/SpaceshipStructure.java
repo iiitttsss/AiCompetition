@@ -12,10 +12,12 @@ public class SpaceshipStructure
     private int maxThrustForce;
     private int maxHitPoints;
 
-    public SpaceshipStructure()
+    public SpaceshipStructure(int maxHitPointsLevel, int radiusLevel, int maxThrustForceLevel, int maxEnergyLevel, int energyPerTurnLevel)
     {
         radius = 32;
         maxHitPoints = 100;
+        this.setMaxEnergy(1000);
+        this.setEnergyPerTurn(10);
     }
 
     public int getMaxThrustForce()

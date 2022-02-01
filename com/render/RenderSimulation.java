@@ -107,6 +107,9 @@ public class RenderSimulation
                 spaceship.getxPos() + lineLength * (float) Math.cos(spaceship.getDirection()), spaceship.getyPos() + lineLength * (float) Math.sin(spaceship.getDirection()));
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * spaceship.getxVel(), spaceship.getyPos() + lineLength * spaceship.getyVel());
+
+        String s = "HP: " + spaceship.getHitPoints()+ "/" + spaceship.getSpaceshipStructure().getMaxHitPoints() + "\nEnergy: " + spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getMaxEnergy();
+        pg.text(s,spaceship.getxPos(), spaceship.getyPos() + 20 + spaceship.getSpaceshipStructure().getRadius());
     }
 
     private static void renderASpaceshipDebug(PApplet pro, PGraphics pg, Spaceship spaceship)
