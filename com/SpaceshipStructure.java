@@ -11,13 +11,73 @@ public class SpaceshipStructure
     private int radius;
     private int maxThrustForce;
     private int maxHitPoints;
+    private int[] attributes;
 
-    public SpaceshipStructure(int maxHitPointsLevel, int radiusLevel, int maxThrustForceLevel, int maxEnergyLevel, int energyPerTurnLevel)
+    public SpaceshipStructure()
     {
         radius = 32;
         maxHitPoints = 100;
         this.setMaxEnergy(1000);
-        this.setEnergyPerTurn(10);
+        this.setEnergyPerTurn(3);
+    }
+
+    public SpaceshipStructure(UpgradeData upgradeData)
+    {
+        this();
+        attributes = new int[26];
+        this.fixUpdateData(upgradeData);
+        for (int upgradeIndex = 0; upgradeIndex < upgradeData.getUpgrades().length; upgradeIndex++)
+        {
+            int level = upgradeData.getUpgrade(upgradeIndex);
+            switch (upgradeIndex)
+            {
+                case UpgradeData.BATTERY:
+                        attributes[upgradeIndex] = level;
+                    break;
+                case UpgradeData.ENERGY_GENERATOR:
+                    attributes[upgradeIndex] = 1;
+                    break;
+            }
+        }
+
+    }
+
+    /**
+     * makes sure the upgrades are not too expensive or bellow 0
+     *
+     * @param upgradeData - the upgrade data from the AI
+     */
+    private void fixUpdateData(UpgradeData upgradeData)
+    {
+        System.out.println(upgradeData);
+        for (int i = 0; i < upgradeData.getUpgrades().length; i++)
+        {
+            if (upgradeData.getUpgrade(i) < 0)
+            {
+                upgradeData.setUpgrade(i, 0);
+            }
+        }
+        int upgradeIndex = 0;
+        while (upgradeData.calculateUpgradesCost() > UpgradeData.MAX_UPGRADE_POINTS)
+        {
+            if (upgradeData.getUpgrade(upgradeIndex) == 0)
+            {
+                upgradeIndex++;
+            }
+            upgradeData.setUpgrade(upgradeIndex, upgradeData.getUpgrade(upgradeIndex) - 1);
+        }
+        //TODO - covert upgrades to actual numbers
+        System.out.println(upgradeData);
+    }
+
+    public int[] getAttributes()
+    {
+        return attributes;
+    }
+
+    public void setAttributes(int[] attributes)
+    {
+        this.attributes = attributes;
     }
 
     public int getMaxThrustForce()

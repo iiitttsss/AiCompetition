@@ -2,6 +2,7 @@ package AiCompetition.com.playersAi;
 
 import AiCompetition.com.Ai;
 import AiCompetition.com.SpaceshipStructure;
+import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
@@ -32,8 +33,15 @@ public class AiSample1B extends Ai
     }
 
     @Override
-    public SpaceshipStructure createStructure()
+    public UpgradeData createStructure()
     {
-        return new SpaceshipStructure();
+        UpgradeData upgradeData = new UpgradeData();
+
+        upgradeData.setUpgrade(UpgradeData.BATTERY, 25);
+        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 5);
+        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 25);
+        upgradeData.setUpgrade(UpgradeData.RADIUS, 10);
+
+        return upgradeData;
     }
 }

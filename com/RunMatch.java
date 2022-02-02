@@ -36,7 +36,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new AiSample1A(), new AiSample1A());
+        match.init(new AiSample1A(), new AiSample1B());
     }
 
     @Override

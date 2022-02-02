@@ -25,6 +25,6 @@ public abstract class Ai
     /**
      * @return - the spaceship structure as specified by the player
      */
-    public abstract SpaceshipStructure createStructure();
+    public abstract UpgradeData createStructure();
 
 }

@@ -47,13 +47,19 @@ public class Spaceship
         this.setHitPoints(this.getHitPoints() - bullet.getDamage());
     }
 
+    private SpaceshipStructure covertUpgradeDataToSpaceshipStructure(UpgradeData upgradeData)
+    {
+        //TODO
+        return new SpaceshipStructure(upgradeData);
+    }
     /**
      * called before the match begins
      *
-     * @param spaceshipStructure - the structure of the spaceship as created by the AI
+     * @param upgradeData - the upgrades of the spaceship as created by the AI
      */
-    public void init(SpaceshipStructure spaceshipStructure)
+    public void init(UpgradeData upgradeData)
     {
+        SpaceshipStructure spaceshipStructure = this.covertUpgradeDataToSpaceshipStructure(upgradeData);
         this.setSpaceshipStructure(spaceshipStructure);
         this.setSpriteBlue(CreateSpaceshipSprite.createSpaceshipSprite(spaceshipStructure));
         //this.setDirection((float) (Math.random() * Math.PI * 2));
