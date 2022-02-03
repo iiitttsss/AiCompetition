@@ -29,15 +29,30 @@ public class SpaceshipStructure
         for (int upgradeIndex = 0; upgradeIndex < upgradeData.getUpgrades().length; upgradeIndex++)
         {
             int level = upgradeData.getUpgrade(upgradeIndex);
+            int value = 0;
             switch (upgradeIndex)
             {
                 case UpgradeData.BATTERY:
-                        attributes[upgradeIndex] = level;
+                    value = level;
                     break;
                 case UpgradeData.ENERGY_GENERATOR:
-                    attributes[upgradeIndex] = 1;
+                    value = 1;
                     break;
+                case UpgradeData.HIT_POINTS:
+                    value = (int) (100 * Math.pow(level + 1, 1.3));
+                    break;
+                case UpgradeData.RADIUS:
+                    break;
+                case UpgradeData.BACK_GUN_DAMAGE:
+                case UpgradeData.FRONT_GUN_DAMAGE:
+                case UpgradeData.LEFT_GUN_DAMAGE:
+                case UpgradeData.RIGHT_GUN_DAMAGE:
+                    value = (int) (10 * Math.pow(level + 1, 1.3));
+                    break;
+
+
             }
+            attributes[upgradeIndex] = value;
         }
 
     }
