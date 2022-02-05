@@ -2,6 +2,7 @@ package AiCompetition.com.render;
 
 import AiCompetition.com.Global;
 import AiCompetition.com.SpaceshipStructure;
+import AiCompetition.com.UpgradeData;
 import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PImage;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 public class CreateSpaceshipSprite
 {
 
+    public static final int BLUE_SPRITE = 0;
+    public static final int RED_SPRITE = 1;
     private final static int SPRITE_SIZE = 32;
     private static ArrayList<PImage> sprites;
 
@@ -46,44 +49,91 @@ public class CreateSpaceshipSprite
         return sprites.get(y * 18 + x);
     }
 
-    private static PImage evaluateWingsSprite(SpaceshipStructure spaceshipStructure)
+    private static PImage evaluateWingsSprite(UpgradeData upgradeData, int spriteColor)
     {
+
         return getSpriteAt(2, 2);
     }
 
-    private static PImage evaluateThrusterSprite(SpaceshipStructure spaceshipStructure)
+    private static PImage evaluateGunSprite(UpgradeData upgradeData, int spriteColor)
     {
-        return getSpriteAt(3, 5);
+        int level = Math.max(upgradeData.getUpgrade(UpgradeData.FRONT_GUN_DAMAGE),
+                Math.max(upgradeData.getUpgrade(UpgradeData.BACK_GUN_DAMAGE),
+                        Math.max(upgradeData.getUpgrade(UpgradeData.LEFT_GUN_DAMAGE),
+                                upgradeData.getUpgrade(UpgradeData.RIGHT_GUN_DAMAGE))));
+
+        int x = 0;
+        int y = 6;
+
+        if (level > 15)
+        {
+            x = 3;
+        } else if (level > 10)
+        {
+            x = 2;
+        } else if (level > 5)
+        {
+            x = 1;
+        } else
+        {
+            x = 0;
+        }
+        return getSpriteAt(x + 6 * spriteColor, y);
     }
 
-    private static PImage evaluateBodySprite(SpaceshipStructure spaceshipStructure)
+    private static PImage evaluateBodySprite(UpgradeData upgradeData, int spriteColor)
     {
-        return getSpriteAt(0, 1);
+        int x = 0;
+        int y = 0;
+
+        int level = upgradeData.getUpgrade(UpgradeData.HIT_POINTS);
+        if (level > 15)
+        {
+            x = 5;
+        } else if (level > 10)
+        {
+            x = 4;
+        } else if (level > 5)
+        {
+            x = 3;
+        } else if (level > 3)
+        {
+            x = 2;
+        } else if (level > 1)
+        {
+            x = 1;
+        } else
+        {
+            x = 0;
+        }
+        return getSpriteAt(x + 6 * spriteColor, y);
     }
 
-    private static PImage evaluateGunSprite(SpaceshipStructure spaceshipStructure)
+    private static PImage evaluateThrusterSprite(UpgradeData upgradeData, int spriteColor)
     {
         return getSpriteAt(2, 6);
     }
 
     /**
-     * @param spaceshipStructure
+     * @param upgradeData
      * @return - creating a returning a spaceship sprite based on the spaceship stats
      */
-    public static PImage createSpaceshipSprite(SpaceshipStructure spaceshipStructure)
+    public static PImage createSpaceshipSprite(UpgradeData upgradeData, SpaceshipStructure spaceshipStructure, int spriteColor)
     {
         // wings < thruster < body < gun
         PGraphics spaceshipSprite = Global.getPro().createGraphics(SPRITE_SIZE, SPRITE_SIZE);
+
         spaceshipSprite.beginDraw();
 
-        spaceshipSprite.image(evaluateWingsSprite(spaceshipStructure), 0, 0);
-        spaceshipSprite.image(evaluateThrusterSprite(spaceshipStructure), 0, 0);
-        spaceshipSprite.image(evaluateBodySprite(spaceshipStructure), 0, 0);
-        spaceshipSprite.image(evaluateGunSprite(spaceshipStructure), 0, 0);
+        spaceshipSprite.image(evaluateWingsSprite(upgradeData, spriteColor), 0, 0);
+        spaceshipSprite.image(evaluateThrusterSprite(upgradeData, spriteColor), 0, 0);
+        spaceshipSprite.image(evaluateBodySprite(upgradeData, spriteColor), 0, 0);
+        spaceshipSprite.image(evaluateGunSprite(upgradeData, spriteColor), 0, 0);
 
         spaceshipSprite.endDraw();
         PImage spaceshipSpriteImage = spaceshipSprite.get();
-        spaceshipSpriteImage.resize(spaceshipStructure.getRadius() * 2, spaceshipStructure.getRadius() * 2);
+        spaceshipSpriteImage.resize(spaceshipStructure.getAttribute(UpgradeData.RADIUS) * 2, spaceshipStructure.getAttribute(UpgradeData.RADIUS) * 2);
+
         return spaceshipSpriteImage;
     }
 

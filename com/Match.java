@@ -4,6 +4,7 @@
 package AiCompetition.com;
 
 import AiCompetition.com.bullets.BulletManager;
+import AiCompetition.com.render.RenderSimulation;
 
 public class Match
 {
@@ -41,6 +42,8 @@ public class Match
         this.getSpaceship1().init(this.getAi1().createStructure());
         this.getSpaceship2().init(this.getAi2().createStructure());
 
+        RenderSimulation.init();
+
     }
 
     /**
@@ -50,29 +53,29 @@ public class Match
     {
         while (!this.isGameOver())
         {
-            this.update();
+            this.update(0.2f);
         }
     }
 
     /**
      * Handle each iteration of the simulation
      */
-    public void update()
+    public void update(float deltaTime)
     {
         // TODO - add all the steps bellow
-        this.getSpaceship1().updateEnergy();
-        this.getSpaceship2().updateEnergy();
+        this.getSpaceship1().updateEnergy(deltaTime);
+        this.getSpaceship2().updateEnergy(deltaTime);
         // - update active bullets
         this.getBulletManager().updateActiveBullets();
         // - AIs update thrusters (try-catch)
-        this.getSpaceship1().executeThrustCommands(this.getAi1().thrustCommands(0,0,null));
-        this.getSpaceship2().executeThrustCommands(this.getAi2().thrustCommands(0,0,null));
+        this.getSpaceship1().executeThrustCommands(this.getAi1().thrustCommands(0,0,null), deltaTime);
+        this.getSpaceship2().executeThrustCommands(this.getAi2().thrustCommands(0,0,null), deltaTime);
         // - AIs shoot (try-catch)
         this.getSpaceship1().executeShootCommands(this.getAi1().shootCommands(0,0,null), this.getBulletManager());
         this.getSpaceship2().executeShootCommands(this.getAi2().shootCommands(0,0,null), this.getBulletManager());
         // - spaceships move
-        this.getSpaceship1().updateMovement();
-        this.getSpaceship2().updateMovement();
+        this.getSpaceship1().updateMovement(deltaTime);
+        this.getSpaceship2().updateMovement(deltaTime);
         // - spaceships handle screen edges
 //        this.handleBoarders();
         // - spaceship/bullets collisions - take damage | bullets deactivate as needed

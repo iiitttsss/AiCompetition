@@ -6,11 +6,12 @@ package AiCompetition.com.render;
 import AiCompetition.com.Global;
 import AiCompetition.com.Match;
 import AiCompetition.com.Spaceship;
+import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
-import AiCompetition.com.util.Timer;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
+import processing.core.PImage;
 
 public class RenderSimulation
 {
@@ -18,11 +19,22 @@ public class RenderSimulation
     private static int translateY;
     private static float scale;
 
+    private static PImage STATIONARY_BACKGROUND;
+
+    public static void init()
+    {
+        STATIONARY_BACKGROUND = Global.getPro().loadImage("src/AiCompetition/com/render/background.png");
+        final int resizeConstant = 1;
+        STATIONARY_BACKGROUND.resize(STATIONARY_BACKGROUND.width / resizeConstant, STATIONARY_BACKGROUND.height / resizeConstant);
+    }
+
     public static void render(PApplet pro, PGraphics pg, Match match)
     {
         pg.beginDraw();
         //TODO
         pg.background(150);
+        pg.imageMode(PConstants.CORNER);
+        pg.image(STATIONARY_BACKGROUND, 0, 0);
         pg.pushMatrix();
         translateToCenter(pro, pg, match);
 
@@ -41,7 +53,7 @@ public class RenderSimulation
 
     private static void renderBackground(PApplet pro, PGraphics pg, Match match)
     {
-       // RenderBackground.renderBackground(pro, pg, match, translateX, translateY, scale);
+        // RenderBackground.renderBackground(pro, pg, match, translateX, translateY, scale);
 //        pg.background(150);
 //        pg.circle(100,100,100);
         RenderBackgroundLines.renderBackground(pro, pg, match, translateX, translateY, scale);
@@ -54,7 +66,7 @@ public class RenderSimulation
         pg.translate(pg.width / 2, pg.height / 2);
 
         float scaleFactor = pg.width / Math.max(Math.abs(match.getSpaceship1().getxPos() - match.getSpaceship2().getxPos()), Math.abs(match.getSpaceship1().getyPos() - match.getSpaceship2().getyPos()));
-        //scale = scaleFactor / 1.5f;
+        // scale = scaleFactor / 1.5f;
         scale = Math.min(scaleFactor / 1.5f, 1);
 
         pg.scale(scale);
@@ -108,14 +120,16 @@ public class RenderSimulation
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * spaceship.getxVel(), spaceship.getyPos() + lineLength * spaceship.getyVel());
 
-        String s = "HP: " + spaceship.getHitPoints()+ "/" + spaceship.getSpaceshipStructure().getMaxHitPoints() + "\nEnergy: " + spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getMaxEnergy();
-        pg.text(s,spaceship.getxPos(), spaceship.getyPos() + 20 + spaceship.getSpaceshipStructure().getRadius());
+        String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
+                "Energy: " + (int)spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY) + "\n" +
+                "velocity: " + (Math.sqrt(spaceship.getxVel() * spaceship.getxVel() + spaceship.getyVel() * spaceship.getyVel()) ) + "\n";
+        pg.text(s, spaceship.getxPos(), spaceship.getyPos() + 20 + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
     }
 
     private static void renderASpaceshipDebug(PApplet pro, PGraphics pg, Spaceship spaceship)
     {
         pg.circle(spaceship.getxPos(), spaceship.getyPos(), 50);
-        pg.circle(spaceship.getxPos(), spaceship.getyPos(), spaceship.getSpaceshipStructure().getRadius() * 2);
+        pg.circle(spaceship.getxPos(), spaceship.getyPos(), spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS) * 2);
         float lineLength = 75;
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * (float) Math.cos(spaceship.getDirection()), spaceship.getyPos() + lineLength * (float) Math.sin(spaceship.getDirection()));

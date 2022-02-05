@@ -5,6 +5,7 @@ import AiCompetition.com.playersAi.AiSample1B;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PGraphics;
 
 public class RunMatch extends PApplet
@@ -22,6 +23,7 @@ public class RunMatch extends PApplet
     public void settings()
     {
         this.size(800, 800);
+        //this.fullScreen();
     }
 
     @Override
@@ -36,7 +38,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new AiSample1A(), new AiSample1B());
+        match.init(new AiSample1A(), new AiSample1A());
     }
 
     @Override
@@ -59,7 +61,7 @@ public class RunMatch extends PApplet
 
     private void update()
     {
-        this.getMatch().update();
+        this.getMatch().update(0.2f);
     }
 
     public int getLastTime()

@@ -4,6 +4,7 @@
 package AiCompetition.com.bullets;
 
 import AiCompetition.com.Spaceship;
+import AiCompetition.com.UpgradeData;
 
 public class Bullet
 {
@@ -33,7 +34,7 @@ public class Bullet
     public boolean checkForCollisionWithSpaceship(Spaceship spaceship)
     {
         return (this.getxPos() - spaceship.getxPos()) * (this.getxPos() - spaceship.getxPos()) + (this.getyPos() - spaceship.getyPos()) * (this.getyPos() - spaceship.getyPos()) <=
-                (this.getRadius() + spaceship.getSpaceshipStructure().getRadius()) * (this.getRadius() + spaceship.getSpaceshipStructure().getRadius());
+                (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS)) * (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
     }
 
     /**

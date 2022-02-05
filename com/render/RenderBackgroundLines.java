@@ -1,5 +1,6 @@
 package AiCompetition.com.render;
 
+import AiCompetition.com.Global;
 import AiCompetition.com.Match;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -23,7 +24,7 @@ public class RenderBackgroundLines
 //        pg.circle(centerX, endY, 40);
 
 
-        for (int i = 1; i <= 20; i *= 2)
+        for (int i = 1; i <= 40; i *= 2)
         {
             int mod = i * 300;
             if (mod * scale > 100)
@@ -36,7 +37,8 @@ public class RenderBackgroundLines
     private static void createLines(PGraphics pg, int mod, int weight, int startX, int endX, int startY, int endY)
     {
         pg.pushStyle();
-        pg.strokeWeight(weight);
+        //pg.strokeWeight(weight);
+        pg.stroke(Global.getPro().color(200));
         for (int x = 0; x < endX; x += mod)
         {
             pg.line(x, startY, x, endY);

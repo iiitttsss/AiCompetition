@@ -30,7 +30,7 @@ public class TestSprites extends PApplet
     {
         background(150);
         image(CreateSpaceshipSprite.getSprites().get(0), 0, 0);
-        PImage spaceship = CreateSpaceshipSprite.createSpaceshipSprite( null);
+        PImage spaceship = CreateSpaceshipSprite.createSpaceshipSprite(null, null, CreateSpaceshipSprite.BLUE_SPRITE);
         image(spaceship.get(), 0, 32);
     }
 }

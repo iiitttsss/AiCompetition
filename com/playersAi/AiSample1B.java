@@ -37,10 +37,10 @@ public class AiSample1B extends Ai
     {
         UpgradeData upgradeData = new UpgradeData();
 
-        upgradeData.setUpgrade(UpgradeData.BATTERY, 25);
-        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 5);
-        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 25);
-        upgradeData.setUpgrade(UpgradeData.RADIUS, 10);
+//
+//        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
+//        upgradeData.setUpgrade(UpgradeData.RADIUS, 1);
+        upgradeData.setUpgrade(UpgradeData.RIGHT_GUN_DAMAGE, 19);
 
         return upgradeData;
     }
