@@ -26,8 +26,8 @@ public class AiSample1B extends Ai
     public ArrayList<ThrustCommand> thrustCommands(float enemyXPos, float enemyYPos, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 1));
-         //thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
+        //thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 1));
+         thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
 
         return thrustCommands;
     }
@@ -39,7 +39,7 @@ public class AiSample1B extends Ai
 
 //
 //        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
-//        upgradeData.setUpgrade(UpgradeData.RADIUS, 1);
+        upgradeData.setUpgrade(UpgradeData.RADIUS, 11);
         upgradeData.setUpgrade(UpgradeData.RIGHT_GUN_DAMAGE, 19);
 
         return upgradeData;

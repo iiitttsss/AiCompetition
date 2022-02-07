@@ -5,14 +5,16 @@ import AiCompetition.com.playersAi.AiSample1B;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 
 public class RunMatch extends PApplet
 {
+    private static final float DELTA_TIME = 1 / 5f;
+    public int numberOfUpdates = 0;
     private int lastTime = 0;
     private Match match;
     private PGraphics pg;
+    private int millisSinceLastUpdate = 0;
 
     public static void main(String[] args)
     {
@@ -31,14 +33,14 @@ public class RunMatch extends PApplet
     {
         System.out.println("start program");
         Global.setPro(this);
-        this.frameRate(60);
+        this.frameRate(40);
 
         CreateSpaceshipSprite.loadSprites("src/AiCompetition/com/render/SpaceshipKit.png"); // TODO - need to move to the match generator because this line only need to be executed once
 
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new AiSample1A(), new AiSample1A());
+        match.init(new AiSample1A(), new AiSample1B());
     }
 
     @Override
@@ -55,13 +57,43 @@ public class RunMatch extends PApplet
 
     private void render()
     {
-        RenderSimulation.render(this, this.getPg(), this.getMatch());
+        RenderSimulation.render(DELTA_TIME, this, this.getPg(), this.getMatch());
         image(this.getPg(), 0, 0);
+        text(1000f * numberOfUpdates / millis(), 40, 500);
+    }
+
+    /**
+     * @return - returns true if it needs to update the match on that frame
+     */
+    private boolean needToUpdate()
+    {
+        int millisForUpdate = (int) (1000 * DELTA_TIME);
+        if (millisSinceLastUpdate >= millisForUpdate)
+        {
+            millisSinceLastUpdate -= millisForUpdate;
+            numberOfUpdates++;
+            return true;
+        }
+        return false;
     }
 
     private void update()
     {
-        this.getMatch().update(0.2f);
+        millisSinceLastUpdate += Global.getDeltaTime();
+        while (this.needToUpdate())
+        {
+            this.getMatch().update(DELTA_TIME);
+        }
+    }
+
+    public int getMillisSinceLastUpdate()
+    {
+        return millisSinceLastUpdate;
+    }
+
+    public void setMillisSinceLastUpdate(int millisSinceLastUpdate)
+    {
+        this.millisSinceLastUpdate = millisSinceLastUpdate;
     }
 
     public int getLastTime()

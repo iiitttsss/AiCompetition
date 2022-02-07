@@ -28,7 +28,7 @@ public class RenderSimulation
         STATIONARY_BACKGROUND.resize(STATIONARY_BACKGROUND.width / resizeConstant, STATIONARY_BACKGROUND.height / resizeConstant);
     }
 
-    public static void render(PApplet pro, PGraphics pg, Match match)
+    public static void render(float deltaTime, PApplet pro, PGraphics pg, Match match)
     {
         pg.beginDraw();
         //TODO
@@ -120,10 +120,14 @@ public class RenderSimulation
         pg.line(spaceship.getxPos(), spaceship.getyPos(),
                 spaceship.getxPos() + lineLength * spaceship.getxVel(), spaceship.getyPos() + lineLength * spaceship.getyVel());
 
+        pg.pushStyle();
+        pg.textSize(14 / scale);
         String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
-                "Energy: " + (int)spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY) + "\n" +
-                "velocity: " + (Math.sqrt(spaceship.getxVel() * spaceship.getxVel() + spaceship.getyVel() * spaceship.getyVel()) ) + "\n";
+                "Energy: " + (int) spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY) + "\n" +
+                "velocity: " + (Math.sqrt(spaceship.getxVel() * spaceship.getxVel() + spaceship.getyVel() * spaceship.getyVel())) + "\n";
+
         pg.text(s, spaceship.getxPos(), spaceship.getyPos() + 20 + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
+        pg.popStyle();
     }
 
     private static void renderASpaceshipDebug(PApplet pro, PGraphics pg, Spaceship spaceship)

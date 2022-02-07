@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class Spaceship
 {
     public final static float TURNING_MULTIPLIER = 0.01f;
-    public final static float ACCELERATION_MULTIPLIER = 0.1f;
-    public final static float FRICTION_MULTIPLIER = 0.001f;
+    public final static float ACCELERATION_MULTIPLIER = 1000f;
+    public final static float FRICTION_MULTIPLIER = 0.01f;
     private SpaceshipStructure spaceshipStructure;
     private float xPos;
     private float yPos;
@@ -63,8 +63,8 @@ public class Spaceship
         SpaceshipStructure spaceshipStructure = this.covertUpgradeDataToSpaceshipStructure(upgradeData);
         this.setSpaceshipStructure(spaceshipStructure);
         //this.setDirection((float) (Math.random() * Math.PI * 2));
-        this.setxPos((float) (Math.random() * 800 - 400));
-        this.setyPos((float) (Math.random() * 800 - 400));
+//        this.setxPos((float) (Math.random() * 800 - 400));
+//        this.setyPos((float) (Math.random() * 800 - 400));
         this.setHitPoints(spaceshipStructure.getAttribute(UpgradeData.HIT_POINTS));
 
         this.createSprites(upgradeData, spaceshipStructure);
@@ -182,31 +182,53 @@ public class Spaceship
         for (ThrustCommand tc : thrustCommands)
         {
             float thrustForce = deltaTime * tc.getForceValue();
+            float angle = 0;
+
             switch (tc.getWhichThruster())
             {
                 case ThrustCommand.BACK_THRUSTER:
-                    xAcc += thrustForce * Math.cos(this.getDirection());
-                    yAcc += thrustForce * Math.sin(this.getDirection());
+                    angle = this.getDirection();
+
                     break;
                 case ThrustCommand.FRONT_THRUSTER:
+                    angle = (float) (this.getDirection() + Math.PI);
                     xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI);
                     yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI);
                     break;
                 case ThrustCommand.RIGHT_THRUSTER:
+                    angle = (float) (this.getDirection() - Math.PI / 2);
+
                     xAcc += thrustForce * Math.cos(this.getDirection() - Math.PI / 2);
                     yAcc += thrustForce * Math.sin(this.getDirection() - Math.PI / 2);
                     break;
                 case ThrustCommand.LEFT_THRUSTER:
+                    angle = (float) (this.getDirection() + Math.PI / 2);
+
                     xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI / 2);
                     yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI / 2);
                     break;
                 case ThrustCommand.CLOCKWISE_THRUSTER:
-                    this.setDirection(this.getDirection() + TURNING_MULTIPLIER * thrustForce);
+                    angle = (this.getDirection() + TURNING_MULTIPLIER * thrustForce);
                     break;
                 case ThrustCommand.COUNTER_CLOCKWISE_THRUSTER:
-                    this.setDirection(this.getDirection() - TURNING_MULTIPLIER * thrustForce);
+                    angle = (this.getDirection() - TURNING_MULTIPLIER * thrustForce);
                     break;
             }
+            switch (tc.getWhichThruster())
+            {
+                case ThrustCommand.BACK_THRUSTER:
+                case ThrustCommand.FRONT_THRUSTER:
+                case ThrustCommand.RIGHT_THRUSTER:
+                case ThrustCommand.LEFT_THRUSTER:
+                    xAcc += thrustForce * Math.cos(angle);
+                    yAcc += thrustForce * Math.sin(angle);
+                    break;
+                case ThrustCommand.CLOCKWISE_THRUSTER:
+                case ThrustCommand.COUNTER_CLOCKWISE_THRUSTER:
+                    this.setDirection(angle);
+                    break;
+            }
+
         }
 
         this.setxVel(this.getxVel() + deltaTime * ACCELERATION_MULTIPLIER * xAcc);
@@ -217,8 +239,8 @@ public class Spaceship
         float direction = calculateDirectionBasedOnVelocityComponents();
 
         //this.setDirection(direction);
-        this.setxVel((float) (this.getxVel() + FRICTION_MULTIPLIER * speed * Math.cos(direction + Math.PI)));
-        this.setyVel((float) (this.getyVel() + FRICTION_MULTIPLIER * speed * Math.sin(direction + Math.PI)));
+        this.setxVel((float) (this.getxVel() + deltaTime * FRICTION_MULTIPLIER * speed * Math.cos(direction + Math.PI)));
+        this.setyVel((float) (this.getyVel() + deltaTime * FRICTION_MULTIPLIER * speed * Math.sin(direction + Math.PI)));
     }
 
     /**

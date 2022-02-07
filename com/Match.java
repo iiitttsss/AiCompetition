@@ -43,7 +43,6 @@ public class Match
         this.getSpaceship2().init(this.getAi2().createStructure());
 
         RenderSimulation.init();
-
     }
 
     /**
@@ -79,7 +78,7 @@ public class Match
         // - spaceships handle screen edges
 //        this.handleBoarders();
         // - spaceship/bullets collisions - take damage | bullets deactivate as needed
-        this.getBulletManager().update();
+        this.getBulletManager().update(deltaTime);
         this.getBulletManager().checkForCollisionsWithSpaceship(spaceship1);
         this.getBulletManager().checkForCollisionsWithSpaceship(spaceship2);
         // - simulation log

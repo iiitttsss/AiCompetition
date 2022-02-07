@@ -64,11 +64,11 @@ public class BulletManager
     /**
      * update
      */
-    public void update()
+    public void update(float deltaTime)
     {
         for (Bullet bullet : this.getActiveBullets())
         {
-            bullet.update();
+            bullet.update(deltaTime);
         }
     }
 

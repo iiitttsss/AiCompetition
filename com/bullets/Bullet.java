@@ -19,6 +19,8 @@ public class Bullet
     private int id; // each bullet have a unique ID
     private boolean isActive;
 
+    private static final float SPEED_MULTIPLIER = 100;
+
     /**
      * called when hitting a spaceship
      */
@@ -40,11 +42,11 @@ public class Bullet
     /**
      * update the bullet
      */
-    public void update()
+    public void update(float deltaTime)
     {
         //TODO
-        this.setxPos(this.getxPos() + xVel);
-        this.setyPos(this.getyPos() + yVel);
+        this.setxPos(this.getxPos() + deltaTime * SPEED_MULTIPLIER * xVel);
+        this.setyPos(this.getyPos() + deltaTime * SPEED_MULTIPLIER * yVel);
 
     }
 

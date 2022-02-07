@@ -28,7 +28,7 @@ public class AiSample1A extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         //thrustCommands.add(new ThrustCommand((int) (Math.random() * 4), 1));
-        thrustCommands.add(new ThrustCommand((int)ThrustCommand.BACK_THRUSTER, 10));
+        thrustCommands.add(new ThrustCommand((int)ThrustCommand.BACK_THRUSTER, 5));
 
         //thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
 
@@ -43,6 +43,8 @@ public class AiSample1A extends Ai
 
 
         upgradeData.setUpgrade(UpgradeData.BACK_THRUSTER, 15);
+        upgradeData.setUpgrade(UpgradeData.RADIUS, 15);
+
 
         return upgradeData;
     }

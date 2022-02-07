@@ -22,7 +22,7 @@ public class SpaceshipStructure
                     value = (int) (baseValue * 20000);
                     break;
                 case UpgradeData.ENERGY_GENERATOR:
-                    value = (int) (baseValue * 20000 / 100);
+                    value = (int) (baseValue * 20000 / 10);
                     break;
                 case UpgradeData.HIT_POINTS:
                     value = (int) (baseValue * 100);
