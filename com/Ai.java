@@ -17,9 +17,9 @@ public abstract class Ai
      * @param bulletsPositions - a list of all the bullets that can hit you (enemy bullets)
      * @return - a list of shoot commands the AI want to execute
      */
-    public abstract ArrayList<ShootCommand> shootCommands(float enemyXpos, float enemyYpos, ArrayList<Bullet> bulletsPositions);
+    public abstract ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions);
 
-    public abstract ArrayList<ThrustCommand> thrustCommands(float enemyXpos, float enemyYpos, ArrayList<Bullet> bulletsPositions);
+    public abstract ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship,Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions);
 
 
     /**

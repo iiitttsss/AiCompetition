@@ -1,6 +1,7 @@
 package AiCompetition.com.playersAi;
 
 import AiCompetition.com.Ai;
+import AiCompetition.com.Spaceship;
 import AiCompetition.com.SpaceshipStructure;
 import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class AiSample1A extends Ai
 {
     @Override
-    public ArrayList<ShootCommand> shootCommands(float enemyXPos, float enemyYPos, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         if (Math.random() < 0.01)
@@ -24,11 +25,11 @@ public class AiSample1A extends Ai
     }
 
     @Override
-    public ArrayList<ThrustCommand> thrustCommands(float enemyXPos, float enemyYPos, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        //thrustCommands.add(new ThrustCommand((int) (Math.random() * 4), 1));
-        thrustCommands.add(new ThrustCommand((int)ThrustCommand.BACK_THRUSTER, 5));
+        thrustCommands.add(new ThrustCommand((int) (Math.random() * 4), 4));
+        //thrustCommands.add(new ThrustCommand((int)ThrustCommand.BACK_THRUSTER, 5));
 
         //thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
 

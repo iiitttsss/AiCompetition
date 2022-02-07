@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class Spaceship
 {
-    public final static float TURNING_MULTIPLIER = 0.01f;
-    public final static float ACCELERATION_MULTIPLIER = 1000f;
-    public final static float FRICTION_MULTIPLIER = 0.01f;
+    public final static float TURNING_MULTIPLIER = 1f;
+    public final static float ACCELERATION_MULTIPLIER = 100f;
+    public final static float FRICTION_MULTIPLIER = 0.00001f;
     private SpaceshipStructure spaceshipStructure;
     private float xPos;
     private float yPos;
@@ -63,8 +63,8 @@ public class Spaceship
         SpaceshipStructure spaceshipStructure = this.covertUpgradeDataToSpaceshipStructure(upgradeData);
         this.setSpaceshipStructure(spaceshipStructure);
         //this.setDirection((float) (Math.random() * Math.PI * 2));
-//        this.setxPos((float) (Math.random() * 800 - 400));
-//        this.setyPos((float) (Math.random() * 800 - 400));
+        this.setxPos((float) (Math.random() * 800 - 400));
+        this.setyPos((float) (Math.random() * 800 - 400));
         this.setHitPoints(spaceshipStructure.getAttribute(UpgradeData.HIT_POINTS));
 
         this.createSprites(upgradeData, spaceshipStructure);

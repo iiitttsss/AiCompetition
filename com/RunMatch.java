@@ -2,6 +2,7 @@ package AiCompetition.com;
 
 import AiCompetition.com.playersAi.AiSample1A;
 import AiCompetition.com.playersAi.AiSample1B;
+import AiCompetition.com.playersAi.Turret;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
 import processing.core.PApplet;
@@ -9,7 +10,7 @@ import processing.core.PGraphics;
 
 public class RunMatch extends PApplet
 {
-    private static final float DELTA_TIME = 1 / 5f;
+    private static final float DELTA_TIME = 1 / 25f;
     public int numberOfUpdates = 0;
     private int lastTime = 0;
     private Match match;
@@ -40,7 +41,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new AiSample1A(), new AiSample1B());
+        match.init(new AiSample1A(), new Turret());
     }
 
     @Override
