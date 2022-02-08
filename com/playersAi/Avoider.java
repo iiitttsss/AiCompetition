@@ -9,7 +9,7 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class Turret extends Ai
+public class Avoider extends Ai
 {
     private boolean needToShoot;
 
@@ -17,7 +17,7 @@ public class Turret extends Ai
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        if (needToShoot && Math.random() < 0.999)
+        if (needToShoot && Math.random() < 0.1)
         {
             shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10));
         }
@@ -29,41 +29,41 @@ public class Turret extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
 
-        float dx = otherSpaceship.getxPos() - mySpaceship.getxPos();
-        float dy = otherSpaceship.getyPos() - mySpaceship.getyPos();
+        float wantedVelX = 0;
+        float wantedVelY = 0;
 
-        float dir = (float) (Math.atan2(dy, dx));
-        if (dir < 0)
-        {
-            dir += 2 * Math.PI;
-        }
-        dir = dir * 180 / 3.14f;
-        float dAngle = (mySpaceship.getDirection() * 180 / 3.14f) - dir;
-        if(dAngle > 180)
-        {
-            dAngle -= 360;
-        }
-        if(dAngle < -180)
-        {
-            dAngle += 360;
-        }
 
-        int threshold = 3;
-
-        needToShoot = false;
-
-        if (dAngle > threshold)
+        for (Bullet bullet : bulletsPositions)
         {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
-        } else  if (dAngle < -threshold)
-        {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.CLOCKWISE_THRUSTER, 1));
+            float dx = mySpaceship.getxPos() - bullet.getxPos();
+            float dy = mySpaceship.getyPos() - bullet.getyPos();
+            float distSq = (dx * dx + dy * dy);
+
+            dx = Math.min(Math.max(dx, -1), 1);
+            dy = Math.min(Math.max(dy, -1), 1);
+
+            wantedVelX += dx / distSq;
+            wantedVelY += dy / distSq;
+
         }
-        else
-        {
-            needToShoot = true;
-        }
+        wantedVelX *= 1000000;
+        wantedVelY *= 1000000;
 
+        int power = 10;
+        if (wantedVelX > 0)
+        {
+            thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, power));
+        } else if (wantedVelX < 0)
+        {
+            thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, power));
+        }
+        if (wantedVelY > 0)
+        {
+            thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, power));
+        } else if (wantedVelY < 0)
+        {
+            thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, power));
+        }
 
         return thrustCommands;
     }

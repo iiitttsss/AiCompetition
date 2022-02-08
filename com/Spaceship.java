@@ -16,7 +16,7 @@ public class Spaceship
 {
     public final static float TURNING_MULTIPLIER = 1f;
     public final static float ACCELERATION_MULTIPLIER = 100f;
-    public final static float FRICTION_MULTIPLIER = 0.00001f;
+    public final static float FRICTION_MULTIPLIER = 0.1f;
     private SpaceshipStructure spaceshipStructure;
     private float xPos;
     private float yPos;
@@ -228,8 +228,8 @@ public class Spaceship
                     this.setDirection(angle);
                     break;
             }
-
         }
+        this.fixDirection();
 
         this.setxVel(this.getxVel() + deltaTime * ACCELERATION_MULTIPLIER * xAcc);
         this.setyVel(this.getyVel() + deltaTime * ACCELERATION_MULTIPLIER * yAcc);
@@ -241,6 +241,18 @@ public class Spaceship
         //this.setDirection(direction);
         this.setxVel((float) (this.getxVel() + deltaTime * FRICTION_MULTIPLIER * speed * Math.cos(direction + Math.PI)));
         this.setyVel((float) (this.getyVel() + deltaTime * FRICTION_MULTIPLIER * speed * Math.sin(direction + Math.PI)));
+    }
+
+    private void fixDirection()
+    {
+        while(this.getDirection() < 0)
+        {
+            direction += 2 * Math.PI;
+        }
+        while(this.getDirection() >= 2 * Math.PI)
+        {
+            direction -= 2 * Math.PI;
+        }
     }
 
     /**

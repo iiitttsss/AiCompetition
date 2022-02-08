@@ -2,6 +2,7 @@ package AiCompetition.com;
 
 import AiCompetition.com.playersAi.AiSample1A;
 import AiCompetition.com.playersAi.AiSample1B;
+import AiCompetition.com.playersAi.Avoider;
 import AiCompetition.com.playersAi.Turret;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
@@ -41,7 +42,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new AiSample1A(), new Turret());
+        match.init(new Avoider(), new Turret());
     }
 
     @Override

@@ -8,6 +8,7 @@ import AiCompetition.com.UpgradeData;
 
 public class Bullet
 {
+    private static final float SPEED_MULTIPLIER = 100;
     private float xPos;
     private float yPos;
     private float xVel;
@@ -18,8 +19,10 @@ public class Bullet
     private Spaceship owner; // who shoot that bullet - can be used in order to prevent bullets hit their owners
     private int id; // each bullet have a unique ID
     private boolean isActive;
+    private int lifeDistance;
 
-    private static final float SPEED_MULTIPLIER = 100;
+    private float startXPos;
+    private float startYPos;
 
     /**
      * called when hitting a spaceship
@@ -45,9 +48,14 @@ public class Bullet
     public void update(float deltaTime)
     {
         //TODO
+
         this.setxPos(this.getxPos() + deltaTime * SPEED_MULTIPLIER * xVel);
         this.setyPos(this.getyPos() + deltaTime * SPEED_MULTIPLIER * yVel);
-
+        float distSq = (this.getxPos() - this.getStartXPos()) * (this.getxPos() - this.getStartXPos()) + (this.getyPos() - this.getStartYPos()) * (this.getyPos() - this.getStartYPos());
+        if (distSq > this.getLifeDistance() * this.getLifeDistance())
+        {
+            this.setActive(false);
+        }
     }
 
     /**
@@ -71,6 +79,41 @@ public class Bullet
         this.setRadius(radius);
         this.setSpeed(speed);
         this.setDamage(damage);
+
+        this.setLifeDistance(100000);
+        this.setStartXPos(xPos);
+        this.setStartYPos(yPos);
+    }
+
+
+    public int getLifeDistance()
+    {
+        return lifeDistance;
+    }
+
+    public void setLifeDistance(int lifeDistance)
+    {
+        this.lifeDistance = lifeDistance;
+    }
+
+    public float getStartXPos()
+    {
+        return startXPos;
+    }
+
+    public void setStartXPos(float startXPos)
+    {
+        this.startXPos = startXPos;
+    }
+
+    public float getStartYPos()
+    {
+        return startYPos;
+    }
+
+    public void setStartYPos(float startYPos)
+    {
+        this.startYPos = startYPos;
     }
 
     public int getDamage()

@@ -67,11 +67,11 @@ public class Match
         // - update active bullets
         this.getBulletManager().updateActiveBullets();
         // - AIs update thrusters (try-catch)
-        this.getSpaceship1().executeThrustCommands(this.getAi1().thrustCommands(this.getSpaceship1(), this.getSpaceship2(), null), deltaTime);
-        this.getSpaceship2().executeThrustCommands(this.getAi2().thrustCommands(this.getSpaceship2(), this.getSpaceship1(), null), deltaTime);
+        this.getSpaceship1().executeThrustCommands(this.getAi1().thrustCommands(this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets()), deltaTime);
+        this.getSpaceship2().executeThrustCommands(this.getAi2().thrustCommands(this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets()), deltaTime);
         // - AIs shoot (try-catch)
-        this.getSpaceship1().executeShootCommands(this.getAi1().shootCommands(this.getSpaceship1(), this.getSpaceship2(), null), this.getBulletManager());
-        this.getSpaceship2().executeShootCommands(this.getAi2().shootCommands(this.getSpaceship2(), this.getSpaceship1(), null), this.getBulletManager());
+        this.getSpaceship1().executeShootCommands(this.getAi1().shootCommands(this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets()), this.getBulletManager());
+        this.getSpaceship2().executeShootCommands(this.getAi2().shootCommands(this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets()), this.getBulletManager());
         // - spaceships move
         this.getSpaceship1().updateMovement(deltaTime);
         this.getSpaceship2().updateMovement(deltaTime);
