@@ -28,41 +28,98 @@ public class Avoider extends Ai
     public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
+        int power = 20;
+
 
         float wantedVelX = 0;
         float wantedVelY = 0;
 
 
+        float minDist = Integer.MAX_VALUE;
+        Bullet minBullet = null;
         for (Bullet bullet : bulletsPositions)
         {
             float dx = mySpaceship.getxPos() - bullet.getxPos();
             float dy = mySpaceship.getyPos() - bullet.getyPos();
             float distSq = (dx * dx + dy * dy);
-
+            if (distSq < minDist)
+            {
+                minBullet = bullet;
+                minDist = distSq;
+            }
             dx = Math.min(Math.max(dx, -1), 1);
             dy = Math.min(Math.max(dy, -1), 1);
 
+//            wantedVelX = dx;
+//            wantedVelY = dy;
             wantedVelX += dx / distSq;
             wantedVelY += dy / distSq;
-
         }
-        wantedVelX *= 1000000;
-        wantedVelY *= 1000000;
 
-        int power = 10;
-        if (wantedVelX > 0)
+        if (minBullet != null && minDist <= 300 * 300)
         {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, power));
-        } else if (wantedVelX < 0)
+            float dir = (float) Math.atan2(minBullet.getyVel(), minBullet.getxVel());
+            if (dir < 0)
+            {
+                dir += 2 * Math.PI;
+            }
+            dir += Math.PI / 2;
+
+
+            wantedVelX *= 1000000;
+            wantedVelY *= 1000000;
+
+            if (dir < Math.PI / 2 || dir > 3 * Math.PI / 2)
+            {
+                thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, power));
+            } else
+            {
+                thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, power));
+            }
+            if (dir < Math.PI)
+            {
+                thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, power));
+            } else
+            {
+                thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, power));
+            }
+        } else
         {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, power));
-        }
-        if (wantedVelY > 0)
-        {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, power));
-        } else if (wantedVelY < 0)
-        {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, power));
+            float dx = mySpaceship.getxPos() - otherSpaceship.getxPos();
+            float dy = mySpaceship.getyPos() - otherSpaceship.getyPos();
+            if (dx * dx + dy * dy > 700 * 700)
+            {
+                if (dx < 0)
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, power));
+                } else
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, power));
+                }
+                if (dy < 0)
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, power));
+                } else
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, power));
+                }
+            } else if (dx * dx + dy * dy < 500 * 500)
+            {
+                if (dx < 0)
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, power));
+                } else
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, power));
+                }
+                if (dy < 0)
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, power));
+                } else
+                {
+                    thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, power));
+                }
+            }
         }
 
         return thrustCommands;

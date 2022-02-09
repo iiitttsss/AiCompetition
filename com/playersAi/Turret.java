@@ -17,9 +17,15 @@ public class Turret extends Ai
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
+        if ( Math.random() < 0.01)
+        {
+            needToShoot = !needToShoot;
+            System.out.println("switch: " + needToShoot);
+        }
         if (needToShoot && Math.random() < 0.999)
         {
             shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10));
+            System.out.println(needToShoot);
         }
         return shootCommands;
     }

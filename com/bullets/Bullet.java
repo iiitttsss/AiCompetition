@@ -8,7 +8,7 @@ import AiCompetition.com.UpgradeData;
 
 public class Bullet
 {
-    private static final float SPEED_MULTIPLIER = 100;
+    private static final float SPEED_MULTIPLIER = 20;
     private float xPos;
     private float yPos;
     private float xVel;
