@@ -56,6 +56,70 @@ public class Match
         }
     }
 
+    private void aiMove(float deltaTime)
+    {
+        EvaluateThrustCommandForAi executeAi1 = new EvaluateThrustCommandForAi(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
+        Thread executeAi1Thread = new Thread(executeAi1);
+        executeAi1Thread.start();
+        EvaluateThrustCommandForAi executeAi2 = new EvaluateThrustCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
+        Thread executeAi2Thread = new Thread(executeAi2);
+        executeAi2Thread.start();
+
+        try
+        {
+            executeAi1Thread.join();
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+            System.out.println("AI1 thrust error");
+        }
+        try
+        {
+            executeAi2Thread.join();
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+            System.out.println("AI2 thrust error");
+
+        }
+        this.getSpaceship1().executeThrustCommands(executeAi1.getThrustCommands(), deltaTime);
+        this.getSpaceship2().executeThrustCommands(executeAi2.getThrustCommands(), deltaTime);
+    }
+
+    private void aiShoot()
+    {
+        EvaluateShootCommandForAi executeAi1 = new EvaluateShootCommandForAi(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
+        Thread executeAi1Thread = new Thread(executeAi1);
+        executeAi1Thread.start();
+        EvaluateShootCommandForAi executeAi2 = new EvaluateShootCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
+        Thread executeAi2Thread = new Thread(executeAi2);
+        executeAi2Thread.start();
+
+        try
+        {
+            executeAi1Thread.join();
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+            System.out.println("AI1 shoot error");
+
+        }
+        try
+        {
+            executeAi2Thread.join();
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+            System.out.println("AI2 shoot error");
+        }
+        this.getSpaceship1().executeShootCommands(executeAi1.getShootCommands(), this.getBulletManager());
+        this.getSpaceship2().executeShootCommands(executeAi2.getShootCommands(), this.getBulletManager());
+    }
+
     /**
      * Handle each iteration of the simulation
      */
@@ -67,11 +131,9 @@ public class Match
         // - update active bullets
         this.getBulletManager().updateActiveBullets();
         // - AIs update thrusters (try-catch)
-        this.getSpaceship1().executeThrustCommands(this.getAi1().thrustCommands(this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets()), deltaTime);
-        this.getSpaceship2().executeThrustCommands(this.getAi2().thrustCommands(this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets()), deltaTime);
+        this.aiMove(deltaTime);
         // - AIs shoot (try-catch)
-        this.getSpaceship1().executeShootCommands(this.getAi1().shootCommands(this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets()), this.getBulletManager());
-        this.getSpaceship2().executeShootCommands(this.getAi2().shootCommands(this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets()), this.getBulletManager());
+        this.aiShoot();
         // - spaceships move
         this.getSpaceship1().updateMovement(deltaTime);
         this.getSpaceship2().updateMovement(deltaTime);

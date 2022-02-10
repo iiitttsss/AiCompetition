@@ -18,11 +18,10 @@ public class Turret extends Ai
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        if ( Math.random() < 0.001)
+        if (Math.random() < 0.001)
         {
             isOnShootInterval = (!isOnShootInterval);
         }
-        isOnShootInterval = true;
         if (isOnShootInterval && Math.random() < 0.1)
         {
             shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10));
@@ -46,11 +45,11 @@ public class Turret extends Ai
         }
         dir = dir * 180 / 3.14f;
         float dAngle = (mySpaceship.getDirection() * 180 / 3.14f) - dir;
-        if(dAngle > 180)
+        if (dAngle > 180)
         {
             dAngle -= 360;
         }
-        if(dAngle < -180)
+        if (dAngle < -180)
         {
             dAngle += 360;
         }
@@ -62,11 +61,10 @@ public class Turret extends Ai
         if (dAngle > threshold)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
-        } else  if (dAngle < -threshold)
+        } else if (dAngle < -threshold)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.CLOCKWISE_THRUSTER, 1));
-        }
-        else
+        } else
         {
             needToShoot = true;
         }
