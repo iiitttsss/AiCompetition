@@ -56,14 +56,23 @@ public class Avoider extends Ai
             wantedVelY += dy / distSq;
         }
 
-        if (minBullet != null && minDist <= 300 * 300)
+        if (minBullet != null && minDist <= 500 * 500)
         {
             float dir = (float) Math.atan2(minBullet.getyVel(), minBullet.getxVel());
+            System.out.println("before space direction: " + dir);
+
             if (dir < 0)
             {
                 dir += 2 * Math.PI;
             }
             dir += Math.PI / 2;
+            if (dir > 2 * Math.PI)
+            {
+                dir -= 2 * Math.PI;
+            }
+
+            System.out.println("space direction: " + dir);
+            System.out.println("bullet velocity: " + minBullet.getyVel() + " | " + minBullet.getxVel());
 
 
             wantedVelX *= 1000000;

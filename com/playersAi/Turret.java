@@ -12,21 +12,22 @@ import java.util.ArrayList;
 public class Turret extends Ai
 {
     private boolean needToShoot;
+    private boolean isOnShootInterval;
 
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        if ( Math.random() < 0.01)
+        if ( Math.random() < 0.001)
         {
-            needToShoot = !needToShoot;
-            System.out.println("switch: " + needToShoot);
+            isOnShootInterval = (!isOnShootInterval);
         }
-        if (needToShoot && Math.random() < 0.999)
+        isOnShootInterval = true;
+        if (isOnShootInterval && Math.random() < 0.1)
         {
             shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10));
-            System.out.println(needToShoot);
         }
+
         return shootCommands;
     }
 
