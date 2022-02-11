@@ -1,11 +1,13 @@
 package AiCompetition.com.playersAi;
 
 import AiCompetition.com.Ai;
+import AiCompetition.com.Global;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
+import AiCompetition.com.util.Timer;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public class Turret extends Ai
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
+        Timer.start();
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         if (Math.random() < 0.001)
         {
@@ -26,6 +29,24 @@ public class Turret extends Ai
         {
             shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10));
         }
+
+//        int[] a = new int[0];
+//        a[0]=0;
+
+//        boolean b = true;
+//        while(b){}
+//        double num = 1;
+//        while(num > 0.00001)
+//        {
+//            num = Math.random();
+//        }
+        int time = Global.getPro().millis();
+        while (Global.getPro().millis() <= time + 25){}
+//        System.out.println(time);
+//        System.out.println(Global.getPro().millis());
+
+
+        Timer.end();
 
         return shootCommands;
     }

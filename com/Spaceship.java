@@ -87,8 +87,12 @@ public class Spaceship
      */
     public void executeShootCommands(ArrayList<ShootCommand> shootCommands, BulletManager bulletManager)
     {
+        if(shootCommands == null)
+        {
+            return;
+        }
         int cost = this.calculateShootCommandsCost(shootCommands);
-        if (cost > this.getEnergy()) // if all the moves are to expensive, do not execute any of them
+        if (cost > this.getEnergy()) // if all the moves are to0 expensive, do not execute any of them
         {
             return;
         }
@@ -167,8 +171,12 @@ public class Spaceship
      */
     public void executeThrustCommands(ArrayList<ThrustCommand> thrustCommands, float deltaTime)
     {
+        if(thrustCommands == null)
+        {
+            return;
+        }
         int cost = this.calculateThrustCommandsCost(thrustCommands);
-        if (cost > this.getEnergy()) // if all the moves are to expensive, do not execute any of them
+        if (cost > this.getEnergy()) // if all the moves are too expensive, do not execute any of them
         {
             return;
         }

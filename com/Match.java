@@ -18,6 +18,8 @@ public class Match
     private int sizeX;
     private int sizeY;
 
+    private static final int MILLIS_FOR_THREAD = 15;
+
     public Match(int sizeX, int sizeY)
     {
         this.setSizeX(sizeX);
@@ -67,7 +69,7 @@ public class Match
 
         try
         {
-            executeAi1Thread.join();
+            executeAi1Thread.join(MILLIS_FOR_THREAD);
         }
         catch (InterruptedException e)
         {
@@ -76,7 +78,7 @@ public class Match
         }
         try
         {
-            executeAi2Thread.join();
+            executeAi2Thread.join(MILLIS_FOR_THREAD);
         }
         catch (InterruptedException e)
         {
@@ -99,17 +101,16 @@ public class Match
 
         try
         {
-            executeAi1Thread.join();
+            executeAi1Thread.join(MILLIS_FOR_THREAD);
         }
         catch (InterruptedException e)
         {
             e.printStackTrace();
             System.out.println("AI1 shoot error");
-
         }
         try
         {
-            executeAi2Thread.join();
+            executeAi2Thread.join(MILLIS_FOR_THREAD);
         }
         catch (InterruptedException e)
         {

@@ -25,7 +25,14 @@ public class EvaluateShootCommandForAi implements Runnable
     @Override
     public void run()
     {
-        this.setShootCommands(this.getAi().shootCommands(this.getSelf(),this.getOther(), this.getBullets()));
+        try
+        {
+            this.setShootCommands(this.getAi().shootCommands(this.getSelf(), this.getOther(), this.getBullets()));
+        }
+        catch (Exception e)
+        {
+            this.getSelf().setHitPoints(0);
+        }
     }
 
     public Spaceship getSelf()

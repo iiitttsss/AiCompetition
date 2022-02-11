@@ -24,7 +24,14 @@ public class EvaluateThrustCommandForAi implements Runnable
     @Override
     public void run()
     {
-        this.setThrustCommands(this.getAi().thrustCommands(this.getSelf(),this.getOther(), this.getBullets()));
+        try
+        {
+            this.setThrustCommands(this.getAi().thrustCommands(this.getSelf(),this.getOther(), this.getBullets()));
+        }
+        catch (Exception e)
+        {
+            this.getSelf().setHitPoints(0);
+        }
     }
 
     public Spaceship getSelf()
