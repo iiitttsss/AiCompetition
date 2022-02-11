@@ -5,6 +5,7 @@ package AiCompetition.com;
 
 import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.render.RenderSimulation;
+import AiCompetition.com.util.Timer;
 
 public class Match
 {
@@ -63,10 +64,8 @@ public class Match
         EvaluateThrustCommandForAi executeAi1 = new EvaluateThrustCommandForAi(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
         Thread executeAi1Thread = new Thread(executeAi1);
         executeAi1Thread.start();
-        EvaluateThrustCommandForAi executeAi2 = new EvaluateThrustCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
-        Thread executeAi2Thread = new Thread(executeAi2);
-        executeAi2Thread.start();
 
+        Timer.start();
         try
         {
             executeAi1Thread.join(MILLIS_FOR_THREAD);
@@ -76,6 +75,10 @@ public class Match
             e.printStackTrace();
             System.out.println("AI1 thrust error");
         }
+        Timer.time();
+        EvaluateThrustCommandForAi executeAi2 = new EvaluateThrustCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
+        Thread executeAi2Thread = new Thread(executeAi2);
+        executeAi2Thread.start();
         try
         {
             executeAi2Thread.join(MILLIS_FOR_THREAD);
@@ -86,6 +89,8 @@ public class Match
             System.out.println("AI2 thrust error");
 
         }
+        Timer.end();
+
         this.getSpaceship1().executeThrustCommands(executeAi1.getThrustCommands(), deltaTime);
         this.getSpaceship2().executeThrustCommands(executeAi2.getThrustCommands(), deltaTime);
     }
@@ -102,6 +107,8 @@ public class Match
         try
         {
             executeAi1Thread.join(MILLIS_FOR_THREAD);
+            System.out.println(executeAi2Thread.isInterrupted());
+
         }
         catch (InterruptedException e)
         {
@@ -111,6 +118,7 @@ public class Match
         try
         {
             executeAi2Thread.join(MILLIS_FOR_THREAD);
+            System.out.println(executeAi2Thread.isInterrupted());
         }
         catch (InterruptedException e)
         {
