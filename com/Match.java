@@ -5,21 +5,19 @@ package AiCompetition.com;
 
 import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.render.RenderSimulation;
-import AiCompetition.com.util.Timer;
 
 public class Match
 {
+    private static final int MILLIS_FOR_THREAD = 15;
+    private static final int CRITICAL_MILLIS_FOR_THREAD = 500;
     private Ai ai1;
     private Ai ai2;
-
     private Spaceship spaceship1;
     private Spaceship spaceship2;
     private BulletManager bulletManager;
-
     private int sizeX;
     private int sizeY;
 
-    private static final int MILLIS_FOR_THREAD = 15;
 
     public Match(int sizeX, int sizeY)
     {
@@ -45,7 +43,6 @@ public class Match
         this.getSpaceship1().init(this.getAi1().createStructure());
         this.getSpaceship2().init(this.getAi2().createStructure());
 
-        RenderSimulation.init();
     }
 
     /**
@@ -62,34 +59,11 @@ public class Match
     private void aiMove(float deltaTime)
     {
         EvaluateThrustCommandForAi executeAi1 = new EvaluateThrustCommandForAi(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
-        Thread executeAi1Thread = new Thread(executeAi1);
-        executeAi1Thread.start();
+        this.handleThread(executeAi1, this.getSpaceship1());
 
-        Timer.start();
-        try
-        {
-            executeAi1Thread.join(MILLIS_FOR_THREAD);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            System.out.println("AI1 thrust error");
-        }
-        Timer.time();
         EvaluateThrustCommandForAi executeAi2 = new EvaluateThrustCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
-        Thread executeAi2Thread = new Thread(executeAi2);
-        executeAi2Thread.start();
-        try
-        {
-            executeAi2Thread.join(MILLIS_FOR_THREAD);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            System.out.println("AI2 thrust error");
+        this.handleThread(executeAi2, this.getSpaceship2());
 
-        }
-        Timer.end();
 
         this.getSpaceship1().executeThrustCommands(executeAi1.getThrustCommands(), deltaTime);
         this.getSpaceship2().executeThrustCommands(executeAi2.getThrustCommands(), deltaTime);
@@ -98,35 +72,34 @@ public class Match
     private void aiShoot()
     {
         EvaluateShootCommandForAi executeAi1 = new EvaluateShootCommandForAi(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
-        Thread executeAi1Thread = new Thread(executeAi1);
-        executeAi1Thread.start();
+        this.handleThread(executeAi1, this.getSpaceship1());
+
         EvaluateShootCommandForAi executeAi2 = new EvaluateShootCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
-        Thread executeAi2Thread = new Thread(executeAi2);
-        executeAi2Thread.start();
+        this.handleThread(executeAi2, this.getSpaceship2());
 
-        try
-        {
-            executeAi1Thread.join(MILLIS_FOR_THREAD);
-            System.out.println(executeAi2Thread.isInterrupted());
-
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            System.out.println("AI1 shoot error");
-        }
-        try
-        {
-            executeAi2Thread.join(MILLIS_FOR_THREAD);
-            System.out.println(executeAi2Thread.isInterrupted());
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-            System.out.println("AI2 shoot error");
-        }
         this.getSpaceship1().executeShootCommands(executeAi1.getShootCommands(), this.getBulletManager());
         this.getSpaceship2().executeShootCommands(executeAi2.getShootCommands(), this.getBulletManager());
+    }
+
+    private void handleThread(Runnable runnable, Spaceship spaceship)
+    {
+        Thread thread = new Thread(runnable);
+        thread.start();
+        try
+        {
+            long startTime = System.currentTimeMillis();
+            thread.join(CRITICAL_MILLIS_FOR_THREAD);
+            long endTime = System.currentTimeMillis();
+
+            if (endTime - startTime >= MILLIS_FOR_THREAD)
+            {
+                spaceship.addOverTimePoint();
+            }
+        } catch (InterruptedException e)
+        {
+            e.printStackTrace();
+            System.out.println("AI thread error");
+        }
     }
 
     /**

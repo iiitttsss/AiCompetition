@@ -17,6 +17,7 @@ public class Spaceship
     public final static float TURNING_MULTIPLIER = 1f;
     public final static float ACCELERATION_MULTIPLIER = 50f;
     public final static float FRICTION_MULTIPLIER = 0.01f;
+    public static final int OVERTIME_POINTS_FOR_DEATH = 10;
     private SpaceshipStructure spaceshipStructure;
     private float xPos;
     private float yPos;
@@ -27,6 +28,7 @@ public class Spaceship
     private int hitPoints;
     private PImage spriteBlue;
     private PImage spriteRed;
+    private int overTimePoints;//when the AI takes to long to give back command, it will get a point, after a certain amount of points, it losses
 
     public void updateEnergy(float deltaTime)
     {
@@ -68,6 +70,8 @@ public class Spaceship
         this.setHitPoints(spaceshipStructure.getAttribute(UpgradeData.HIT_POINTS));
 
         this.createSprites(upgradeData, spaceshipStructure);
+        this.setOverTimePoints(0);
+
         //TODO
     }
 
@@ -87,7 +91,7 @@ public class Spaceship
      */
     public void executeShootCommands(ArrayList<ShootCommand> shootCommands, BulletManager bulletManager)
     {
-        if(shootCommands == null)
+        if (shootCommands == null)
         {
             return;
         }
@@ -171,7 +175,7 @@ public class Spaceship
      */
     public void executeThrustCommands(ArrayList<ThrustCommand> thrustCommands, float deltaTime)
     {
-        if(thrustCommands == null)
+        if (thrustCommands == null)
         {
             return;
         }
@@ -253,11 +257,11 @@ public class Spaceship
 
     private void fixDirection()
     {
-        while(this.getDirection() < 0)
+        while (this.getDirection() < 0)
         {
             direction += 2 * Math.PI;
         }
-        while(this.getDirection() >= 2 * Math.PI)
+        while (this.getDirection() >= 2 * Math.PI)
         {
             direction -= 2 * Math.PI;
         }
@@ -338,6 +342,21 @@ public class Spaceship
     public void update(float deltaTime)
     {
         //TODO
+    }
+
+    public void addOverTimePoint()
+    {
+        this.overTimePoints++;
+    }
+
+    public int getOverTimePoints()
+    {
+        return overTimePoints;
+    }
+
+    public void setOverTimePoints(int overTimePoints)
+    {
+        this.overTimePoints = overTimePoints;
     }
 
     public PImage getSpriteRed()

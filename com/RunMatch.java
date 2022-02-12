@@ -1,9 +1,6 @@
 package AiCompetition.com;
 
-import AiCompetition.com.playersAi.AiSample1A;
-import AiCompetition.com.playersAi.AiSample1B;
-import AiCompetition.com.playersAi.Avoider;
-import AiCompetition.com.playersAi.Turret;
+import AiCompetition.com.playersAi.*;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
 import processing.core.PApplet;
@@ -35,14 +32,15 @@ public class RunMatch extends PApplet
     {
         System.out.println("start program");
         Global.setPro(this);
-        this.frameRate(40);
+        this.frameRate(60);
 
         CreateSpaceshipSprite.loadSprites("src/AiCompetition/com/render/SpaceshipKit.png"); // TODO - need to move to the match generator because this line only need to be executed once
 
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new Avoider(), new Turret());
+        match.init(new Tester(), new Turret());
+        RenderSimulation.init(match, pg);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class RunMatch extends PApplet
 
     private void render()
     {
-        RenderSimulation.render(DELTA_TIME, this, this.getPg(), this.getMatch());
+        RenderSimulation.render(DELTA_TIME);
         image(this.getPg(), 0, 0);
         text(1000f * numberOfUpdates / millis(), 40, 500);
     }
