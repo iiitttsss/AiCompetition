@@ -10,7 +10,7 @@ import AiCompetition.com.util.Timer;
 public class Match
 {
     private static final int MILLIS_FOR_THREAD = 20;
-    private static final int CRITICAL_MILLIS_FOR_THREAD = 500;
+    private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
     private Ai ai1;
     private Ai ai2;
     private Spaceship spaceship1;

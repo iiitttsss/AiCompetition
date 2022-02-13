@@ -351,6 +351,14 @@ public class Spaceship
         this.overTimePoints++;
     }
 
+    /**
+     * @return - returns true if the spaceship is alive (false otherwise).
+     */
+    public boolean isAlive()
+    {
+        return this.getHitPoints() > 0 && !this.didCrash && this.getOverTimePoints() < OVERTIME_POINTS_FOR_DEATH;
+    }
+
     public boolean isDidCrash()
     {
         return didCrash;
