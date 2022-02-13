@@ -1,7 +1,6 @@
 package AiCompetition.com.playersAi;
 
 import AiCompetition.com.Ai;
-import AiCompetition.com.Global;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
@@ -10,27 +9,14 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class Tester extends Ai
+public class Tester2 extends Ai
 {
+    private boolean thrust;
 
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-
-        if (Math.random() < 0.99961)
-        {
-            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 1, 10));
-        }
-
-
-//        int[] a = new int[0];
-//        a[0]=0;
-
-//        boolean b = true;
-//        while(b){}
-
-
         return shootCommands;
     }
 
@@ -38,18 +24,14 @@ public class Tester extends Ai
     public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        if (Math.random() < 0.9991)
+
+        if (Math.random() < 0.0001)
         {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.CLOCKWISE_THRUSTER, 1));
+            thrust = true;
         }
-        //thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
-
-
-
-        int startTime = Global.getPro().millis();
-        int waitTime = 5;
-        while (Global.getPro().millis() < startTime + waitTime)
+        if (thrust)
         {
+            //thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
         }
 
 

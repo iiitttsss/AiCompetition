@@ -8,6 +8,7 @@ import AiCompetition.com.Match;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
+import AiCompetition.com.util.Timer;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PGraphics;
@@ -59,9 +60,15 @@ public class RenderSimulation
         renderBackground();
 
         //spaceships
+        Timer.time();
         renderSpaceships();
+        Timer.time("renderSpaceships");
+
         //bullets
+        Timer.time();
         renderBullets();
+        Timer.time("renderBullets");
+
         pgReference.popMatrix();
         //UI - life, energy, energy per turn, name
         renderUi();
@@ -109,6 +116,11 @@ public class RenderSimulation
     {
         pgReference.pushStyle();
         pgReference.noStroke();
+        final int BULLET_GLOW_RADIUS = 50;
+        int glowLayersNumber = (int) Math.max(BULLET_GLOW_RADIUS * scale / 5, 1);
+        int radiusIncreaseMultiplier = BULLET_GLOW_RADIUS / glowLayersNumber;
+        int glowAlphaValue = 125 / glowLayersNumber;
+
         for (Bullet b : matchReference.getBulletManager().getActiveBullets())
         {
             if (!isOnScreen(b.getxPos(), b.getyPos()))
@@ -116,10 +128,9 @@ public class RenderSimulation
                 continue;
             }
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < glowLayersNumber; i++)
             {
-                int radiusIncreaseMultiplier = 10;
-                pgReference.fill(Global.getPro().color(255, 253, 107, 25));
+                pgReference.fill(Global.getPro().color(255, 253, 107, glowAlphaValue));
                 pgReference.circle(b.getxPos(), b.getyPos(), b.getRadius() * 2 + radiusIncreaseMultiplier * i);
             }
             pgReference.fill(Global.getPro().color(255));

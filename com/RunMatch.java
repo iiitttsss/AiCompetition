@@ -3,6 +3,7 @@ package AiCompetition.com;
 import AiCompetition.com.playersAi.*;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
+import AiCompetition.com.util.Timer;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -39,7 +40,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new Tester(), new Avoider());
+        match.init(new Tester(), new Tester2());
         RenderSimulation.init(match, pg);
     }
 
@@ -57,9 +58,12 @@ public class RunMatch extends PApplet
 
     private void render()
     {
+        Timer.start();
         RenderSimulation.render(DELTA_TIME);
+        Timer.time();
         image(this.getPg(), 0, 0);
         text(1000f * numberOfUpdates / millis(), 40, 500);
+        Timer.end();
     }
 
     /**

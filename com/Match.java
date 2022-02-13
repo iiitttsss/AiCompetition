@@ -5,6 +5,7 @@ package AiCompetition.com;
 
 import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.render.RenderSimulation;
+import AiCompetition.com.util.Timer;
 
 public class Match
 {
@@ -106,21 +107,27 @@ public class Match
         // TODO - add all the steps bellow
         this.getSpaceship1().updateEnergy(deltaTime);
         this.getSpaceship2().updateEnergy(deltaTime);
+
         // - update active bullets
         this.getBulletManager().updateActiveBullets();
+
         // - AIs update thrusters (try-catch)
         // - AIs shoot (try-catch)
         this.aiCommands(deltaTime);
+
         // - spaceships move
         this.getSpaceship1().updateMovement(deltaTime);
         this.getSpaceship2().updateMovement(deltaTime);
+
         // - spaceships handle screen edges
 //        this.handleBoarders();
         // - spaceship/bullets collisions - take damage | bullets deactivate as needed
         this.getBulletManager().update(deltaTime);
         this.getBulletManager().checkForCollisionsWithSpaceship(spaceship1);
         this.getBulletManager().checkForCollisionsWithSpaceship(spaceship2);
+
         // - simulation log
+
     }
 
     private void handleBoarders()
