@@ -20,7 +20,7 @@ public class Tester extends Ai
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
 
-        if (Math.random() < 0.991)
+        if (Math.random() < 0.61)
         {
             shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 1, 10));
         }
@@ -40,11 +40,11 @@ public class Tester extends Ai
     public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        if (Math.random() < 0.01)
+        if (Math.random() < 0.9991)
         {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
+            thrustCommands.add(new ThrustCommand(ThrustCommand.CLOCKWISE_THRUSTER, 1));
         }
-        thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
+        //thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
 
 
 

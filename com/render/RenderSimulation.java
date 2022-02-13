@@ -81,7 +81,7 @@ public class RenderSimulation
 
         float scaleFactor = pgReference.width / Math.max(Math.abs(matchReference.getSpaceship1().getxPos() - matchReference.getSpaceship2().getxPos()), Math.abs(matchReference.getSpaceship1().getyPos() - matchReference.getSpaceship2().getyPos()));
         // scale = scaleFactor / 1.5f;
-        scale = Math.min(scaleFactor / 1.5f, 1);
+        scale = Math.min(scaleFactor / 2f, 1);
 
         pgReference.scale(scale);
 
@@ -116,11 +116,11 @@ public class RenderSimulation
                 continue;
             }
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
-                int mult = 15;
-                pgReference.fill(Global.getPro().color(156, 255, 165, 50));
-                pgReference.circle(b.getxPos(), b.getyPos(), b.getRadius() * 2 + mult * i);
+                int radiusIncreaseMultiplier = 10;
+                pgReference.fill(Global.getPro().color(255, 253, 107, 25));
+                pgReference.circle(b.getxPos(), b.getyPos(), b.getRadius() * 2 + radiusIncreaseMultiplier * i);
             }
             pgReference.fill(Global.getPro().color(255));
             pgReference.circle(b.getxPos(), b.getyPos(), b.getRadius() * 2);

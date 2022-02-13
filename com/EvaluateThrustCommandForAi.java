@@ -30,7 +30,7 @@ public class EvaluateThrustCommandForAi implements Runnable
         }
         catch (Exception e)
         {
-            this.getSelf().setHitPoints(0);
+            this.getSelf().setDidCrash(true);
         }
     }
 

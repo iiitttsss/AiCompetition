@@ -39,7 +39,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new Tester(), new Turret());
+        match.init(new Tester(), new Avoider());
         RenderSimulation.init(match, pg);
     }
 

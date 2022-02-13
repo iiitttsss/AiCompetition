@@ -8,7 +8,7 @@ import AiCompetition.com.render.RenderSimulation;
 
 public class Match
 {
-    private static final int MILLIS_FOR_THREAD = 15;
+    private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 500;
     private Ai ai1;
     private Ai ai2;
@@ -56,27 +56,16 @@ public class Match
         }
     }
 
-    private void aiMove(float deltaTime)
+    private void aiCommands(float deltaTime)
     {
-        EvaluateThrustCommandForAi executeAi1 = new EvaluateThrustCommandForAi(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
+        EvaluateAiCommands executeAi1 = new EvaluateAiCommands(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
         this.handleThread(executeAi1, this.getSpaceship1());
 
-        EvaluateThrustCommandForAi executeAi2 = new EvaluateThrustCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
+        EvaluateAiCommands executeAi2 = new EvaluateAiCommands(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
         this.handleThread(executeAi2, this.getSpaceship2());
-
 
         this.getSpaceship1().executeThrustCommands(executeAi1.getThrustCommands(), deltaTime);
         this.getSpaceship2().executeThrustCommands(executeAi2.getThrustCommands(), deltaTime);
-    }
-
-    private void aiShoot()
-    {
-        EvaluateShootCommandForAi executeAi1 = new EvaluateShootCommandForAi(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
-        this.handleThread(executeAi1, this.getSpaceship1());
-
-        EvaluateShootCommandForAi executeAi2 = new EvaluateShootCommandForAi(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
-        this.handleThread(executeAi2, this.getSpaceship2());
-
         this.getSpaceship1().executeShootCommands(executeAi1.getShootCommands(), this.getBulletManager());
         this.getSpaceship2().executeShootCommands(executeAi2.getShootCommands(), this.getBulletManager());
     }
@@ -90,17 +79,24 @@ public class Match
             long startTime = System.currentTimeMillis();
             thread.join(CRITICAL_MILLIS_FOR_THREAD);
             long endTime = System.currentTimeMillis();
-
-            if (endTime - startTime >= MILLIS_FOR_THREAD)
+            long timePassed = endTime - startTime;
+            if (timePassed >= CRITICAL_MILLIS_FOR_THREAD)
+            {
+                spaceship.setOverTimePoints(Spaceship.OVERTIME_POINTS_FOR_DEATH);
+            }
+            else if (timePassed >= MILLIS_FOR_THREAD)
             {
                 spaceship.addOverTimePoint();
             }
         } catch (InterruptedException e)
         {
             e.printStackTrace();
-            System.out.println("AI thread error");
+            System.out.println("AI thread InterruptedException");
+            spaceship.setDidCrash(true);
         }
     }
+
+
 
     /**
      * Handle each iteration of the simulation
@@ -113,9 +109,8 @@ public class Match
         // - update active bullets
         this.getBulletManager().updateActiveBullets();
         // - AIs update thrusters (try-catch)
-        this.aiMove(deltaTime);
         // - AIs shoot (try-catch)
-        this.aiShoot();
+        this.aiCommands(deltaTime);
         // - spaceships move
         this.getSpaceship1().updateMovement(deltaTime);
         this.getSpaceship2().updateMovement(deltaTime);

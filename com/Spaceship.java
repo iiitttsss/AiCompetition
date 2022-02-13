@@ -17,7 +17,7 @@ public class Spaceship
     public final static float TURNING_MULTIPLIER = 1f;
     public final static float ACCELERATION_MULTIPLIER = 50f;
     public final static float FRICTION_MULTIPLIER = 0.01f;
-    public static final int OVERTIME_POINTS_FOR_DEATH = 10;
+    public static final int OVERTIME_POINTS_FOR_DEATH = 5;
     private SpaceshipStructure spaceshipStructure;
     private float xPos;
     private float yPos;
@@ -29,6 +29,7 @@ public class Spaceship
     private PImage spriteBlue;
     private PImage spriteRed;
     private int overTimePoints;//when the AI takes to long to give back command, it will get a point, after a certain amount of points, it losses
+    private boolean didCrash;
 
     public void updateEnergy(float deltaTime)
     {
@@ -71,6 +72,7 @@ public class Spaceship
 
         this.createSprites(upgradeData, spaceshipStructure);
         this.setOverTimePoints(0);
+        this.setDidCrash(false);
 
         //TODO
     }
@@ -347,6 +349,16 @@ public class Spaceship
     public void addOverTimePoint()
     {
         this.overTimePoints++;
+    }
+
+    public boolean isDidCrash()
+    {
+        return didCrash;
+    }
+
+    public void setDidCrash(boolean didCrash)
+    {
+        this.didCrash = didCrash;
     }
 
     public int getOverTimePoints()

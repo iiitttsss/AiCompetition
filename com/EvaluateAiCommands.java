@@ -3,19 +3,19 @@ package AiCompetition.com;
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
-import AiCompetition.com.util.Timer;
 
 import java.util.ArrayList;
 
-public class EvaluateShootCommandForAi implements Runnable
+public class EvaluateAiCommands implements Runnable
 {
     private Ai ai;
     private ArrayList<ShootCommand> shootCommands;
+    private ArrayList<ThrustCommand> thrustCommands;
     private Spaceship self;
     private Spaceship other;
     private ArrayList<Bullet> bullets;
 
-    public EvaluateShootCommandForAi(Ai ai, Spaceship self, Spaceship other, ArrayList<Bullet> bullets)
+    public EvaluateAiCommands(Ai ai, Spaceship self, Spaceship other, ArrayList<Bullet> bullets)
     {
         this.setAi(ai);
         this.setSelf(self);
@@ -29,11 +29,21 @@ public class EvaluateShootCommandForAi implements Runnable
         try
         {
             this.setShootCommands(this.getAi().shootCommands(this.getSelf(), this.getOther(), this.getBullets()));
-        }
-        catch (Exception e)
+            this.setThrustCommands(this.getAi().thrustCommands(this.getSelf(), this.getOther(), this.getBullets()));
+        } catch (Exception e)
         {
             this.getSelf().setDidCrash(true);
         }
+    }
+
+    public ArrayList<ThrustCommand> getThrustCommands()
+    {
+        return thrustCommands;
+    }
+
+    public void setThrustCommands(ArrayList<ThrustCommand> thrustCommands)
+    {
+        this.thrustCommands = thrustCommands;
     }
 
     public Spaceship getSelf()
