@@ -18,7 +18,7 @@ public class Tester extends Ai
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
 
-        if (Math.random() < 0.99961)
+        if (Math.random() < 0.1)
         {
             shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 1, 10));
         }
