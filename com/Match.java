@@ -3,9 +3,8 @@
  */
 package AiCompetition.com;
 
+import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.bullets.BulletManager;
-import AiCompetition.com.render.RenderSimulation;
-import AiCompetition.com.util.Timer;
 
 public class Match
 {
@@ -19,7 +18,6 @@ public class Match
     private int sizeX;
     private int sizeY;
 
-
     public Match(int sizeX, int sizeY)
     {
         this.setSizeX(sizeX);
@@ -28,6 +26,17 @@ public class Match
         this.setBulletManager(new BulletManager());
         this.setSpaceship1(new Spaceship());
         this.setSpaceship2(new Spaceship());
+    }
+
+    public void savePreviousPosition()
+    {
+        this.getSpaceship1().savePreviousPosition();
+        this.getSpaceship2().savePreviousPosition();
+        for(Bullet bullet : this.getBulletManager().getActiveBullets())
+        {
+            bullet.savePreviousPosition();
+        }
+
     }
 
     /**
@@ -84,19 +93,18 @@ public class Match
             if (timePassed >= CRITICAL_MILLIS_FOR_THREAD)
             {
                 spaceship.setOverTimePoints(Spaceship.OVERTIME_POINTS_FOR_DEATH);
-            }
-            else if (timePassed >= MILLIS_FOR_THREAD)
+            } else if (timePassed >= MILLIS_FOR_THREAD)
             {
                 spaceship.addOverTimePoint();
             }
-        } catch (InterruptedException e)
+        }
+        catch (InterruptedException e)
         {
             e.printStackTrace();
             System.out.println("AI thread InterruptedException");
             spaceship.setDidCrash(true);
         }
     }
-
 
 
     /**

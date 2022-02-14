@@ -24,6 +24,15 @@ public class Bullet
     private float startXPos;
     private float startYPos;
 
+    private float previousXPos;
+    private float previousYPos;
+
+    public void savePreviousPosition()
+    {
+        this.setPreviousXPos(this.getxPos());
+        this.setPreviousYPos(this.getyPos());
+    }
+
     /**
      * called when hitting a spaceship
      */
@@ -83,8 +92,29 @@ public class Bullet
         this.setLifeDistance(100000);
         this.setStartXPos(xPos);
         this.setStartYPos(yPos);
+        this.setPreviousXPos(xPos);
+        this.setPreviousYPos(yPos);
     }
 
+    public float getPreviousXPos()
+    {
+        return previousXPos;
+    }
+
+    public void setPreviousXPos(float previousXPos)
+    {
+        this.previousXPos = previousXPos;
+    }
+
+    public float getPreviousYPos()
+    {
+        return previousYPos;
+    }
+
+    public void setPreviousYPos(float previousYPos)
+    {
+        this.previousYPos = previousYPos;
+    }
 
     public int getLifeDistance()
     {

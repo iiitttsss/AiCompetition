@@ -30,6 +30,16 @@ public class Spaceship
     private PImage spriteRed;
     private int overTimePoints;//when the AI takes to long to give back command, it will get a point, after a certain amount of points, it losses
     private boolean didCrash;
+    private float previousXPos;
+    private float previousYPos;
+    private float previousDirection;
+
+    public void savePreviousPosition()
+    {
+        this.setPreviousXPos(this.getxPos());
+        this.setPreviousYPos(this.getyPos());
+        this.setPreviousDirection(this.getDirection());
+    }
 
     public void updateEnergy(float deltaTime)
     {
@@ -262,10 +272,12 @@ public class Spaceship
         while (this.getDirection() < 0)
         {
             direction += 2 * Math.PI;
+            previousDirection += 2 * Math.PI;
         }
         while (this.getDirection() >= 2 * Math.PI)
         {
             direction -= 2 * Math.PI;
+            previousDirection -= 2 * Math.PI;
         }
     }
 
@@ -349,6 +361,36 @@ public class Spaceship
     public void addOverTimePoint()
     {
         this.overTimePoints++;
+    }
+
+    public float getPreviousXPos()
+    {
+        return previousXPos;
+    }
+
+    public void setPreviousXPos(float previousXPos)
+    {
+        this.previousXPos = previousXPos;
+    }
+
+    public float getPreviousYPos()
+    {
+        return previousYPos;
+    }
+
+    public void setPreviousYPos(float previousYPos)
+    {
+        this.previousYPos = previousYPos;
+    }
+
+    public float getPreviousDirection()
+    {
+        return previousDirection;
+    }
+
+    public void setPreviousDirection(float previousDirection)
+    {
+        this.previousDirection = previousDirection;
     }
 
     /**

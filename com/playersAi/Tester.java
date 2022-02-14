@@ -40,7 +40,7 @@ public class Tester extends Ai
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         if (Math.random() < 0.9991)
         {
-            thrustCommands.add(new ThrustCommand(ThrustCommand.CLOCKWISE_THRUSTER, 1));
+            thrustCommands.add(new ThrustCommand(ThrustCommand.COUNTER_CLOCKWISE_THRUSTER, 1));
         }
         //thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
 

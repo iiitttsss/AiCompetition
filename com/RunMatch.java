@@ -3,13 +3,12 @@ package AiCompetition.com;
 import AiCompetition.com.playersAi.*;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
-import AiCompetition.com.util.Timer;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class RunMatch extends PApplet
 {
-    private static final float DELTA_TIME = 1 / 25f;
+    private static final float DELTA_TIME = 1 / 5f;
     public int numberOfUpdates = 0;
     private int lastTime = 0;
     private Match match;
@@ -37,7 +36,6 @@ public class RunMatch extends PApplet
 
         CreateSpaceshipSprite.loadSprites("src/AiCompetition/com/render/SpaceshipKit.png"); // TODO - need to move to the match generator because this line only need to be executed once
 
-
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
         match.init(new Tester(), new Tester2());
@@ -58,12 +56,9 @@ public class RunMatch extends PApplet
 
     private void render()
     {
-        Timer.start();
         RenderSimulation.render(DELTA_TIME);
-        Timer.time();
         image(this.getPg(), 0, 0);
         text(1000f * numberOfUpdates / millis(), 40, 500);
-        Timer.end();
     }
 
     /**
@@ -86,7 +81,9 @@ public class RunMatch extends PApplet
         millisSinceLastUpdate += Global.getDeltaTime();
         while (this.needToUpdate())
         {
+            match.savePreviousPosition();
             this.getMatch().update(DELTA_TIME);
+            RenderSimulation.matchUpdate();
         }
     }
 
