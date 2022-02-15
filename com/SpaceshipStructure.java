@@ -28,7 +28,7 @@ public class SpaceshipStructure
                     value = (int) (baseValue * 100);
                     break;
                 case UpgradeData.RADIUS:
-                    value = (int) (2 * (90 - baseValue));
+                    value = (int) (1 * (90 - baseValue));
                     break;
                 case UpgradeData.BACK_GUN_DAMAGE:
                 case UpgradeData.FRONT_GUN_DAMAGE:

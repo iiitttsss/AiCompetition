@@ -1,21 +1,22 @@
 package AiCompetition.com.render;
 
 import AiCompetition.com.Global;
-import AiCompetition.com.Match;
-import processing.core.PApplet;
-import processing.core.PGraphics;
 
 public class RenderBackgroundLines
 {
 
+
     public static void renderBackground()
     {
-        for (int i = 1; i <= 40; i *= 2)
+
+
+        for (int i = 1; i <= 400; i *= 2)
         {
             int mod = i * 200;
             if (mod * RenderSimulation.getScale() > 100)
             {
-                createLines( mod, i, RenderSimulation.getStartX(), RenderSimulation.getEndX(), RenderSimulation.getStartY(), RenderSimulation.getEndY());
+                createLines(mod, i, RenderSimulation.getStartX(), RenderSimulation.getEndX(), RenderSimulation.getStartY(), RenderSimulation.getEndY());
+                break;
             }
         }
     }
@@ -43,4 +44,7 @@ public class RenderBackgroundLines
         }
         RenderSimulation.getPgReference().popStyle();
     }
+
+
+
 }

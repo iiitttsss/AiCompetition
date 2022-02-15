@@ -55,7 +55,7 @@ public class Turret extends Ai
             dAngle += 360;
         }
 
-        int threshold = 3;
+        int threshold = 10;
 
         needToShoot = false;
 

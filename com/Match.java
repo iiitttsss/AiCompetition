@@ -5,6 +5,8 @@ package AiCompetition.com;
 
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.bullets.BulletManager;
+import AiCompetition.com.render.RenderBackgroundLines;
+import AiCompetition.com.render.RenderSimulation;
 
 public class Match
 {
@@ -36,7 +38,7 @@ public class Match
         {
             bullet.savePreviousPosition();
         }
-
+        RenderSimulation.savePreviousPosition();
     }
 
     /**

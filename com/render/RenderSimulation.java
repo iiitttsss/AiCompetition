@@ -15,8 +15,8 @@ import processing.core.PImage;
 
 public class RenderSimulation
 {
-    private static int centerX;
-    private static int centerY;
+    private static float centerX;
+    private static float centerY;
     private static float scale;
 
     private static int startX;
@@ -30,7 +30,16 @@ public class RenderSimulation
 
     private static float framePercent;
     private static int timeOfLastUpdate;
+    private static float previousXCenter;
+    private static float previousYCenter;
+    private static float previousScale;
 
+    public static void savePreviousPosition()
+    {
+        setPreviousXCenter(RenderSimulation.getCenterX());
+        setPreviousYCenter(RenderSimulation.getCenterY());
+        setPreviousScale(RenderSimulation.getScale());
+    }
 
     public static void init(Match matchReference, PGraphics pgReference)
     {
@@ -57,6 +66,7 @@ public class RenderSimulation
         float percent = (currentTime - lastTime) / millisDeltaTime;
         RenderSimulation.setFramePercent(percent);
     }
+
     private static float interpretBetweenPositions(float currentPosition, float previousPosition)
     {
         float interpretPosition = previousPosition * (1 - getFramePercent()) + currentPosition * (getFramePercent());
@@ -104,18 +114,21 @@ public class RenderSimulation
 
     private static void translateToCenter()
     {
-
         pgReference.translate(pgReference.width / 2, pgReference.height / 2);
 
         float scaleFactor = pgReference.width / Math.max(Math.abs(matchReference.getSpaceship1().getxPos() - matchReference.getSpaceship2().getxPos()), Math.abs(matchReference.getSpaceship1().getyPos() - matchReference.getSpaceship2().getyPos()));
         // scale = scaleFactor / 1.5f;
         scale = Math.min(scaleFactor / 2f, 1);
+        float scaleInterpret = RenderSimulation.interpretBetweenPositions(scale, getPreviousScale());
 
-        pgReference.scale(scale);
 
-        int centerX = (int) ((matchReference.getSpaceship1().getxPos() + matchReference.getSpaceship2().getxPos()) / 2);
-        int centerY = (int) ((matchReference.getSpaceship1().getyPos() + matchReference.getSpaceship2().getyPos()) / 2);
-        pgReference.translate(-centerX, -centerY);
+        pgReference.scale(scaleInterpret);
+
+        float centerX = ((matchReference.getSpaceship1().getxPos() + matchReference.getSpaceship2().getxPos()) / 2f);
+        float centerY = ((matchReference.getSpaceship1().getyPos() + matchReference.getSpaceship2().getyPos()) / 2f);
+        float xPosInterpret = RenderSimulation.interpretBetweenPositions(centerX, getPreviousXCenter());
+        float yPosInterpret = RenderSimulation.interpretBetweenPositions(centerY, getPreviousYCenter());
+        pgReference.translate(-xPosInterpret, -yPosInterpret);
         RenderSimulation.centerX = centerX;
         RenderSimulation.centerY = centerY;
 
@@ -217,6 +230,36 @@ public class RenderSimulation
         pgReference.text("HP: " + spaceship.getHitPoints(), spaceship.getxPos(), spaceship.getyPos() - 50);
     }
 
+    public static float getPreviousScale()
+    {
+        return previousScale;
+    }
+
+    public static void setPreviousScale(float previousScale)
+    {
+        RenderSimulation.previousScale = previousScale;
+    }
+
+    public static float getPreviousXCenter()
+    {
+        return previousXCenter;
+    }
+
+    public static void setPreviousXCenter(float previousXCenter)
+    {
+        RenderSimulation.previousXCenter = previousXCenter;
+    }
+
+    public static float getPreviousYCenter()
+    {
+        return previousYCenter;
+    }
+
+    public static void setPreviousYCenter(float previousYCenter)
+    {
+        RenderSimulation.previousYCenter = previousYCenter;
+    }
+
     public static float getFramePercent()
     {
         return framePercent;
@@ -257,22 +300,22 @@ public class RenderSimulation
         RenderSimulation.matchReference = matchReference;
     }
 
-    public static int getCenterX()
+    public static float getCenterX()
     {
         return centerX;
     }
 
-    public static void setCenterX(int centerX)
+    public static void setCenterX(float centerX)
     {
         RenderSimulation.centerX = centerX;
     }
 
-    public static int getCenterY()
+    public static float getCenterY()
     {
         return centerY;
     }
 
-    public static void setCenterY(int centerY)
+    public static void setCenterY(float centerY)
     {
         RenderSimulation.centerY = centerY;
     }

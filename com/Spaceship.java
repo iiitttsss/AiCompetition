@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class Spaceship
 {
     public final static float TURNING_MULTIPLIER = 1f;
-    public final static float ACCELERATION_MULTIPLIER = 50f;
-    public final static float FRICTION_MULTIPLIER = 0.01f;
+    public final static float ACCELERATION_MULTIPLIER = 0.5f;
+    public final static float FRICTION_MULTIPLIER = 0.001f;
     public static final int OVERTIME_POINTS_FOR_DEATH = 5;
     private SpaceshipStructure spaceshipStructure;
     private float xPos;
