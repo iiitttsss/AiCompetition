@@ -16,14 +16,13 @@ public class Bullet
     private int radius;
     private int speed;
     private int damage;
+    private int range;
     private Spaceship owner; // who shoot that bullet - can be used in order to prevent bullets hit their owners
     private int id; // each bullet have a unique ID
     private boolean isActive;
     private int lifeDistance;
-
     private float startXPos;
     private float startYPos;
-
     private float previousXPos;
     private float previousYPos;
 
@@ -77,7 +76,7 @@ public class Bullet
      * @param radius - the radius of the bullet
      * @param speed  of the bullet
      */
-    public void init(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed, int damage)
+    public void init(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed, int damage, int range)
     {
         this.setActive(true);
         this.setOwner(owner);
@@ -88,12 +87,22 @@ public class Bullet
         this.setRadius(radius);
         this.setSpeed(speed);
         this.setDamage(damage);
+        this.setLifeDistance(range);
 
-        this.setLifeDistance(100000);
         this.setStartXPos(xPos);
         this.setStartYPos(yPos);
         this.setPreviousXPos(xPos);
         this.setPreviousYPos(yPos);
+    }
+
+    public int getRange()
+    {
+        return range;
+    }
+
+    public void setRange(int range)
+    {
+        this.range = range;
     }
 
     public float getPreviousXPos()

@@ -19,7 +19,7 @@ public class Avoider extends Ai
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         if (needToShoot && Math.random() < 0.1)
         {
-            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10));
+            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10, 1000));
         }
         return shootCommands;
     }

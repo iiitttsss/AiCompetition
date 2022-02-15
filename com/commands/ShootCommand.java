@@ -12,19 +12,31 @@ public class ShootCommand extends Command
     private int radius;
     private int speed;
     private int damage;
+    private int range;
 
-    public ShootCommand(int whichGun, int radius, int speed, int damage)
+    public ShootCommand(int whichGun, int radius, int speed, int damage, int range)
     {
         this.setWhichGun(whichGun);
         this.setRadius(radius);
         this.setSpeed(speed);
         this.setDamage(damage);
+        this.setRange(range);
     }
 
     @Override
     public int calculateCost()
     {
-        return damage + speed * speed + radius;
+        return (int) (damage + speed * speed + radius + Math.pow(range, 0.01));
+    }
+
+    public int getRange()
+    {
+        return range;
+    }
+
+    public void setRange(int range)
+    {
+        this.range = range;
     }
 
     public int getDamage()

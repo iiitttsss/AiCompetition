@@ -144,7 +144,7 @@ public class Spaceship
             float bulletSpeed = (float) Math.sqrt(bulletXVel * bulletXVel + bulletYVel * bulletYVel);
 
 
-            bulletManager.addBullet(this, this.getxPos(), this.getyPos(), bulletXVel, bulletYVel, sc.getRadius(), (int) bulletSpeed, sc.getDamage());
+            bulletManager.addBullet(this, this.getxPos(), this.getyPos(), bulletXVel, bulletYVel, sc.getRadius(), (int) bulletSpeed, sc.getDamage(), sc.getRange());
         }
     }
 

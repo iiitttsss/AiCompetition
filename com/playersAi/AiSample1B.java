@@ -18,7 +18,7 @@ public class AiSample1B extends Ai
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         if(Math.random() < 0.01)
         {
-            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10));
+            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10, 1000));
         }
         return shootCommands;
     }
