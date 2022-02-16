@@ -81,6 +81,21 @@ public class RenderSimulation
         RenderSimulation.setEndY((int) (centerY + pgReference.height / 2 / scale));
     }
 
+    private static void renderBorder()
+    {
+        //processing Draw transparent circle filled outside
+        //https://forum.processing.org/two/discussion/26405/how-do-i-fill-the-space-around-a-shape.html
+        getPgReference().pushStyle();
+        getPgReference().noFill();
+        getPgReference().strokeWeight(10);
+
+        getPgReference().circle(0, 0, 2 * getMatchReference().getBorderRadius());
+
+
+        getPgReference().popStyle();
+
+    }
+
     public static void render(float updateDeltaTime)
     {
         RenderSimulation.updateFramePercent(updateDeltaTime);
@@ -94,6 +109,9 @@ public class RenderSimulation
 
         //background
         renderBackground();
+
+        //border
+        renderBorder();
 
         //spaceships
         renderSpaceships();
@@ -120,7 +138,6 @@ public class RenderSimulation
         // scale = scaleFactor / 1.5f;
         scale = Math.min(scaleFactor / 2f, 1);
         float scaleInterpret = RenderSimulation.interpretBetweenPositions(scale, getPreviousScale());
-
 
         pgReference.scale(scaleInterpret);
 
@@ -212,7 +229,8 @@ public class RenderSimulation
         pgReference.textSize(14 / scale);
         String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
                 "Energy: " + (int) spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY) + "\n" +
-                "velocity: " + (Math.sqrt(spaceship.getxVel() * spaceship.getxVel() + spaceship.getyVel() * spaceship.getyVel())) + "\n";
+                "velocity: " + (Math.sqrt(spaceship.getxVel() * spaceship.getxVel() + spaceship.getyVel() * spaceship.getyVel())) + "\n"
+                + "position: " + spaceship.getxPos() + "/" + spaceship.getyPos() + "\n";
 
         pgReference.text(s, xPosInterpret, yPosInterpret + 20 + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
         pgReference.popStyle();

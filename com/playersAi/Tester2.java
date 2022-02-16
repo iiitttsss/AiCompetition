@@ -33,6 +33,7 @@ public class Tester2 extends Ai
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
         }
+        thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 100));
 
 
         return thrustCommands;

@@ -8,8 +8,6 @@ public class RenderBackgroundLines
 
     public static void renderBackground()
     {
-
-
         for (int i = 1; i <= 400; i *= 2)
         {
             int mod = i * 200;

@@ -5,11 +5,16 @@ package AiCompetition.com;
 
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.bullets.BulletManager;
-import AiCompetition.com.render.RenderBackgroundLines;
 import AiCompetition.com.render.RenderSimulation;
 
 public class Match
 {
+    public static final float START_BORDER_RADIUS = 4000;
+    public static final float BORDER_TIME_FOR_PHASE = 10;
+    public static final float[] BORDER_RADIUS_ARRAY = {START_BORDER_RADIUS, START_BORDER_RADIUS / 2, START_BORDER_RADIUS / 4, START_BORDER_RADIUS / 8, START_BORDER_RADIUS / 16, 0};
+    public static final int BORDER_PHASE_STATIONARY = 0;
+    public static final int BORDER_PHASE_MOVING = 1;
+    private static final float BORDER_SPEED_DIVISOR = 25;//the higher it is the slower the border
     private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
     private Ai ai1;
@@ -19,6 +24,10 @@ public class Match
     private BulletManager bulletManager;
     private int sizeX;
     private int sizeY;
+    private float borderRadius;
+    private int targetBorderSizeIndex;
+    private int borderPhase;
+    private float timeUntilNextPhase;
 
     public Match(int sizeX, int sizeY)
     {
@@ -34,7 +43,7 @@ public class Match
     {
         this.getSpaceship1().savePreviousPosition();
         this.getSpaceship2().savePreviousPosition();
-        for(Bullet bullet : this.getBulletManager().getActiveBullets())
+        for (Bullet bullet : this.getBulletManager().getActiveBullets())
         {
             bullet.savePreviousPosition();
         }
@@ -54,7 +63,8 @@ public class Match
         this.setAi2(ai2);
         this.getSpaceship1().init(this.getAi1().createStructure());
         this.getSpaceship2().init(this.getAi2().createStructure());
-
+        this.setBorderRadius(Match.START_BORDER_RADIUS);
+        this.setBorderPhase(Match.BORDER_PHASE_STATIONARY);
     }
 
     /**
@@ -66,6 +76,34 @@ public class Match
         {
             this.update(0.2f);
         }
+    }
+
+    private void updateBorder(float deltaTime)
+    {
+        switch (this.getBorderPhase())
+        {
+            case Match.BORDER_PHASE_STATIONARY:
+                timeUntilNextPhase -= deltaTime;
+                if (this.getTimeUntilNextPhase() <= 0)
+                {
+                    this.setBorderPhase(Match.BORDER_PHASE_MOVING);
+                    this.targetBorderSizeIndex++;
+                }
+                break;
+            case Match.BORDER_PHASE_MOVING:
+                if (this.borderRadius > 0)
+                {
+                    this.borderRadius -= deltaTime * Match.BORDER_RADIUS_ARRAY[this.getTargetBorderSizeIndex()] / BORDER_SPEED_DIVISOR;
+                    this.setBorderRadius(Math.max(0, this.getBorderRadius()));
+                }
+                if (this.getTargetBorderSizeIndex() < Match.BORDER_RADIUS_ARRAY.length && borderRadius <= Match.BORDER_RADIUS_ARRAY[this.getTargetBorderSizeIndex()])
+                {
+                    this.setBorderPhase(Match.BORDER_PHASE_STATIONARY);
+                    this.setTimeUntilNextPhase(Match.BORDER_TIME_FOR_PHASE);
+                }
+                break;
+        }
+
     }
 
     private void aiCommands(float deltaTime)
@@ -108,7 +146,6 @@ public class Match
         }
     }
 
-
     /**
      * Handle each iteration of the simulation
      */
@@ -129,21 +166,57 @@ public class Match
         this.getSpaceship1().updateMovement(deltaTime);
         this.getSpaceship2().updateMovement(deltaTime);
 
-        // - spaceships handle screen edges
-//        this.handleBoarders();
+
         // - spaceship/bullets collisions - take damage | bullets deactivate as needed
         this.getBulletManager().update(deltaTime);
         this.getBulletManager().checkForCollisionsWithSpaceship(spaceship1);
         this.getBulletManager().checkForCollisionsWithSpaceship(spaceship2);
 
+        this.updateBorder(deltaTime);
+        this.getSpaceship1().updateBorder(this.getBorderRadius());
+        this.getSpaceship2().updateBorder(this.getBorderRadius());
         // - simulation log
 
     }
 
-    private void handleBoarders()
+    public float getTimeUntilNextPhase()
     {
-        this.getSpaceship1().handleReflectiveBorders(this.getSizeX(), this.getSizeY());
-        this.getSpaceship2().handleReflectiveBorders(this.getSizeX(), this.getSizeY());
+        return timeUntilNextPhase;
+    }
+
+    public void setTimeUntilNextPhase(float timeUntilNextPhase)
+    {
+        this.timeUntilNextPhase = timeUntilNextPhase;
+    }
+
+    public int getTargetBorderSizeIndex()
+    {
+        return targetBorderSizeIndex;
+    }
+
+    public void setTargetBorderSizeIndex(int targetBorderSizeIndex)
+    {
+        this.targetBorderSizeIndex = targetBorderSizeIndex;
+    }
+
+    public int getBorderPhase()
+    {
+        return borderPhase;
+    }
+
+    public void setBorderPhase(int borderPhase)
+    {
+        this.borderPhase = borderPhase;
+    }
+
+    public float getBorderRadius()
+    {
+        return borderRadius;
+    }
+
+    public void setBorderRadius(float borderRadius)
+    {
+        this.borderRadius = borderRadius;
     }
 
     public int getSizeX()

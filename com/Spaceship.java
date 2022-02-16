@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Spaceship
 {
     public final static float TURNING_MULTIPLIER = 1f;
-    public final static float ACCELERATION_MULTIPLIER = 0.5f;
+    public final static float ACCELERATION_MULTIPLIER = 10.5f;
     public final static float FRICTION_MULTIPLIER = 0.001f;
     public static final int OVERTIME_POINTS_FOR_DEATH = 5;
     private SpaceshipStructure spaceshipStructure;
@@ -33,6 +33,11 @@ public class Spaceship
     private float previousXPos;
     private float previousYPos;
     private float previousDirection;
+
+    public void updateBorder(float orderRadius)
+    {
+        //TODO
+    }
 
     public void savePreviousPosition()
     {
@@ -328,23 +333,6 @@ public class Spaceship
             {
                 return (float) (Math.PI + atan);//Q3
             }
-        }
-    }
-
-    public void handleReflectiveBorders(int xMax, int yMax)
-    {
-        if (this.getxPos() < 0)
-        {
-            this.setxPos(this.getxPos() + xMax);
-        } else if (this.getxPos() >= xMax)
-        {
-            this.setxPos(this.getxPos() - xMax);
-        } else if (this.getyPos() < 0)
-        {
-            this.setyPos(this.getyPos() + yMax);
-        } else if (this.getyPos() >= yMax)
-        {
-            this.setyPos(this.getyPos() - yMax);
         }
     }
 
