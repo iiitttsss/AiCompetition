@@ -26,7 +26,9 @@ public class ShootCommand extends Command
     @Override
     public int calculateCost()
     {
-        return (int) (damage + speed * speed + radius + Math.pow(range, 0.01));
+        int cost = (int) (damage + speed * speed + radius + Math.pow(range, 0.01));
+        System.out.println(cost);
+        return cost;
     }
 
     public int getRange()

@@ -15,17 +15,17 @@ public class SpaceshipStructure
         {
             int level = upgradeData.getUpgrade(upgradeIndex);
             int value = 0;
-            float baseValue = (float) Math.pow(level + 1, 1.3);
+            float baseValue = levelToValue(level);
             switch (upgradeIndex)
             {
-                case UpgradeData.BATTERY:
-                    value = (int) (baseValue * 20000);
+                case UpgradeData.BATTERY_SIZE:
+                    value = (int) (baseValue * 500);
                     break;
                 case UpgradeData.ENERGY_GENERATOR:
-                    value = (int) (baseValue * 20000 / 10);
+                    value = (int) (baseValue * 20);
                     break;
                 case UpgradeData.HIT_POINTS:
-                    value = (int) (baseValue * 100);
+                    value = (int) (baseValue * 101);
                     break;
                 case UpgradeData.RADIUS:
                     value = (int) (1 * (90 - baseValue));
@@ -34,19 +34,26 @@ public class SpaceshipStructure
                 case UpgradeData.FRONT_GUN_DAMAGE:
                 case UpgradeData.LEFT_GUN_DAMAGE:
                 case UpgradeData.RIGHT_GUN_DAMAGE:
-                    value = (int) (baseValue * 100 / 15);
+                    value = (int) (baseValue * 10);
                     break;
                 case UpgradeData.BACK_GUN_SPEED:
                 case UpgradeData.FRONT_GUN_SPEED:
                 case UpgradeData.LEFT_GUN_SPEED:
                 case UpgradeData.RIGHT_GUN_SPEED:
-                    value = (int) (1 * baseValue);
+                    value = (int) (baseValue * 2);
                     break;
                 case UpgradeData.BACK_GUN_RADIUS:
                 case UpgradeData.FRONT_GUN_RADIUS:
                 case UpgradeData.LEFT_GUN_RADIUS:
                 case UpgradeData.RIGHT_GUN_RADIUS:
-                    value = (int) (5 * baseValue);
+                    value = (int) (3 * baseValue);
+                    break;
+
+                case UpgradeData.BACK_GUN_RANGE:
+                case UpgradeData.FRONT_GUN_RANGE:
+                case UpgradeData.LEFT_GUN_RANGE:
+                case UpgradeData.RIGHT_GUN_RANGE:
+                    value = (int) (50 * baseValue);
                     break;
 
                 case UpgradeData.FRONT_THRUSTER:
@@ -60,6 +67,18 @@ public class SpaceshipStructure
             }
             attributes[upgradeIndex] = value;
         }
+    }
+
+    /**
+     * @param level - the level that need to be used
+     * @return - the value the component will have
+     */
+    private float levelToValue(int level)
+    {
+        float power = 2;
+        int levelToBeDoubled = 5;
+        final float DOUBLE_CHANGE = (float) (Math.pow((levelToBeDoubled + 1), power) / 2);
+        return (float) (Math.pow((level + 1), power) + DOUBLE_CHANGE - 1) / DOUBLE_CHANGE;
     }
 
     /**

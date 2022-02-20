@@ -6,6 +6,7 @@ import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
+import AiCompetition.com.util.MathUtil;
 
 import java.util.ArrayList;
 
@@ -28,11 +29,11 @@ public class Avoider extends Ai
     public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
-        int power = 20;
-
-
-        float wantedVelX = 0;
-        float wantedVelY = 0;
+        final int power = 5;
+        final int powerFast = 15;
+        final int bulletDistance = 500;
+        final int getCloserDistance = 700;
+        final int getFartherDistance = 500;
 
 
         float minDist = Integer.MAX_VALUE;
@@ -47,20 +48,11 @@ public class Avoider extends Ai
                 minBullet = bullet;
                 minDist = distSq;
             }
-            dx = Math.min(Math.max(dx, -1), 1);
-            dy = Math.min(Math.max(dy, -1), 1);
-
-//            wantedVelX = dx;
-//            wantedVelY = dy;
-            wantedVelX += dx / distSq;
-            wantedVelY += dy / distSq;
         }
 
-        if (minBullet != null && minDist <= 500 * 500)
+        if (minBullet != null && minDist <= bulletDistance * bulletDistance)
         {
             float dir = (float) Math.atan2(minBullet.getyVel(), minBullet.getxVel());
-//            System.out.println("before space direction: " + dir);
-
             if (dir < 0)
             {
                 dir += 2 * Math.PI;
@@ -71,32 +63,26 @@ public class Avoider extends Ai
                 dir -= 2 * Math.PI;
             }
 
-//            System.out.println("space direction: " + dir);
-//            System.out.println("bullet velocity: " + minBullet.getyVel() + " | " + minBullet.getxVel());
-
-
-            wantedVelX *= 1000000;
-            wantedVelY *= 1000000;
-
             if (dir < Math.PI / 2 || dir > 3 * Math.PI / 2)
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, power));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, powerFast));
             } else
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, power));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, powerFast));
             }
             if (dir < Math.PI)
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, power));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, powerFast));
             } else
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, power));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, powerFast));
             }
-        } else
+        } else if (mySpaceship.getEnergy() > 2500)
         {
             float dx = mySpaceship.getxPos() - otherSpaceship.getxPos();
             float dy = mySpaceship.getyPos() - otherSpaceship.getyPos();
-            if (dx * dx + dy * dy > 700 * 700)
+            float distSq = MathUtil.distSq(0, 0, dx, dy);
+            if (distSq > getCloserDistance * getCloserDistance)
             {
                 if (dx < 0)
                 {
@@ -112,7 +98,7 @@ public class Avoider extends Ai
                 {
                     thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, power));
                 }
-            } else if (dx * dx + dy * dy < 500 * 500)
+            } else if (distSq < getFartherDistance * getFartherDistance)
             {
                 if (dx < 0)
                 {
@@ -138,9 +124,8 @@ public class Avoider extends Ai
     public UpgradeData createStructure()
     {
         UpgradeData upgradeData = new UpgradeData();
-//        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
         upgradeData.setUpgrade(UpgradeData.RADIUS, 20);
-        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 19);
+        upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 10);
 
         return upgradeData;
     }

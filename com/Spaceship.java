@@ -54,9 +54,9 @@ public class Spaceship
     public void updateEnergy(float deltaTime)
     {
         this.energy += this.getSpaceshipStructure().getAttribute(UpgradeData.ENERGY_GENERATOR) * deltaTime;
-        if (this.getEnergy() > this.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY))
+        if (this.getEnergy() > this.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE))
         {
-            this.setEnergy(this.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY));
+            this.setEnergy(this.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE));
         }
     }
 
@@ -93,6 +93,8 @@ public class Spaceship
         this.createSprites(upgradeData, spaceshipStructure);
         this.setOverTimePoints(0);
         this.setDidCrash(false);
+
+        this.setEnergy(this.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE));
 
         //TODO
     }

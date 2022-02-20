@@ -78,7 +78,8 @@ public class GoTo extends Ai
     {
         UpgradeData upgradeData = new UpgradeData();
 //        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
-        upgradeData.setUpgrade(UpgradeData.RADIUS, 20);
+        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 10);
+
         //upgradeData.setUpgrade(UpgradeData.RIGHT_GUN_DAMAGE, 19);
 
         return upgradeData;

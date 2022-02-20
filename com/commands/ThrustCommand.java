@@ -21,7 +21,7 @@ public class ThrustCommand extends Command
     @Override
     public int calculateCost()
     {
-        return forceValue * forceValue;
+        return (int) Math.pow(forceValue, 1.3);
     }
 
     public int getWhichThruster()

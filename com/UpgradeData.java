@@ -4,7 +4,7 @@ public class UpgradeData
 {
     public static final int MAX_UPGRADE_POINTS = 30;
 
-    public final static int BATTERY = 0;//100-5,000
+    public final static int BATTERY_SIZE = 0;//100-5,000
     public final static int ENERGY_GENERATOR = 1;//1-50
 
     public final static int HIT_POINTS = 2;//100-10,000
@@ -22,18 +22,15 @@ public class UpgradeData
     public final static int FRONT_GUN_RADIUS = 12;//5-50
     public final static int FRONT_GUN_RANGE = 22;//50-10,000
 
-
     public final static int BACK_GUN_DAMAGE = 13;
     public final static int BACK_GUN_SPEED = 14;
     public final static int BACK_GUN_RADIUS = 15;
     public final static int BACK_GUN_RANGE = 23;
 
-
     public final static int RIGHT_GUN_DAMAGE = 16;
     public final static int RIGHT_GUN_SPEED = 17;
     public final static int RIGHT_GUN_RADIUS = 18;
     public final static int RIGHT_GUN_RANGE = 24;
-
 
     public final static int LEFT_GUN_DAMAGE = 19;
     public final static int LEFT_GUN_SPEED = 20;

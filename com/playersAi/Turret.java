@@ -20,7 +20,7 @@ public class Turret extends Ai
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        if (Math.random() < 0.001)
+        if (Math.random() < 0.01)
         {
             isOnShootInterval = (!isOnShootInterval);
         }
@@ -79,7 +79,9 @@ public class Turret extends Ai
     {
         UpgradeData upgradeData = new UpgradeData();
 //        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
+
         upgradeData.setUpgrade(UpgradeData.RADIUS, 20);
+        upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 20);
         //upgradeData.setUpgrade(UpgradeData.RIGHT_GUN_DAMAGE, 19);
 
         return upgradeData;
