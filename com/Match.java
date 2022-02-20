@@ -14,7 +14,7 @@ public class Match
     public static final float[] BORDER_RADIUS_ARRAY = {START_BORDER_RADIUS, START_BORDER_RADIUS / 2, START_BORDER_RADIUS / 4, START_BORDER_RADIUS / 8, START_BORDER_RADIUS / 16, 0};
     public static final int BORDER_PHASE_STATIONARY = 0;
     public static final int BORDER_PHASE_MOVING = 1;
-    private static final float BORDER_SPEED_DIVISOR = 25;//the higher it is the slower the border
+    private static final float BORDER_SPEED_DIVISOR = 250;//the higher it is the slower the border
     private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
     private Ai ai1;
@@ -25,10 +25,10 @@ public class Match
     private int sizeX;
     private int sizeY;
     private float borderRadius;
+    private float previousBorderRadius;
     private int targetBorderSizeIndex;
     private int borderPhase;
     private float timeUntilNextPhase;
-
     public Match(int sizeX, int sizeY)
     {
         this.setSizeX(sizeX);
@@ -80,6 +80,7 @@ public class Match
 
     private void updateBorder(float deltaTime)
     {
+        this.setPreviousBorderRadius(this.getBorderRadius());
         switch (this.getBorderPhase())
         {
             case Match.BORDER_PHASE_STATIONARY:
@@ -137,8 +138,7 @@ public class Match
             {
                 spaceship.addOverTimePoint();
             }
-        }
-        catch (InterruptedException e)
+        } catch (InterruptedException e)
         {
             e.printStackTrace();
             System.out.println("AI thread InterruptedException");
@@ -177,6 +177,16 @@ public class Match
         this.getSpaceship2().updateBorder(this.getBorderRadius());
         // - simulation log
 
+    }
+
+    public float getPreviousBorderRadius()
+    {
+        return previousBorderRadius;
+    }
+
+    public void setPreviousBorderRadius(float previousBorderRadius)
+    {
+        this.previousBorderRadius = previousBorderRadius;
     }
 
     public float getTimeUntilNextPhase()

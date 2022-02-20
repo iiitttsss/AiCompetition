@@ -8,6 +8,7 @@ import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
 import AiCompetition.com.render.CreateSpaceshipSprite;
+import AiCompetition.com.util.MathUtil;
 import processing.core.PImage;
 
 import java.util.ArrayList;
@@ -15,9 +16,10 @@ import java.util.ArrayList;
 public class Spaceship
 {
     public final static float TURNING_MULTIPLIER = 1f;
-    public final static float ACCELERATION_MULTIPLIER = 10.5f;
-    public final static float FRICTION_MULTIPLIER = 0.001f;
+    public final static float ACCELERATION_MULTIPLIER = 3f;
+    public final static float FRICTION_MULTIPLIER = 0.005f;
     public static final int OVERTIME_POINTS_FOR_DEATH = 5;
+    public static final int BASE_DAMAGE_DUE_TO_BORDER = 1;
     private SpaceshipStructure spaceshipStructure;
     private float xPos;
     private float yPos;
@@ -34,9 +36,12 @@ public class Spaceship
     private float previousYPos;
     private float previousDirection;
 
-    public void updateBorder(float orderRadius)
+    public void updateBorder(float borderRadius)
     {
-        //TODO
+        if (MathUtil.distSq(0, 0, this.getxPos(), this.getyPos()) > borderRadius * borderRadius)
+        {
+            this.setHitPoints(this.getHitPoints()-Spaceship.BASE_DAMAGE_DUE_TO_BORDER);
+        }
     }
 
     public void savePreviousPosition()

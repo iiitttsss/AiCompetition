@@ -48,6 +48,7 @@ public class RenderSimulation
         STATIONARY_BACKGROUND = Global.getPro().loadImage("src/AiCompetition/com/render/background.png");
         final int resizeConstant = 1;
         STATIONARY_BACKGROUND.resize(STATIONARY_BACKGROUND.width / resizeConstant, STATIONARY_BACKGROUND.height / resizeConstant);
+        RenderBorder.init();
     }
 
     /**
@@ -67,7 +68,7 @@ public class RenderSimulation
         RenderSimulation.setFramePercent(percent);
     }
 
-    private static float interpretBetweenPositions(float currentPosition, float previousPosition)
+    public static float interpretBetweenPositions(float currentPosition, float previousPosition)
     {
         float interpretPosition = previousPosition * (1 - getFramePercent()) + currentPosition * (getFramePercent());
         return interpretPosition;
@@ -83,50 +84,34 @@ public class RenderSimulation
 
     private static void renderBorder()
     {
-        //processing Draw transparent circle filled outside
-        //https://forum.processing.org/two/discussion/26405/how-do-i-fill-the-space-around-a-shape.html
-        getPgReference().pushStyle();
-        getPgReference().noFill();
-        getPgReference().strokeWeight(10);
+        RenderBorder.render(getPgReference());
+    }
 
-        getPgReference().circle(0, 0, 2 * getMatchReference().getBorderRadius());
-
-
-        getPgReference().popStyle();
-
+    private static void renderBackground()
+    {
+        pgReference.background(150);
+        pgReference.imageMode(PConstants.CORNER);
+        pgReference.image(STATIONARY_BACKGROUND, 0, 0);
     }
 
     public static void render(float updateDeltaTime)
     {
         RenderSimulation.updateFramePercent(updateDeltaTime);
         pgReference.beginDraw();
-        //TODO
-        pgReference.background(150);
-        pgReference.imageMode(PConstants.CORNER);
-        pgReference.image(STATIONARY_BACKGROUND, 0, 0);
+        renderBackground();
         pgReference.pushMatrix();
         translateToCenter();
-
-        //background
-        renderBackground();
-
-        //border
-        renderBorder();
-
-        //spaceships
+        renderBackgroundLines();
         renderSpaceships();
-
-        //bullets
         renderBullets();
         pgReference.popMatrix();
-        //UI - life, energy, energy per turn, name
+        renderBorder();
         renderUi();
         pgReference.endDraw();
     }
 
-    private static void renderBackground()
+    private static void renderBackgroundLines()
     {
-//        pg.background(150);
         RenderBackgroundLines.renderBackground();
     }
 
@@ -156,6 +141,7 @@ public class RenderSimulation
 
     private static void renderUi()
     {
+        //UI - life, energy, energy per turn, name
         pgReference.text("bullets: " + matchReference.getBulletManager().getAllBullets().size() + "/" + matchReference.getBulletManager().getActiveBullets().size(), 20, 20);
         pgReference.text("FPS: " + Global.getPro().frameRate, 20, 40);
 
@@ -194,9 +180,15 @@ public class RenderSimulation
         pgReference.popStyle();
     }
 
+    /**
+     *
+     * @param x - sprite center x
+     * @param y - sprite center y
+     * @return - returns true if the object is on the screen (plus some) and needs to be rendered
+     */
     private static boolean isOnScreen(float x, float y)
     {
-        int t = 50;
+        int t = 50;//how many pixels outside the screen the object can be and still be rendered
         return (x >= startX - t && x <= endX + t) && (y >= startY - t && y <= endY + t);
     }
 

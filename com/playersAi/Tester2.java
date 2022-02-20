@@ -25,15 +25,15 @@ public class Tester2 extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
 
-        if (Math.random() < 0.001)
-        {
-            thrust = true;
-        }
-        if (thrust)
-        {
+//        if (Math.random() < 0.001)
+//        {
+//            thrust = true;
+//        }
+//        if (thrust)
+//        {
+//            thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
+//        }
             thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
-        }
-        thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 100));
 
 
         return thrustCommands;
