@@ -1,13 +1,11 @@
 package AiCompetition.com.playersAi;
 
 import AiCompetition.com.Ai;
-import AiCompetition.com.Global;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
-import AiCompetition.com.util.Timer;
 
 import java.util.ArrayList;
 
@@ -26,7 +24,7 @@ public class Turret extends Ai
         }
         if (isOnShootInterval && Math.random() < 0.1)
         {
-            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10, 1000));
+            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 10, 10, 2000));
         }
         return shootCommands;
     }

@@ -22,10 +22,10 @@ public class SpaceshipStructure
                     value = (int) (baseValue * 500);
                     break;
                 case UpgradeData.ENERGY_GENERATOR:
-                    value = (int) (baseValue * 20);
+                    value = (int) (baseValue * 5);
                     break;
                 case UpgradeData.HIT_POINTS:
-                    value = (int) (baseValue * 101);
+                    value = (int) (baseValue * 100);
                     break;
                 case UpgradeData.RADIUS:
                     value = (int) (1 * (90 - baseValue));
@@ -75,10 +75,7 @@ public class SpaceshipStructure
      */
     private float levelToValue(int level)
     {
-        float power = 2;
-        int levelToBeDoubled = 5;
-        final float DOUBLE_CHANGE = (float) (Math.pow((levelToBeDoubled + 1), power) / 2);
-        return (float) (Math.pow((level + 1), power) + DOUBLE_CHANGE - 1) / DOUBLE_CHANGE;
+        return CostFunction.costFunction(level,2,5);
     }
 
     /**

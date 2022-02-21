@@ -30,10 +30,10 @@ public class Avoider extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         final int power = 5;
-        final int powerFast = 15;
-        final int bulletDistance = 500;
-        final int getCloserDistance = 700;
-        final int getFartherDistance = 500;
+        final int powerFast = 30;
+        final int bulletDistance = 900;
+        final int getCloserDistance = 1000;
+        final int getFartherDistance = 700;
 
 
         float minDist = Integer.MAX_VALUE;

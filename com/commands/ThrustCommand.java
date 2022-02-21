@@ -1,5 +1,7 @@
 package AiCompetition.com.commands;
 
+import AiCompetition.com.CostFunction;
+
 public class ThrustCommand extends Command
 {
     public static final int FRONT_THRUSTER = 0;
@@ -21,7 +23,7 @@ public class ThrustCommand extends Command
     @Override
     public int calculateCost()
     {
-        return (int) Math.pow(forceValue, 1.3);
+        return (int) CostFunction.costFunction(forceValue,2.5f,5);
     }
 
     public int getWhichThruster()

@@ -18,9 +18,14 @@ public class Tester extends Ai
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
 
-        if (Math.random() < 0.1)
+        if (Math.random() < 0.91)
         {
-            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10, 1000));
+            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 1, 1, 1, 1000));
+            shootCommands.add(new ShootCommand(ShootCommand.BACK_GUN, 1, 1, 1, 1000));
+            //shootCommands.add(new ShootCommand(ShootCommand.RIGHT_GUN, 1, 1, 1, 1500));
+            //shootCommands.add(new ShootCommand(ShootCommand.LEFT_GUN, 1, 1, 1, 1500));
+
+
         }
 
 
@@ -61,7 +66,9 @@ public class Tester extends Ai
     {
         UpgradeData upgradeData = new UpgradeData();
 //        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
-        upgradeData.setUpgrade(UpgradeData.RADIUS, 20);
+        //upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 5);
+        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 30);
+
         //upgradeData.setUpgrade(UpgradeData.RIGHT_GUN_DAMAGE, 19);
 
         return upgradeData;

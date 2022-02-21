@@ -6,6 +6,7 @@ package AiCompetition.com;
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.render.RenderSimulation;
+import AiCompetition.com.util.MathUtil;
 
 public class Match
 {
@@ -176,7 +177,6 @@ public class Match
         this.getSpaceship1().updateBorder(this.getBorderRadius());
         this.getSpaceship2().updateBorder(this.getBorderRadius());
         // - simulation log
-
     }
 
     public float getPreviousBorderRadius()

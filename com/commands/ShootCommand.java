@@ -1,5 +1,7 @@
 package AiCompetition.com.commands;
 
+import AiCompetition.com.CostFunction;
+
 public class ShootCommand extends Command
 {
 
@@ -9,10 +11,10 @@ public class ShootCommand extends Command
     public static final int LEFT_GUN = 3;
 
     private int whichGun;
-    private int radius;
-    private int speed;
-    private int damage;
-    private int range;
+    private int radius;//0-150
+    private int speed;//0-100
+    private int damage;//0-500
+    private int range;//0-10000
 
     public ShootCommand(int whichGun, int radius, int speed, int damage, int range)
     {
@@ -26,9 +28,13 @@ public class ShootCommand extends Command
     @Override
     public int calculateCost()
     {
-        int cost = (int) (damage + speed * speed + radius + Math.pow(range, 0.01));
-        System.out.println(cost);
-        return cost;
+        float cost = 0;
+        //(int) (damage + speed * speed + radius + Math.pow(range, 0.01));
+        cost += CostFunction.costFunction(radius,1.5f,5);
+        cost += CostFunction.costFunction(speed,1.5f,5);
+        cost += CostFunction.costFunction(damage,2f,40);
+        cost += CostFunction.costFunction(range,1.7f,250);
+        return (int)cost;
     }
 
     public int getRange()
