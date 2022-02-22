@@ -31,7 +31,9 @@ public class RenderBorder
         float pixelY = MathUtil.map(0, RenderSimulation.getStartY(), RenderSimulation.getEndY(), 0, pg.height);
 
         float radius = RenderSimulation.interpretBetweenPositions(RenderSimulation.getMatchReference().getBorderRadius(), RenderSimulation.getMatchReference().getPreviousBorderRadius());
-        maskImage.circle(pixelX, pixelY, radius * RenderSimulation.getScale() * 2);
+        float scale = RenderSimulation.interpretBetweenPositions(RenderSimulation.getScale(), RenderSimulation.getPreviousScale());
+
+        maskImage.circle(pixelX, pixelY, radius * scale * 2);
         maskImage.endDraw();
 
         PImage border = borderColor.get();

@@ -6,16 +6,11 @@ package AiCompetition.com;
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.render.RenderSimulation;
-import AiCompetition.com.util.MathUtil;
 
 public class Match
 {
     public static final float START_BORDER_RADIUS = 4000;
-    public static final float BORDER_TIME_FOR_PHASE = 10;
-    public static final float[] BORDER_RADIUS_ARRAY = {START_BORDER_RADIUS, START_BORDER_RADIUS / 2, START_BORDER_RADIUS / 4, START_BORDER_RADIUS / 8, START_BORDER_RADIUS / 16, 0};
-    public static final int BORDER_PHASE_STATIONARY = 0;
-    public static final int BORDER_PHASE_MOVING = 1;
-    private static final float BORDER_SPEED_DIVISOR = 250;//the higher it is the slower the border
+    public static final float BORDER_SPEED = 5f;
     private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
     private Ai ai1;
@@ -27,9 +22,7 @@ public class Match
     private int sizeY;
     private float borderRadius;
     private float previousBorderRadius;
-    private int targetBorderSizeIndex;
-    private int borderPhase;
-    private float timeUntilNextPhase;
+
     public Match(int sizeX, int sizeY)
     {
         this.setSizeX(sizeX);
@@ -65,7 +58,6 @@ public class Match
         this.getSpaceship1().init(this.getAi1().createStructure());
         this.getSpaceship2().init(this.getAi2().createStructure());
         this.setBorderRadius(Match.START_BORDER_RADIUS);
-        this.setBorderPhase(Match.BORDER_PHASE_STATIONARY);
     }
 
     /**
@@ -82,30 +74,11 @@ public class Match
     private void updateBorder(float deltaTime)
     {
         this.setPreviousBorderRadius(this.getBorderRadius());
-        switch (this.getBorderPhase())
+        this.setBorderRadius(this.getBorderRadius() - deltaTime * BORDER_SPEED);
+        if(this.getBorderRadius() < 0)
         {
-            case Match.BORDER_PHASE_STATIONARY:
-                timeUntilNextPhase -= deltaTime;
-                if (this.getTimeUntilNextPhase() <= 0)
-                {
-                    this.setBorderPhase(Match.BORDER_PHASE_MOVING);
-                    this.targetBorderSizeIndex++;
-                }
-                break;
-            case Match.BORDER_PHASE_MOVING:
-                if (this.borderRadius > 0)
-                {
-                    this.borderRadius -= deltaTime * Match.BORDER_RADIUS_ARRAY[this.getTargetBorderSizeIndex()] / BORDER_SPEED_DIVISOR;
-                    this.setBorderRadius(Math.max(0, this.getBorderRadius()));
-                }
-                if (this.getTargetBorderSizeIndex() < Match.BORDER_RADIUS_ARRAY.length && borderRadius <= Match.BORDER_RADIUS_ARRAY[this.getTargetBorderSizeIndex()])
-                {
-                    this.setBorderPhase(Match.BORDER_PHASE_STATIONARY);
-                    this.setTimeUntilNextPhase(Match.BORDER_TIME_FOR_PHASE);
-                }
-                break;
+            this.setBorderRadius(0);
         }
-
     }
 
     private void aiCommands(float deltaTime)
@@ -187,36 +160,6 @@ public class Match
     public void setPreviousBorderRadius(float previousBorderRadius)
     {
         this.previousBorderRadius = previousBorderRadius;
-    }
-
-    public float getTimeUntilNextPhase()
-    {
-        return timeUntilNextPhase;
-    }
-
-    public void setTimeUntilNextPhase(float timeUntilNextPhase)
-    {
-        this.timeUntilNextPhase = timeUntilNextPhase;
-    }
-
-    public int getTargetBorderSizeIndex()
-    {
-        return targetBorderSizeIndex;
-    }
-
-    public void setTargetBorderSizeIndex(int targetBorderSizeIndex)
-    {
-        this.targetBorderSizeIndex = targetBorderSizeIndex;
-    }
-
-    public int getBorderPhase()
-    {
-        return borderPhase;
-    }
-
-    public void setBorderPhase(int borderPhase)
-    {
-        this.borderPhase = borderPhase;
     }
 
     public float getBorderRadius()

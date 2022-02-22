@@ -25,12 +25,14 @@ public class GoTo extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
 
-        int targetX = 2500;
-        int targetY = 2500;
+        int targetX = 1500;
+        int targetY = 1500;
 
         int td = 50;
         int tv = 1;
-        int p = 10;
+        int p = 20;
+        int lp = 5;
+
         int dx = (int) (mySpaceship.getxPos() - targetX);
         if (dx > td)
         {
@@ -43,10 +45,10 @@ public class GoTo extends Ai
             int dvx = (int) (mySpaceship.getxVel());
             if (dvx > tv)
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, p));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, lp));
             } else if (dvx < -tv)
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, p));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, lp));
             }
         }
         int dy = (int) (mySpaceship.getyPos() - targetY);
@@ -62,10 +64,10 @@ public class GoTo extends Ai
             int dvy = (int) (mySpaceship.getyVel());
             if (dvy > tv)
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, p));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, lp));
             } else if (dvy < -tv)
             {
-                thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, p));
+                thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, lp));
             }
         }
 
@@ -78,7 +80,7 @@ public class GoTo extends Ai
     {
         UpgradeData upgradeData = new UpgradeData();
 //        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
-        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 10);
+        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 30);
 
         //upgradeData.setUpgrade(UpgradeData.RIGHT_GUN_DAMAGE, 19);
 
