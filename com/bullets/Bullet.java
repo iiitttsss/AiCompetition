@@ -9,10 +9,10 @@ import AiCompetition.com.UpgradeData;
 public class Bullet
 {
     private static final float SPEED_MULTIPLIER = 20;
-    private float xPos;
-    private float yPos;
-    private float xVel;
-    private float yVel;
+    private float xPosition;
+    private float yPosition;
+    private float xVelocity;
+    private float yVelocity;
     private int radius;
     private int speed;
     private int damage;
@@ -21,15 +21,15 @@ public class Bullet
     private int id; // each bullet have a unique ID
     private boolean isActive;
     private int lifeDistance;
-    private float startXPos;
-    private float startYPos;
-    private float previousXPos;
-    private float previousYPos;
+    private float startXPosition;
+    private float startYPosition;
+    private float previousXPosition;
+    private float previousYPosition;
 
     public void savePreviousPosition()
     {
-        this.setPreviousXPos(this.getxPos());
-        this.setPreviousYPos(this.getyPos());
+        this.setPreviousXPosition(this.getxPosition());
+        this.setPreviousYPosition(this.getyPosition());
     }
 
     /**
@@ -46,7 +46,7 @@ public class Bullet
      */
     public boolean checkForCollisionWithSpaceship(Spaceship spaceship)
     {
-        return (this.getxPos() - spaceship.getxPos()) * (this.getxPos() - spaceship.getxPos()) + (this.getyPos() - spaceship.getyPos()) * (this.getyPos() - spaceship.getyPos()) <=
+        return (this.getxPosition() - spaceship.getxPos()) * (this.getxPosition() - spaceship.getxPos()) + (this.getyPosition() - spaceship.getyPos()) * (this.getyPosition() - spaceship.getyPos()) <=
                 (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS)) * (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
     }
 
@@ -57,9 +57,9 @@ public class Bullet
     {
         //TODO
 
-        this.setxPos(this.getxPos() + deltaTime * SPEED_MULTIPLIER * xVel);
-        this.setyPos(this.getyPos() + deltaTime * SPEED_MULTIPLIER * yVel);
-        float distSq = (this.getxPos() - this.getStartXPos()) * (this.getxPos() - this.getStartXPos()) + (this.getyPos() - this.getStartYPos()) * (this.getyPos() - this.getStartYPos());
+        this.setxPosition(this.getxPosition() + deltaTime * SPEED_MULTIPLIER * xVelocity);
+        this.setyPosition(this.getyPosition() + deltaTime * SPEED_MULTIPLIER * yVelocity);
+        float distSq = (this.getxPosition() - this.getStartXPosition()) * (this.getxPosition() - this.getStartXPosition()) + (this.getyPosition() - this.getStartYPosition()) * (this.getyPosition() - this.getStartYPosition());
         if (distSq > this.getLifeDistance() * this.getLifeDistance())
         {
             this.setActive(false);
@@ -80,19 +80,19 @@ public class Bullet
     {
         this.setActive(true);
         this.setOwner(owner);
-        this.setxPos(xPos);
-        this.setyPos(yPos);
-        this.setxVel(xVel);
-        this.setyVel(yVel);
+        this.setxPosition(xPos);
+        this.setyPosition(yPos);
+        this.setxVelocity(xVel);
+        this.setyVelocity(yVel);
         this.setRadius(radius);
         this.setSpeed(speed);
         this.setDamage(damage);
         this.setLifeDistance(range);
 
-        this.setStartXPos(xPos);
-        this.setStartYPos(yPos);
-        this.setPreviousXPos(xPos);
-        this.setPreviousYPos(yPos);
+        this.setStartXPosition(xPos);
+        this.setStartYPosition(yPos);
+        this.setPreviousXPosition(xPos);
+        this.setPreviousYPosition(yPos);
     }
 
     public int getRange()
@@ -105,24 +105,24 @@ public class Bullet
         this.range = range;
     }
 
-    public float getPreviousXPos()
+    public float getPreviousXPosition()
     {
-        return previousXPos;
+        return previousXPosition;
     }
 
-    public void setPreviousXPos(float previousXPos)
+    public void setPreviousXPosition(float previousXPosition)
     {
-        this.previousXPos = previousXPos;
+        this.previousXPosition = previousXPosition;
     }
 
-    public float getPreviousYPos()
+    public float getPreviousYPosition()
     {
-        return previousYPos;
+        return previousYPosition;
     }
 
-    public void setPreviousYPos(float previousYPos)
+    public void setPreviousYPosition(float previousYPosition)
     {
-        this.previousYPos = previousYPos;
+        this.previousYPosition = previousYPosition;
     }
 
     public int getLifeDistance()
@@ -135,24 +135,24 @@ public class Bullet
         this.lifeDistance = lifeDistance;
     }
 
-    public float getStartXPos()
+    public float getStartXPosition()
     {
-        return startXPos;
+        return startXPosition;
     }
 
-    public void setStartXPos(float startXPos)
+    public void setStartXPosition(float startXPosition)
     {
-        this.startXPos = startXPos;
+        this.startXPosition = startXPosition;
     }
 
-    public float getStartYPos()
+    public float getStartYPosition()
     {
-        return startYPos;
+        return startYPosition;
     }
 
-    public void setStartYPos(float startYPos)
+    public void setStartYPosition(float startYPosition)
     {
-        this.startYPos = startYPos;
+        this.startYPosition = startYPosition;
     }
 
     public int getDamage()
@@ -195,44 +195,44 @@ public class Bullet
         this.owner = owner;
     }
 
-    public float getxPos()
+    public float getxPosition()
     {
-        return xPos;
+        return xPosition;
     }
 
-    public void setxPos(float xPos)
+    public void setxPosition(float xPosition)
     {
-        this.xPos = xPos;
+        this.xPosition = xPosition;
     }
 
-    public float getyPos()
+    public float getyPosition()
     {
-        return yPos;
+        return yPosition;
     }
 
-    public void setyPos(float yPos)
+    public void setyPosition(float yPosition)
     {
-        this.yPos = yPos;
+        this.yPosition = yPosition;
     }
 
-    public float getxVel()
+    public float getxVelocity()
     {
-        return xVel;
+        return xVelocity;
     }
 
-    public void setxVel(float xVel)
+    public void setxVelocity(float xVelocity)
     {
-        this.xVel = xVel;
+        this.xVelocity = xVelocity;
     }
 
-    public float getyVel()
+    public float getyVelocity()
     {
-        return yVel;
+        return yVelocity;
     }
 
-    public void setyVel(float yVel)
+    public void setyVelocity(float yVelocity)
     {
-        this.yVel = yVel;
+        this.yVelocity = yVelocity;
     }
 
     public int getRadius()
