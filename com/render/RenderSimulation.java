@@ -45,7 +45,7 @@ public class RenderSimulation
     {
         setMatchReference(matchReference);
         setPgReference(pgReference);
-        STATIONARY_BACKGROUND = Global.getPro().loadImage("src/AiCompetition/com/render/background.png");
+        STATIONARY_BACKGROUND = Global.getPro().loadImage("AiCompetition/com/render/background.png");
         final int resizeConstant = 1;
         STATIONARY_BACKGROUND.resize(STATIONARY_BACKGROUND.width / resizeConstant, STATIONARY_BACKGROUND.height / resizeConstant);
         RenderBorder.init();
