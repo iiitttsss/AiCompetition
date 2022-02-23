@@ -124,7 +124,6 @@ public class Avoider extends Ai
         UpgradeData upgradeData = new UpgradeData();
         upgradeData.setUpgrade(UpgradeData.RADIUS, 20);
         upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 10);
-
         return upgradeData;
     }
 }
