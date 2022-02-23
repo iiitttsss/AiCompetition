@@ -26,15 +26,18 @@ public class ShootCommand extends Command
     }
 
     @Override
-    public int calculateCost()
+    public int calculateCost(float deltaTime)
     {
         float cost = 0;
         //(int) (damage + speed * speed + radius + Math.pow(range, 0.01));
-        cost += CostFunction.costFunction(radius,1.5f,5);
-        cost += CostFunction.costFunction(speed,1.5f,5);
-        cost += CostFunction.costFunction(damage,2f,40);
-        cost += CostFunction.costFunction(range,1.7f,250);
-        return (int)cost;
+        cost += CostFunction.costFunction(radius, 1.5f, 5);
+        cost += CostFunction.costFunction(speed, 1.5f, 5);
+        cost += CostFunction.costFunction(damage, 2f, 40);
+        cost += CostFunction.costFunction(range, 1.7f, 250);
+
+        final float COST_MULTIPLIER = 5f;
+
+        return (int) (deltaTime * COST_MULTIPLIER * cost);
     }
 
     public int getRange()

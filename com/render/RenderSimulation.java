@@ -119,15 +119,15 @@ public class RenderSimulation
     {
         pgReference.translate(pgReference.width / 2, pgReference.height / 2);
 
-        float scaleFactor = pgReference.width / Math.max(Math.abs(matchReference.getSpaceship1().getxPos() - matchReference.getSpaceship2().getxPos()), Math.abs(matchReference.getSpaceship1().getyPos() - matchReference.getSpaceship2().getyPos()));
+        float scaleFactor = pgReference.width / Math.max(Math.abs(matchReference.getSpaceship1().getXPosition() - matchReference.getSpaceship2().getXPosition()), Math.abs(matchReference.getSpaceship1().getYPosition() - matchReference.getSpaceship2().getYPosition()));
         // scale = scaleFactor / 1.5f;
         scale = Math.min(scaleFactor / 2f, 1);
         float scaleInterpret = RenderSimulation.interpretBetweenPositions(scale, getPreviousScale());
 
         pgReference.scale(scaleInterpret);
 
-        float centerX = ((matchReference.getSpaceship1().getxPos() + matchReference.getSpaceship2().getxPos()) / 2f);
-        float centerY = ((matchReference.getSpaceship1().getyPos() + matchReference.getSpaceship2().getyPos()) / 2f);
+        float centerX = ((matchReference.getSpaceship1().getXPosition() + matchReference.getSpaceship2().getXPosition()) / 2f);
+        float centerY = ((matchReference.getSpaceship1().getYPosition() + matchReference.getSpaceship2().getYPosition()) / 2f);
         float xPosInterpret = RenderSimulation.interpretBetweenPositions(centerX, getPreviousXCenter());
         float yPosInterpret = RenderSimulation.interpretBetweenPositions(centerY, getPreviousYCenter());
         pgReference.translate(-xPosInterpret, -yPosInterpret);
@@ -200,8 +200,8 @@ public class RenderSimulation
 
     private static void renderASpaceship(Spaceship spaceship)
     {
-        float xPosInterpret = interpretBetweenPositions(spaceship.getxPos(), spaceship.getPreviousXPos());
-        float yPosInterpret = interpretBetweenPositions(spaceship.getyPos(), spaceship.getPreviousYPos());
+        float xPosInterpret = interpretBetweenPositions(spaceship.getXPosition(), spaceship.getPreviousXPosition());
+        float yPosInterpret = interpretBetweenPositions(spaceship.getYPosition(), spaceship.getPreviousYPosition());
         float directionInterpret = interpretBetweenPositions(spaceship.getDirection(), spaceship.getPreviousDirection());
 
         pgReference.pushMatrix();
@@ -215,14 +215,14 @@ public class RenderSimulation
         pgReference.line(xPosInterpret, yPosInterpret,
                 xPosInterpret + lineLength * (float) Math.cos(directionInterpret), yPosInterpret + lineLength * (float) Math.sin(directionInterpret));
         pgReference.line(xPosInterpret, yPosInterpret,
-                xPosInterpret + lineLength * spaceship.getxVel(), yPosInterpret + lineLength * spaceship.getyVel());
+                xPosInterpret + lineLength * spaceship.getXVelocity(), yPosInterpret + lineLength * spaceship.getYVelocity());
 
         pgReference.pushStyle();
         pgReference.textSize(14 / scale);
         String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
                 "Energy: " + (int) spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE) + "\n" +
-                "velocity: " + (Math.sqrt(spaceship.getxVel() * spaceship.getxVel() + spaceship.getyVel() * spaceship.getyVel())) + "\n"
-                + "position: " + spaceship.getxPos() + "/" + spaceship.getyPos() + "\n";
+                "velocity: " + (Math.sqrt(spaceship.getXVelocity() * spaceship.getXVelocity() + spaceship.getYVelocity() * spaceship.getYVelocity())) + "\n"
+                + "position: " + spaceship.getXPosition() + "/" + spaceship.getYPosition() + "\n";
 
         pgReference.text(s, xPosInterpret, yPosInterpret + 20 + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
         pgReference.popStyle();
@@ -230,14 +230,14 @@ public class RenderSimulation
 
     private static void renderASpaceshipDebug(PApplet pro, PGraphics pg, Spaceship spaceship)
     {
-        pgReference.circle(spaceship.getxPos(), spaceship.getyPos(), 50);
-        pgReference.circle(spaceship.getxPos(), spaceship.getyPos(), spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS) * 2);
+        pgReference.circle(spaceship.getXPosition(), spaceship.getYPosition(), 50);
+        pgReference.circle(spaceship.getXPosition(), spaceship.getYPosition(), spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS) * 2);
         float lineLength = 75;
-        pgReference.line(spaceship.getxPos(), spaceship.getyPos(),
-                spaceship.getxPos() + lineLength * (float) Math.cos(spaceship.getDirection()), spaceship.getyPos() + lineLength * (float) Math.sin(spaceship.getDirection()));
-        pgReference.line(spaceship.getxPos(), spaceship.getyPos(),
-                spaceship.getxPos() + lineLength * spaceship.getxVel(), spaceship.getyPos() + lineLength * spaceship.getyVel());
-        pgReference.text("HP: " + spaceship.getHitPoints(), spaceship.getxPos(), spaceship.getyPos() - 50);
+        pgReference.line(spaceship.getXPosition(), spaceship.getYPosition(),
+                spaceship.getXPosition() + lineLength * (float) Math.cos(spaceship.getDirection()), spaceship.getYPosition() + lineLength * (float) Math.sin(spaceship.getDirection()));
+        pgReference.line(spaceship.getXPosition(), spaceship.getYPosition(),
+                spaceship.getXPosition() + lineLength * spaceship.getXVelocity(), spaceship.getYPosition() + lineLength * spaceship.getYVelocity());
+        pgReference.text("HP: " + spaceship.getHitPoints(), spaceship.getXPosition(), spaceship.getYPosition() - 50);
     }
 
     public static float getPreviousScale()

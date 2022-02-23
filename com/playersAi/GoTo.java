@@ -33,7 +33,7 @@ public class GoTo extends Ai
         int p = 20;
         int lp = 5;
 
-        int dx = (int) (mySpaceship.getxPos() - targetX);
+        int dx = (int) (mySpaceship.getXPosition() - targetX);
         if (dx > td)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, p));
@@ -42,7 +42,7 @@ public class GoTo extends Ai
             thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, p));
         } else
         {
-            int dvx = (int) (mySpaceship.getxVel());
+            int dvx = (int) (mySpaceship.getXVelocity());
             if (dvx > tv)
             {
                 thrustCommands.add(new ThrustCommand(ThrustCommand.FRONT_THRUSTER, lp));
@@ -51,7 +51,7 @@ public class GoTo extends Ai
                 thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, lp));
             }
         }
-        int dy = (int) (mySpaceship.getyPos() - targetY);
+        int dy = (int) (mySpaceship.getYPosition() - targetY);
 
         if (dy > td)
         {
@@ -61,7 +61,7 @@ public class GoTo extends Ai
             thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, p));
         } else
         {
-            int dvy = (int) (mySpaceship.getyVel());
+            int dvy = (int) (mySpaceship.getYVelocity());
             if (dvy > tv)
             {
                 thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, lp));

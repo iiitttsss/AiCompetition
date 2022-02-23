@@ -34,8 +34,8 @@ public class Turret extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
 
-        float dx = otherSpaceship.getxPos() - mySpaceship.getxPos();
-        float dy = otherSpaceship.getyPos() - mySpaceship.getyPos();
+        float dx = otherSpaceship.getXPosition() - mySpaceship.getXPosition();
+        float dy = otherSpaceship.getYPosition() - mySpaceship.getYPosition();
 
         float dir = (float) (Math.atan2(dy, dx));
         if (dir < 0)

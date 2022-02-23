@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 public abstract class Command
 {
-    public abstract int calculateCost();
+    public abstract int calculateCost(float deltaTime);
 }

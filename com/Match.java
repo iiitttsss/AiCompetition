@@ -89,10 +89,10 @@ public class Match
         EvaluateAiCommands executeAi2 = new EvaluateAiCommands(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
         this.handleThread(executeAi2, this.getSpaceship2());
 
-        this.getSpaceship1().executeThrustCommands(executeAi1.getThrustCommands(), deltaTime);
-        this.getSpaceship2().executeThrustCommands(executeAi2.getThrustCommands(), deltaTime);
-        this.getSpaceship1().executeShootCommands(executeAi1.getShootCommands(), this.getBulletManager());
-        this.getSpaceship2().executeShootCommands(executeAi2.getShootCommands(), this.getBulletManager());
+        this.getSpaceship1().executeThrustCommands(deltaTime, executeAi1.getThrustCommands());
+        this.getSpaceship2().executeThrustCommands(deltaTime, executeAi2.getThrustCommands());
+        this.getSpaceship1().executeShootCommands(deltaTime, executeAi1.getShootCommands(), this.getBulletManager());
+        this.getSpaceship2().executeShootCommands(deltaTime, executeAi2.getShootCommands(), this.getBulletManager());
     }
 
     private void handleThread(Runnable runnable, Spaceship spaceship)

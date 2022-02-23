@@ -46,7 +46,7 @@ public class Bullet
      */
     public boolean checkForCollisionWithSpaceship(Spaceship spaceship)
     {
-        return (this.getxPosition() - spaceship.getxPos()) * (this.getxPosition() - spaceship.getxPos()) + (this.getyPosition() - spaceship.getyPos()) * (this.getyPosition() - spaceship.getyPos()) <=
+        return (this.getxPosition() - spaceship.getXPosition()) * (this.getxPosition() - spaceship.getXPosition()) + (this.getyPosition() - spaceship.getYPosition()) * (this.getyPosition() - spaceship.getYPosition()) <=
                 (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS)) * (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
     }
 

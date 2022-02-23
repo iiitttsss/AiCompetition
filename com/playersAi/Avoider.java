@@ -40,8 +40,8 @@ public class Avoider extends Ai
         Bullet minBullet = null;
         for (Bullet bullet : bulletsPositions)
         {
-            float dx = mySpaceship.getxPos() - bullet.getxPosition();
-            float dy = mySpaceship.getyPos() - bullet.getyPosition();
+            float dx = mySpaceship.getXPosition() - bullet.getxPosition();
+            float dy = mySpaceship.getYPosition() - bullet.getyPosition();
             float distSq = (dx * dx + dy * dy);
             if (distSq < minDist)
             {
@@ -79,8 +79,8 @@ public class Avoider extends Ai
             }
         } else if (mySpaceship.getEnergy() > 2500)
         {
-            float dx = mySpaceship.getxPos() - otherSpaceship.getxPos();
-            float dy = mySpaceship.getyPos() - otherSpaceship.getyPos();
+            float dx = mySpaceship.getXPosition() - otherSpaceship.getXPosition();
+            float dy = mySpaceship.getYPosition() - otherSpaceship.getYPosition();
             float distSq = MathUtil.distSq(0, 0, dx, dy);
             if (distSq > getCloserDistance * getCloserDistance)
             {

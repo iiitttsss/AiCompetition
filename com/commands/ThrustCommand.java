@@ -21,9 +21,10 @@ public class ThrustCommand extends Command
     }
 
     @Override
-    public int calculateCost()
+    public int calculateCost(float deltaTime)
     {
-        return (int) CostFunction.costFunction(forceValue,2.5f,5);
+        final float COST_MULTIPLIER = 5f;
+        return (int) (deltaTime * COST_MULTIPLIER * CostFunction.costFunction(forceValue, 2.5f, 5));
     }
 
     public int getWhichThruster()
