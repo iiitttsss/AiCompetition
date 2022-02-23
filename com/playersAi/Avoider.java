@@ -12,16 +12,11 @@ import java.util.ArrayList;
 
 public class Avoider extends Ai
 {
-    private boolean needToShoot;
 
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        if (needToShoot && Math.random() < 0.1)
-        {
-            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 5, 10, 1000));
-        }
         return shootCommands;
     }
 
@@ -40,13 +35,16 @@ public class Avoider extends Ai
         Bullet minBullet = null;
         for (Bullet bullet : bulletsPositions)
         {
-            float dx = mySpaceship.getXPosition() - bullet.getxPosition();
-            float dy = mySpaceship.getYPosition() - bullet.getyPosition();
-            float distSq = (dx * dx + dy * dy);
-            if (distSq < minDist)
+            if (bullet.getOwner() != mySpaceship)
             {
-                minBullet = bullet;
-                minDist = distSq;
+                float dx = mySpaceship.getXPosition() - bullet.getxPosition();
+                float dy = mySpaceship.getYPosition() - bullet.getyPosition();
+                float distSq = (dx * dx + dy * dy);
+                if (distSq < minDist)
+                {
+                    minBullet = bullet;
+                    minDist = distSq;
+                }
             }
         }
 

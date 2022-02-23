@@ -11,11 +11,13 @@ import java.util.ArrayList;
 
 public abstract class Ai
 {
+
     /**
-     * @param enemyXpos - the x position of the enemy
-     * @param enemyYpos - the y position of the enemy
-     * @param bulletsPositions - a list of all the bullets that can hit you (enemy bullets)
-     * @return - a list of shoot commands the AI want to execute
+     *
+     * @param mySpaceship - the spaceship the AI controls
+     * @param otherSpaceship - the enemy (other player) spaceship
+     * @param bulletsPositions - list of all the bullets (including your own)
+     * @return - returns a list of commands for the spaceship
      */
     public abstract ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions);
 

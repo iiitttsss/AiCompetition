@@ -125,7 +125,6 @@ public class Match
      */
     public void update(float deltaTime)
     {
-        // TODO - add all the steps bellow
         this.getSpaceship1().updateEnergy(deltaTime);
         this.getSpaceship2().updateEnergy(deltaTime);
 

@@ -221,7 +221,7 @@ public class RenderSimulation
         pgReference.textSize(14 / scale);
         String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
                 "Energy: " + (int) spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE) + "\n" +
-                "velocity: " + (Math.sqrt(spaceship.getXVelocity() * spaceship.getXVelocity() + spaceship.getYVelocity() * spaceship.getYVelocity())) + "\n"
+                "speed: " + (Math.sqrt(spaceship.getXVelocity() * spaceship.getXVelocity() + spaceship.getYVelocity() * spaceship.getYVelocity())) + "\n"
                 + "position: " + spaceship.getXPosition() + "/" + spaceship.getYPosition() + "\n";
 
         pgReference.text(s, xPosInterpret, yPosInterpret + 20 + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
