@@ -160,8 +160,8 @@ public class RenderSimulation
 
         for (Bullet b : matchReference.getBulletManager().getActiveBullets())
         {
-            float xPosInterpret = interpretBetweenPositions(b.getxPosition(), b.getPreviousXPosition());
-            float yPosInterpret = interpretBetweenPositions(b.getyPosition(), b.getPreviousYPosition());
+            float xPosInterpret = interpretBetweenPositions(b.getXPosition(), b.getPreviousXPosition());
+            float yPosInterpret = interpretBetweenPositions(b.getYPosition(), b.getPreviousYPosition());
 
             if (!isOnScreen(xPosInterpret, yPosInterpret))
             {

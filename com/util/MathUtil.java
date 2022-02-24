@@ -16,4 +16,16 @@ public class MathUtil
     {
         return (float) Math.sqrt(distSq(x1, y1, x2, y2));
     }
+
+    /**
+     *
+     * @param a - start position
+     * @param b - end position
+     * @param t - percent (0.0-1.0)
+     * @return
+     */
+    public static float interpretBetweenPositions(float a, float b, float t)
+    {
+        return ((1 - t) * a + t * b);
+    }
 }

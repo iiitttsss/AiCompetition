@@ -5,6 +5,7 @@ package AiCompetition.com.bullets;
 
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
+import AiCompetition.com.util.MathUtil;
 
 public class Bullet
 {
@@ -28,8 +29,8 @@ public class Bullet
 
     public void savePreviousPosition()
     {
-        this.setPreviousXPosition(this.getxPosition());
-        this.setPreviousYPosition(this.getyPosition());
+        this.setPreviousXPosition(this.getXPosition());
+        this.setPreviousYPosition(this.getYPosition());
     }
 
     /**
@@ -46,8 +47,44 @@ public class Bullet
      */
     public boolean checkForCollisionWithSpaceship(Spaceship spaceship)
     {
-        return (this.getxPosition() - spaceship.getXPosition()) * (this.getxPosition() - spaceship.getXPosition()) + (this.getyPosition() - spaceship.getYPosition()) * (this.getyPosition() - spaceship.getYPosition()) <=
+        return (this.getXPosition() - spaceship.getXPosition()) * (this.getXPosition() - spaceship.getXPosition()) + (this.getYPosition() - spaceship.getYPosition()) * (this.getYPosition() - spaceship.getYPosition()) <=
                 (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS)) * (this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
+    }
+
+    public boolean advanceCheckForCollisionWithSpaceship(Spaceship spaceship)
+    {
+        float xa1 = spaceship.getPreviousXPosition();
+        float ya1 = spaceship.getPreviousYPosition();
+        float xa2 = spaceship.getXPosition();
+        float ya2 = spaceship.getPreviousYPosition();
+
+        float xb1 = this.getPreviousXPosition();
+        float yb1 = this.getPreviousYPosition();
+        float xb2 = this.getXPosition();
+        float yb2 = this.getYPosition();
+
+        float radiusSum = this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS);
+
+
+        float distSqAtStart = MathUtil.distSq(xa1, ya1, xb1, yb1);
+        float distSqAtEnd = MathUtil.distSq(xa2, ya2, xb2, yb2);
+        if (distSqAtStart <= radiusSum * radiusSum || distSqAtEnd <= radiusSum * radiusSum)
+        {
+            return true;
+        } else if ((ya1 - ya2) == (yb1 - yb2) && (xa1 - xa2) == (xb1 - xb2))//if parallel
+        {
+            return false;
+        } else
+        {
+            float progressAtMinimum = -((xa1 - xb1) * (xa2 + xb1 - xa1 - xb2) + (ya1 - yb1) * (ya2 + yb1 - ya1 - yb2)) /
+                    ((xa2 + xb1 - xa1 - xb2) * (xa2 + xb1 - xa1 - xb2) + (ya2 + yb1 - ya1 - yb2) * (ya2 + yb1 - ya1 - yb2));
+
+            return MathUtil.distSq(
+                    MathUtil.interpretBetweenPositions(xa1, xa2, progressAtMinimum),
+                    MathUtil.interpretBetweenPositions(ya1, ya2, progressAtMinimum),
+                    MathUtil.interpretBetweenPositions(xb1, xb2, progressAtMinimum),
+                    MathUtil.interpretBetweenPositions(yb1, yb2, progressAtMinimum)) <= radiusSum * radiusSum;
+        }
     }
 
     /**
@@ -57,9 +94,9 @@ public class Bullet
     {
         //TODO
 
-        this.setxPosition(this.getxPosition() + deltaTime * SPEED_MULTIPLIER * xVelocity);
-        this.setyPosition(this.getyPosition() + deltaTime * SPEED_MULTIPLIER * yVelocity);
-        float distSq = (this.getxPosition() - this.getStartXPosition()) * (this.getxPosition() - this.getStartXPosition()) + (this.getyPosition() - this.getStartYPosition()) * (this.getyPosition() - this.getStartYPosition());
+        this.setXPosition(this.getXPosition() + deltaTime * SPEED_MULTIPLIER * xVelocity);
+        this.setYPosition(this.getYPosition() + deltaTime * SPEED_MULTIPLIER * yVelocity);
+        float distSq = (this.getXPosition() - this.getStartXPosition()) * (this.getXPosition() - this.getStartXPosition()) + (this.getYPosition() - this.getStartYPosition()) * (this.getYPosition() - this.getStartYPosition());
         if (distSq > this.getLifeDistance() * this.getLifeDistance())
         {
             this.setActive(false);
@@ -80,10 +117,10 @@ public class Bullet
     {
         this.setActive(true);
         this.setOwner(owner);
-        this.setxPosition(xPos);
-        this.setyPosition(yPos);
-        this.setxVelocity(xVel);
-        this.setyVelocity(yVel);
+        this.setXPosition(xPos);
+        this.setYPosition(yPos);
+        this.setXVelocity(xVel);
+        this.setYVelocity(yVel);
         this.setRadius(radius);
         this.setSpeed(speed);
         this.setDamage(damage);
@@ -195,42 +232,42 @@ public class Bullet
         this.owner = owner;
     }
 
-    public float getxPosition()
+    public float getXPosition()
     {
         return xPosition;
     }
 
-    public void setxPosition(float xPosition)
+    public void setXPosition(float xPosition)
     {
         this.xPosition = xPosition;
     }
 
-    public float getyPosition()
+    public float getYPosition()
     {
         return yPosition;
     }
 
-    public void setyPosition(float yPosition)
+    public void setYPosition(float yPosition)
     {
         this.yPosition = yPosition;
     }
 
-    public float getxVelocity()
+    public float getXVelocity()
     {
         return xVelocity;
     }
 
-    public void setxVelocity(float xVelocity)
+    public void setXVelocity(float xVelocity)
     {
         this.xVelocity = xVelocity;
     }
 
-    public float getyVelocity()
+    public float getYVelocity()
     {
         return yVelocity;
     }
 
-    public void setyVelocity(float yVelocity)
+    public void setYVelocity(float yVelocity)
     {
         this.yVelocity = yVelocity;
     }

@@ -37,8 +37,8 @@ public class Avoider extends Ai
         {
             if (bullet.getOwner() != mySpaceship)
             {
-                float dx = mySpaceship.getXPosition() - bullet.getxPosition();
-                float dy = mySpaceship.getYPosition() - bullet.getyPosition();
+                float dx = mySpaceship.getXPosition() - bullet.getXPosition();
+                float dy = mySpaceship.getYPosition() - bullet.getYPosition();
                 float distSq = (dx * dx + dy * dy);
                 if (distSq < minDist)
                 {
@@ -50,7 +50,7 @@ public class Avoider extends Ai
 
         if (minBullet != null && minDist <= bulletDistance * bulletDistance)
         {
-            float dir = (float) Math.atan2(minBullet.getyVelocity(), minBullet.getxVelocity());
+            float dir = (float) Math.atan2(minBullet.getYVelocity(), minBullet.getXVelocity());
             if (dir < 0)
             {
                 dir += 2 * Math.PI;

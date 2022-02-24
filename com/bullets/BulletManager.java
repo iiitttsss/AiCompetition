@@ -27,7 +27,7 @@ public class BulletManager
         for(Bullet bullet : this.getActiveBullets())
         {
             // if the spaceship do not own the bullet and touch the bullet
-            if(bullet.getOwner() != spaceship && bullet.checkForCollisionWithSpaceship(spaceship))
+            if(bullet.getOwner() != spaceship && bullet.advanceCheckForCollisionWithSpaceship(spaceship))
             {
                 spaceship.hitByBullet(bullet);
                 bullet.hitSpaceship();
