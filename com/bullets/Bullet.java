@@ -56,7 +56,7 @@ public class Bullet
         float xa1 = spaceship.getPreviousXPosition();
         float ya1 = spaceship.getPreviousYPosition();
         float xa2 = spaceship.getXPosition();
-        float ya2 = spaceship.getPreviousYPosition();
+        float ya2 = spaceship.getYPosition();
 
         float xb1 = this.getPreviousXPosition();
         float yb1 = this.getPreviousYPosition();

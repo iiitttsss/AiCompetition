@@ -18,15 +18,14 @@ public class BasicAi extends Ai
         float dy = otherSpaceship.getYPosition() - mySpaceship.getYPosition();
         dy = Math.abs(dy);
 
-        if (dy < 110)
+        if (dy < 60 && Math.abs(mySpaceship.getYVelocity()) < 1.25f)
         {
             if (otherSpaceship.getXPosition() > mySpaceship.getXPosition())
             {
-                shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 150, 10, 2000));
+                shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 10, 10, 2000));
             } else
             {
-                shootCommands.add(new ShootCommand(ShootCommand.BACK_GUN, 5, 150, 10, 2000));
-
+                shootCommands.add(new ShootCommand(ShootCommand.BACK_GUN, 5, 10, 10, 2000));
             }
         }
         return shootCommands;
@@ -37,15 +36,28 @@ public class BasicAi extends Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         float dy = otherSpaceship.getYPosition() - mySpaceship.getYPosition();
-        float threshold = 100;
+        float threshold = 50;
         int thrusterPower = 5;
         if (dy > threshold)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, thrusterPower));
         }
-        if (dy < -threshold)
+        else if (dy < -threshold)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, thrusterPower));
+        }
+        else
+        {
+            float speedThreshold = 1;
+            float velocity = mySpaceship.getYVelocity();
+            if (velocity > speedThreshold)
+            {
+                thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, thrusterPower));
+            }
+            else if (velocity < -speedThreshold)
+            {
+                thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, thrusterPower));
+            }
         }
         return thrustCommands;
     }
