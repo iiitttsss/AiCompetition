@@ -9,7 +9,7 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class BasicAi extends Ai
+public class BasicAi implements Ai
 {
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)

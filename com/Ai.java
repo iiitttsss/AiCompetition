@@ -9,7 +9,7 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public abstract class Ai
+public interface Ai
 {
 
     /**
@@ -19,14 +19,14 @@ public abstract class Ai
      * @param bulletsPositions - list of all the bullets (including your own)
      * @return - returns a list of commands for the spaceship
      */
-    public abstract ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions);
+    ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions);
 
-    public abstract ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship,Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions);
+    ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions);
 
 
     /**
      * @return - the spaceship structure as specified by the player
      */
-    public abstract UpgradeData createStructure();
+    UpgradeData createStructure();
 
 }

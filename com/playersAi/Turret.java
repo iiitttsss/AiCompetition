@@ -9,7 +9,7 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class Turret extends Ai
+public class Turret implements Ai
 {
     private boolean needToShoot;
     private boolean isOnShootInterval;

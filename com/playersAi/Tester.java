@@ -10,7 +10,7 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class Tester extends Ai
+public class Tester implements Ai
 {
 
     @Override

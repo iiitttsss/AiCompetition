@@ -10,7 +10,7 @@ import AiCompetition.com.util.MathUtil;
 
 import java.util.ArrayList;
 
-public class Avoider extends Ai
+public class Avoider implements Ai
 {
 
     @Override

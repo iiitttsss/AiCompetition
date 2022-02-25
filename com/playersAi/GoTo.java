@@ -9,7 +9,7 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class GoTo extends Ai
+public class GoTo implements Ai
 {
     private boolean thrust;
 
