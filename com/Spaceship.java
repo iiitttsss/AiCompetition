@@ -11,6 +11,7 @@ import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.util.MathUtil;
 import processing.core.PImage;
 
+
 import java.util.ArrayList;
 
 public class Spaceship
