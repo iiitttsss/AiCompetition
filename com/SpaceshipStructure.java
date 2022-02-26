@@ -40,7 +40,7 @@ public class SpaceshipStructure
                 case UpgradeData.FRONT_GUN_SPEED:
                 case UpgradeData.LEFT_GUN_SPEED:
                 case UpgradeData.RIGHT_GUN_SPEED:
-                    value = (int) (baseValue * 2);
+                    value = (int) (baseValue * 6);
                     break;
                 case UpgradeData.BACK_GUN_RADIUS:
                 case UpgradeData.FRONT_GUN_RADIUS:
@@ -53,7 +53,7 @@ public class SpaceshipStructure
                 case UpgradeData.FRONT_GUN_RANGE:
                 case UpgradeData.LEFT_GUN_RANGE:
                 case UpgradeData.RIGHT_GUN_RANGE:
-                    value = (int) (50 * baseValue);
+                    value = (int) (300 * baseValue);
                     break;
 
                 case UpgradeData.FRONT_THRUSTER:

@@ -75,7 +75,7 @@ public class Match
     {
         this.setPreviousBorderRadius(this.getBorderRadius());
         this.setBorderRadius(this.getBorderRadius() - deltaTime * BORDER_SPEED);
-        if(this.getBorderRadius() < 0)
+        if (this.getBorderRadius() < 0)
         {
             this.setBorderRadius(0);
         }
@@ -226,12 +226,7 @@ public class Match
      */
     private boolean isGameOver()
     {
-        //TODO - game over conditions:
-        //1. one or both of the spaceships are dead
-        //2. times-up
-        //3. one or both of the AIs have crushed
-
-        return false;// return false is temporary, need to implement the method
+        return !(this.getSpaceship1().isAlive() && this.getSpaceship2().isAlive());
     }
 
     public Ai getAi1()

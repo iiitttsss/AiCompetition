@@ -1,6 +1,8 @@
 package AiCompetition.com.commands;
 
 import AiCompetition.com.CostFunction;
+import AiCompetition.com.Spaceship;
+import AiCompetition.com.UpgradeData;
 
 public class ThrustCommand extends Command
 {
@@ -11,30 +13,25 @@ public class ThrustCommand extends Command
     public static final int CLOCKWISE_THRUSTER = 4;
     public static final int COUNTER_CLOCKWISE_THRUSTER = 5;
 
-    private int whichThruster;
     private int forceValue;
 
     public ThrustCommand(int whichThruster, int forceValue)
     {
-        this.setWhichThruster(whichThruster);
+        this.setWhichComponent(whichThruster);
         this.setForceValue(forceValue);
     }
 
     @Override
     public int calculateCost(float deltaTime)
     {
-        final float COST_MULTIPLIER = 5f;
-        return (int) (deltaTime * COST_MULTIPLIER * CostFunction.costFunction(forceValue, 2.5f, 5));
+        final float COST_MULTIPLIER = 8f;
+        return (int) (deltaTime * COST_MULTIPLIER * CostFunction.costFunction(forceValue, 2f, 5));
     }
 
-    public int getWhichThruster()
+    @Override
+    public void fixCommand(Spaceship spaceship)
     {
-        return whichThruster;
-    }
-
-    public void setWhichThruster(int whichThruster)
-    {
-        this.whichThruster = whichThruster;
+        this.setForceValue(this.fixAttribute(this.getForceValue(), spaceship, UpgradeData.FRONT_THRUSTER, 1));
     }
 
     public int getForceValue()
