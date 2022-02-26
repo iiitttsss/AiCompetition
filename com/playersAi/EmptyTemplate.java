@@ -15,6 +15,7 @@ public class EmptyTemplate implements Ai
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
+        // shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 10, 10, 10, 1000));
         return shootCommands;
     }
 
@@ -22,6 +23,7 @@ public class EmptyTemplate implements Ai
     public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
+        // thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
         return thrustCommands;
     }
 
@@ -29,6 +31,7 @@ public class EmptyTemplate implements Ai
     public UpgradeData createStructure()
     {
         UpgradeData upgradeData = new UpgradeData();
+        // upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 5);
         return upgradeData;
     }
 }

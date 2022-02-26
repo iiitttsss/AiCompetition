@@ -43,7 +43,7 @@ public class Bullet
 
     /**
      * @param spaceship - the spaceship
-     * @return - returns true id the spaceship collide with the bullet
+     * @return - returns true if the spaceship collide with the bullet
      */
     public boolean checkForCollisionWithSpaceship(Spaceship spaceship)
     {
@@ -65,7 +65,6 @@ public class Bullet
 
         float radiusSum = this.getRadius() + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS);
 
-
         float distSqAtStart = MathUtil.distSq(xa1, ya1, xb1, yb1);
         float distSqAtEnd = MathUtil.distSq(xa2, ya2, xb2, yb2);
         if (distSqAtStart <= radiusSum * radiusSum || distSqAtEnd <= radiusSum * radiusSum)
@@ -79,11 +78,19 @@ public class Bullet
             float progressAtMinimum = -((xa1 - xb1) * (xa2 + xb1 - xa1 - xb2) + (ya1 - yb1) * (ya2 + yb1 - ya1 - yb2)) /
                     ((xa2 + xb1 - xa1 - xb2) * (xa2 + xb1 - xa1 - xb2) + (ya2 + yb1 - ya1 - yb2) * (ya2 + yb1 - ya1 - yb2));
 
-            return MathUtil.distSq(
+            if(progressAtMinimum < 0 || progressAtMinimum > 1)
+            {
+                return false;
+            }
+
+            float distSq = MathUtil.distSq(
                     MathUtil.interpretBetweenPositions(xa1, xa2, progressAtMinimum),
                     MathUtil.interpretBetweenPositions(ya1, ya2, progressAtMinimum),
                     MathUtil.interpretBetweenPositions(xb1, xb2, progressAtMinimum),
-                    MathUtil.interpretBetweenPositions(yb1, yb2, progressAtMinimum)) <= radiusSum * radiusSum;
+                    MathUtil.interpretBetweenPositions(yb1, yb2, progressAtMinimum));
+
+
+            return distSq <= radiusSum * radiusSum;
         }
     }
 

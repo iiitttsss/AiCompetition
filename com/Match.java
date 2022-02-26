@@ -10,7 +10,7 @@ import AiCompetition.com.render.RenderSimulation;
 public class Match
 {
     public static final float START_BORDER_RADIUS = 4000;
-    public static final float BORDER_SPEED = 5f;
+    public static final float BORDER_SPEED = 1f;
     private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
     private Ai ai1;
