@@ -19,6 +19,10 @@ public class CreateSpaceshipSprite
 
     public static void loadSprites(String fileName)
     {
+        if(sprites != null)
+        {
+            return;
+        }
         // 576x320 spread sheet
         // 18x10 sprites
         // 32x32 pixels per sprite

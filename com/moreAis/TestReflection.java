@@ -1,4 +1,4 @@
-package AiCompetition.com.playersAi;
+package AiCompetition.com.moreAis;
 
 import AiCompetition.com.Ai;
 import AiCompetition.com.Spaceship;
@@ -9,13 +9,14 @@ import AiCompetition.com.commands.ThrustCommand;
 
 import java.util.ArrayList;
 
-public class EmptyTemplate implements Ai
+public class TestReflection implements Ai
 {
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         // shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 10, 10, 10, 1000));
+        //System.out.println("shootCommands");
         return shootCommands;
     }
 
@@ -24,6 +25,7 @@ public class EmptyTemplate implements Ai
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         // thrustCommands.add(new ThrustCommand(ThrustCommand.BACK_THRUSTER, 10));
+        //System.out.println("thrustCommands");
         return thrustCommands;
     }
 
@@ -32,6 +34,7 @@ public class EmptyTemplate implements Ai
     {
         UpgradeData upgradeData = new UpgradeData();
         // upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 5);
+        // System.out.println("creating structure");
         return upgradeData;
     }
 }

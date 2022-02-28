@@ -89,7 +89,10 @@ public class Spaceship
         this.setYPosition((float) (Math.random() * 800 - 400));
         this.setHitPoints(spaceshipStructure.getAttribute(UpgradeData.HIT_POINTS));
 
-        this.createSprites(upgradeData, spaceshipStructure);
+        if(Match.needToRender)
+        {
+            this.createSprites(upgradeData, spaceshipStructure);
+        }
         this.setOverTimePoints(0);
         this.setDidCrash(false);
 

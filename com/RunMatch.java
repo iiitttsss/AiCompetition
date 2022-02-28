@@ -35,10 +35,9 @@ public class RunMatch extends PApplet
         Global.setPro(this);
         this.frameRate(60);
 
-        CreateSpaceshipSprite.loadSprites("AiCompetition/com/render/SpaceshipKit.png"); // TODO - need to move to the match generator because this line only need to be executed once
 
         this.setPg(this.createGraphics(width, height));
-        match = new Match(width, height);
+        match = new Match(width, height, true);
         match.init(new BasicAi(), new Orbiter());
         RenderSimulation.init(match, pg);
     }

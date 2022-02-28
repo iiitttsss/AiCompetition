@@ -1,4 +1,4 @@
-package AiCompetition.com.playersAi;
+package AiCompetition.com.moreAis;
 
 import AiCompetition.com.Ai;
 import AiCompetition.com.Global;

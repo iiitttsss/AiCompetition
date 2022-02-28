@@ -5,6 +5,7 @@ package AiCompetition.com;
 
 import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.bullets.BulletManager;
+import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
 
 public class Match
@@ -14,6 +15,7 @@ public class Match
     public static final int NO_SHOOT_PERIOD = 30;
     private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
+    public static boolean needToRender;
     private Ai ai1;
     private Ai ai2;
     private Spaceship spaceship1;
@@ -25,14 +27,20 @@ public class Match
     private float previousBorderRadius;
     private float noShootTime;
 
-    public Match(int sizeX, int sizeY)
+    public Match(int sizeX, int sizeY, boolean needToRenderBool)
     {
+        needToRender = needToRenderBool;
         this.setSizeX(sizeX);
         this.setSizeY(sizeY);
 
         this.setBulletManager(new BulletManager());
         this.setSpaceship1(new Spaceship());
         this.setSpaceship2(new Spaceship());
+
+        if(Match.needToRender)
+        {
+            CreateSpaceshipSprite.loadSprites("AiCompetition/com/render/SpaceshipKit.png"); // TODO - need to move to the match generator because this line only need to be executed once
+        }
     }
 
     public void savePreviousPosition()
@@ -95,11 +103,10 @@ public class Match
         this.getSpaceship1().executeThrustCommands(deltaTime, executeAi1.getThrustCommands());
         this.getSpaceship2().executeThrustCommands(deltaTime, executeAi2.getThrustCommands());
 
-        if(this.getNoShootTime() < Match.NO_SHOOT_PERIOD)
+        if (this.getNoShootTime() < Match.NO_SHOOT_PERIOD)
         {
             this.setNoShootTime(this.getNoShootTime() + deltaTime);
-        }
-        else
+        } else
         {
             this.getSpaceship1().executeShootCommands(deltaTime, executeAi1.getShootCommands(), this.getBulletManager());
             this.getSpaceship2().executeShootCommands(deltaTime, executeAi2.getShootCommands(), this.getBulletManager());
@@ -123,7 +130,8 @@ public class Match
             {
                 spaceship.addOverTimePoint();
             }
-        } catch (InterruptedException e)
+        }
+        catch (InterruptedException e)
         {
             e.printStackTrace();
             System.out.println("AI thread InterruptedException");
