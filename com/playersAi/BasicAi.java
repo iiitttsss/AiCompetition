@@ -37,7 +37,7 @@ public class BasicAi implements Ai
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         float dy = otherSpaceship.getYPosition() - mySpaceship.getYPosition();
         float threshold = 50;
-        int thrusterPower = 3;
+        int thrusterPower = 6;
         if (dy > threshold)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, thrusterPower));
@@ -64,8 +64,8 @@ public class BasicAi implements Ai
     public UpgradeData createStructure()
     {
         UpgradeData upgradeData = new UpgradeData();
-        upgradeData.setUpgrade(UpgradeData.RIGHT_THRUSTER, 2);
-        upgradeData.setUpgrade(UpgradeData.LEFT_THRUSTER, 2);
+        upgradeData.setUpgrade(UpgradeData.RIGHT_THRUSTER, 5);
+        upgradeData.setUpgrade(UpgradeData.LEFT_THRUSTER, 5);
 
         upgradeData.setUpgrade(UpgradeData.FRONT_GUN_RADIUS, 3);
         upgradeData.setUpgrade(UpgradeData.BACK_GUN_RADIUS, 3);
@@ -77,9 +77,12 @@ public class BasicAi implements Ai
         upgradeData.setUpgrade(UpgradeData.BACK_GUN_RANGE, 6);
 
 
-        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 3);
+        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 8);
+        upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 5);
+        upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 5);
+        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 5);
 
-        System.out.println("cost: " + upgradeData.calculateUpgradesCost());
+
 
         return upgradeData;
     }

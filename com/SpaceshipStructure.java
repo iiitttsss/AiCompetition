@@ -34,7 +34,7 @@ public class SpaceshipStructure
                 case UpgradeData.FRONT_GUN_DAMAGE:
                 case UpgradeData.LEFT_GUN_DAMAGE:
                 case UpgradeData.RIGHT_GUN_DAMAGE:
-                    value = (int) (baseValue * 10);
+                    value = (int) (baseValue * 3);
                     break;
                 case UpgradeData.BACK_GUN_SPEED:
                 case UpgradeData.FRONT_GUN_SPEED:
@@ -60,9 +60,12 @@ public class SpaceshipStructure
                 case UpgradeData.BACK_THRUSTER:
                 case UpgradeData.LEFT_THRUSTER:
                 case UpgradeData.RIGHT_THRUSTER:
+
+                    value = (int) (4 * baseValue);
+                    break;
                 case UpgradeData.CLOCKWISE_THRUSTER:
                 case UpgradeData.COUNTER_CLOCKWISE_THRUSTER:
-                    value = (int) (4 * baseValue);
+                    value = (int) (6 * baseValue);
                     break;
             }
             attributes[upgradeIndex] = value;
@@ -75,7 +78,7 @@ public class SpaceshipStructure
      */
     private float levelToValue(int level)
     {
-        return CostFunction.costFunction(level,2,5);
+        return CostFunction.costFunction(level, 2, 5);
     }
 
     /**

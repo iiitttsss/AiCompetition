@@ -2,7 +2,7 @@ package AiCompetition.com;
 
 public class UpgradeData
 {
-    public static final int MAX_UPGRADE_POINTS = 40;
+    public static final int MAX_UPGRADE_POINTS = 50;
 
     public final static int BATTERY_SIZE = 0;//100-5,000
     public final static int ENERGY_GENERATOR = 1;//1-50

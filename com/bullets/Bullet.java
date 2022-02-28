@@ -9,7 +9,7 @@ import AiCompetition.com.util.MathUtil;
 
 public class Bullet
 {
-    private static final float SPEED_MULTIPLIER = 20;
+    private static final float SPEED_MULTIPLIER = 5;
     private float xPosition;
     private float yPosition;
     private float xVelocity;

@@ -3,6 +3,7 @@ package AiCompetition.com;
 import AiCompetition.com.playersAi.*;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -38,7 +39,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height);
-        match.init(new BasicAi(), new Avoider());
+        match.init(new BasicAi(), new Orbiter());
         RenderSimulation.init(match, pg);
     }
 
@@ -50,7 +51,10 @@ public class RunMatch extends PApplet
         Global.setDeltaTime(currentTime - lastTime);
         lastTime = currentTime;
 
-        this.update();
+        for(int i = 0; i < 10; i++)
+        {
+            this.update();
+        }
         this.render();
     }
 

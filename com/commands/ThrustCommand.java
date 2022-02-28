@@ -24,8 +24,21 @@ public class ThrustCommand extends Command
     @Override
     public int calculateCost(float deltaTime)
     {
-        final float COST_MULTIPLIER = 8f;
-        return (int) (deltaTime * COST_MULTIPLIER * CostFunction.costFunction(forceValue, 2f, 5));
+        switch (this.getWhichComponent())
+        {
+            case FRONT_THRUSTER:
+            case BACK_THRUSTER:
+            case RIGHT_THRUSTER:
+            case LEFT_THRUSTER:
+                final float COST_MULTIPLIER = 8f;
+                return (int) (deltaTime * COST_MULTIPLIER * CostFunction.costFunction(forceValue, 2f, 5));
+            case CLOCKWISE_THRUSTER:
+            case COUNTER_CLOCKWISE_THRUSTER:
+                return 1;
+            default:
+                System.out.println("not supposed to get here!");
+                return  1000;
+        }
     }
 
     @Override

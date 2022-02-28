@@ -10,7 +10,8 @@ import AiCompetition.com.render.RenderSimulation;
 public class Match
 {
     public static final float START_BORDER_RADIUS = 4000;
-    public static final float BORDER_SPEED = 1f;
+    public static final float BORDER_SPEED = 0.5f;
+    public static final int NO_SHOOT_PERIOD = 30;
     private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
     private Ai ai1;
@@ -22,6 +23,7 @@ public class Match
     private int sizeY;
     private float borderRadius;
     private float previousBorderRadius;
+    private float noShootTime;
 
     public Match(int sizeX, int sizeY)
     {
@@ -58,6 +60,7 @@ public class Match
         this.getSpaceship1().init(this.getAi1().createStructure());
         this.getSpaceship2().init(this.getAi2().createStructure());
         this.setBorderRadius(Match.START_BORDER_RADIUS);
+        this.setNoShootTime(0);
     }
 
     /**
@@ -91,8 +94,16 @@ public class Match
 
         this.getSpaceship1().executeThrustCommands(deltaTime, executeAi1.getThrustCommands());
         this.getSpaceship2().executeThrustCommands(deltaTime, executeAi2.getThrustCommands());
-        this.getSpaceship1().executeShootCommands(deltaTime, executeAi1.getShootCommands(), this.getBulletManager());
-        this.getSpaceship2().executeShootCommands(deltaTime, executeAi2.getShootCommands(), this.getBulletManager());
+
+        if(this.getNoShootTime() < Match.NO_SHOOT_PERIOD)
+        {
+            this.setNoShootTime(this.getNoShootTime() + deltaTime);
+        }
+        else
+        {
+            this.getSpaceship1().executeShootCommands(deltaTime, executeAi1.getShootCommands(), this.getBulletManager());
+            this.getSpaceship2().executeShootCommands(deltaTime, executeAi2.getShootCommands(), this.getBulletManager());
+        }
     }
 
     private void handleThread(Runnable runnable, Spaceship spaceship)
@@ -149,6 +160,16 @@ public class Match
         this.getSpaceship1().updateBorder(this.getBorderRadius());
         this.getSpaceship2().updateBorder(this.getBorderRadius());
         // - simulation log
+    }
+
+    public float getNoShootTime()
+    {
+        return noShootTime;
+    }
+
+    public void setNoShootTime(float noShootTime)
+    {
+        this.noShootTime = noShootTime;
     }
 
     public float getPreviousBorderRadius()

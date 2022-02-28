@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class Spaceship
 {
-    public final static float TURNING_MULTIPLIER = 1f;
+    public final static float TURNING_MULTIPLIER = 0.5f;
     public final static float ACCELERATION_MULTIPLIER = 1f;
     public final static float FRICTION_MULTIPLIER = 0.01f;
     public static final int OVERTIME_POINTS_FOR_DEATH = 3;
@@ -259,30 +259,27 @@ public class Spaceship
             {
                 case ThrustCommand.BACK_THRUSTER:
                     angle = this.getDirection();
-
                     break;
                 case ThrustCommand.FRONT_THRUSTER:
                     angle = (float) (this.getDirection() + Math.PI);
-                    xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI);
-                    yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI);
+//                    xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI);
+//                    yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI);
                     break;
                 case ThrustCommand.RIGHT_THRUSTER:
                     angle = (float) (this.getDirection() - Math.PI / 2);
-
-                    xAcc += thrustForce * Math.cos(this.getDirection() - Math.PI / 2);
-                    yAcc += thrustForce * Math.sin(this.getDirection() - Math.PI / 2);
+//                    xAcc += thrustForce * Math.cos(this.getDirection() - Math.PI / 2);
+//                    yAcc += thrustForce * Math.sin(this.getDirection() - Math.PI / 2);
                     break;
                 case ThrustCommand.LEFT_THRUSTER:
                     angle = (float) (this.getDirection() + Math.PI / 2);
-
-                    xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI / 2);
-                    yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI / 2);
+//                    xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI / 2);
+//                    yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI / 2);
                     break;
                 case ThrustCommand.CLOCKWISE_THRUSTER:
-                    angle = (this.getDirection() + TURNING_MULTIPLIER * thrustForce);
+                    angle = deltaTime * deltaTime * TURNING_MULTIPLIER / thrustForce;
                     break;
                 case ThrustCommand.COUNTER_CLOCKWISE_THRUSTER:
-                    angle = (this.getDirection() - TURNING_MULTIPLIER * thrustForce);
+                    angle = -deltaTime * deltaTime * TURNING_MULTIPLIER / thrustForce;
                     break;
             }
             switch (tc.getWhichComponent())
@@ -296,7 +293,7 @@ public class Spaceship
                     break;
                 case ThrustCommand.CLOCKWISE_THRUSTER:
                 case ThrustCommand.COUNTER_CLOCKWISE_THRUSTER:
-                    this.setDirection(angle);
+                    this.setDirection(this.getDirection() + angle);
                     break;
             }
         }

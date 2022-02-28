@@ -18,7 +18,6 @@ public class MathUtil
     }
 
     /**
-     *
      * @param a - start position
      * @param b - end position
      * @param t - percent (0.0-1.0)
@@ -27,5 +26,20 @@ public class MathUtil
     public static float interpretBetweenPositions(float a, float b, float t)
     {
         return ((1 - t) * a + t * b);
+    }
+
+    public static float boundRadian(float angle)
+    {
+        float returnAngle = angle;
+
+        while (returnAngle >= 2 * Math.PI)
+        {
+            returnAngle -= 2 * Math.PI;
+        }
+        while (returnAngle < 0)
+        {
+            returnAngle += 2 * Math.PI;
+        }
+        return returnAngle;
     }
 }
