@@ -77,12 +77,10 @@ public class BasicAi implements Ai
         upgradeData.setUpgrade(UpgradeData.BACK_GUN_RANGE, 6);
 
 
-        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 8);
+        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 6);
         upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 5);
         upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 5);
         upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 5);
-
-
 
         return upgradeData;
     }

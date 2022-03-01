@@ -23,21 +23,43 @@ public class RunCompetition
 
     public static void main(String[] args)
     {
-        Global.setPro(new PApplet());
+        final int MATCHES_PER_PAIR = 50;
+        PApplet pro = new PApplet();
+        Global.setPro(pro);
         String[] aisFileNamesArray = createAisNamesArray("src/AiCompetition/com/playersAi");
         ArrayList<String[]> aiPairs = createPairs(aisFileNamesArray);
+        System.out.println("There are " + aiPairs.size() + " AI pairs");
         HashMap<String, Integer> wins = new HashMap<>();
         for (String name : aisFileNamesArray)
         {
             wins.put(name, 0);
         }
 
-        for (String[] pair : aiPairs)
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < MATCHES_PER_PAIR; i++)
         {
-            System.out.println(pair[0] + " vs. " + pair[1]);
-            //String[] testPair = {"Orbiter", "TestReflection"};
-            System.out.println(runMatchForPair(pair));
-            //TODO - ADD pints for winner
+            for (String[] pair : aiPairs)
+            {
+                //System.out.println(pair[0] + " vs. " + pair[1]);
+
+                //String[] testPair = {"Orbiter", "TestReflection"};
+                int winner = runMatchForPair(pair);
+                //System.out.println(winner);
+                if (winner == 1 || winner == 2)
+                {
+                    wins.put(pair[winner - 1], wins.get(pair[winner - 1]) + 1);
+                }
+            }
+            long currentTime = System.currentTimeMillis();
+            float totalTime = (float) (currentTime - startTime) * MATCHES_PER_PAIR / (i + 1) / 1000 / 60;
+            float timeRemaining = totalTime - (float) (currentTime-startTime) / 1000 / 60;
+            System.out.println("totalTimeEstimation: " + totalTime + " min. \testimatedTimeRemaining: " + (int)timeRemaining * 60 + " sec.");
+        }
+
+        for (String key : wins.keySet())
+        {
+            float score = ((float) wins.get(key) / MATCHES_PER_PAIR) * aisFileNamesArray.length / aiPairs.size();
+            System.out.println(key + ": " + score);
         }
     }
 
