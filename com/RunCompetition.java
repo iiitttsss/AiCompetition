@@ -23,7 +23,7 @@ public class RunCompetition
 
     public static void main(String[] args)
     {
-        final int MATCHES_PER_PAIR = 50;
+        final int MATCHES_PER_PAIR = 1000;
         PApplet pro = new PApplet();
         Global.setPro(pro);
         String[] aisFileNamesArray = createAisNamesArray("src/AiCompetition/com/playersAi");
@@ -52,8 +52,8 @@ public class RunCompetition
             }
             long currentTime = System.currentTimeMillis();
             float totalTime = (float) (currentTime - startTime) * MATCHES_PER_PAIR / (i + 1) / 1000 / 60;
-            float timeRemaining = totalTime - (float) (currentTime-startTime) / 1000 / 60;
-            System.out.println("totalTimeEstimation: " + totalTime + " min. \testimatedTimeRemaining: " + (int)timeRemaining * 60 + " sec.");
+            float timeRemaining = totalTime - (float) (currentTime - startTime) / 1000 / 60;
+            System.out.println("totalTimeEstimation: " + totalTime + " min. \testimatedTimeRemaining: " + (int) (timeRemaining * 60) + " sec.");
         }
 
         for (String key : wins.keySet())

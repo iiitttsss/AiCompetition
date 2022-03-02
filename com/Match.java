@@ -10,7 +10,7 @@ import AiCompetition.com.render.RenderSimulation;
 
 public class Match
 {
-    public static final float START_BORDER_RADIUS = 4000;
+    public static final float START_BORDER_RADIUS = 6000;
     public static final float BORDER_SPEED = 0.5f;
     public static final int NO_SHOOT_PERIOD = 30;
     private static final int MILLIS_FOR_THREAD = 20;
@@ -39,7 +39,7 @@ public class Match
 
         if(Match.needToRender)
         {
-            CreateSpaceshipSprite.loadSprites("AiCompetition/com/render/SpaceshipKit.png"); // TODO - need to move to the match generator because this line only need to be executed once
+            CreateSpaceshipSprite.loadSprites("AiCompetition/com/render/SpaceshipKit.png");
         }
     }
 

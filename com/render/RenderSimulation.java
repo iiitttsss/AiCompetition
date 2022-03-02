@@ -56,7 +56,7 @@ public class RenderSimulation
      */
     public static void matchUpdate()
     {
-        timeOfLastUpdate = Global.getPro().millis();
+        setTimeOfLastUpdate(Global.getPro().millis());
     }
 
     private static void updateFramePercent(float updateDeltaTime)
@@ -70,11 +70,10 @@ public class RenderSimulation
 
     public static float interpretBetweenPositions(float currentPosition, float previousPosition)
     {
-        float interpretPosition = previousPosition * (1 - getFramePercent()) + currentPosition * (getFramePercent());
-        return interpretPosition;
+        return previousPosition * (1 - getFramePercent()) + currentPosition * (getFramePercent());
     }
 
-    private static void updateScreenEdges(PGraphics pg)
+    private static void updateScreenEdges()
     {
         RenderSimulation.setStartX((int) (centerX - pgReference.width / 2 / scale));
         RenderSimulation.setEndX((int) (centerX + pgReference.width / 2 / scale));
@@ -106,7 +105,7 @@ public class RenderSimulation
         renderBullets();
         pgReference.popMatrix();
         renderBorder();
-        renderUi();
+        // renderUi();
         pgReference.endDraw();
     }
 
@@ -117,7 +116,7 @@ public class RenderSimulation
 
     private static void translateToCenter()
     {
-        pgReference.translate(pgReference.width / 2, pgReference.height / 2);
+        pgReference.translate(pgReference.width / 2f, pgReference.height / 2f);
 
         float scaleFactor = pgReference.width / Math.max(Math.abs(matchReference.getSpaceship1().getXPosition() - matchReference.getSpaceship2().getXPosition()), Math.abs(matchReference.getSpaceship1().getYPosition() - matchReference.getSpaceship2().getYPosition()));
         // scale = scaleFactor / 1.5f;
@@ -134,7 +133,7 @@ public class RenderSimulation
         RenderSimulation.centerX = centerX;
         RenderSimulation.centerY = centerY;
 
-        updateScreenEdges(pgReference);
+        updateScreenEdges();
 
 
     }
@@ -181,7 +180,6 @@ public class RenderSimulation
     }
 
     /**
-     *
      * @param x - sprite center x
      * @param y - sprite center y
      * @return - returns true if the object is on the screen (plus some) and needs to be rendered
@@ -194,11 +192,11 @@ public class RenderSimulation
 
     private static void renderSpaceships()
     {
-        renderASpaceship(matchReference.getSpaceship1());
-        renderASpaceship(matchReference.getSpaceship2());
+        renderASpaceship(matchReference.getSpaceship1(), CreateSpaceshipSprite.BLUE_SPRITE);
+        renderASpaceship(matchReference.getSpaceship2(), CreateSpaceshipSprite.RED_SPRITE);
     }
 
-    private static void renderASpaceship(Spaceship spaceship)
+    private static void renderASpaceship(Spaceship spaceship, int color)
     {
         float xPosInterpret = interpretBetweenPositions(spaceship.getXPosition(), spaceship.getPreviousXPosition());
         float yPosInterpret = interpretBetweenPositions(spaceship.getYPosition(), spaceship.getPreviousYPosition());
@@ -208,21 +206,27 @@ public class RenderSimulation
         pgReference.imageMode(PConstants.CENTER);
         pgReference.translate(xPosInterpret, yPosInterpret);
         pgReference.rotate(directionInterpret + PConstants.PI / 2);
-        pgReference.image(spaceship.getSpriteBlue(), 0, 0);
+        if (spaceship.getNumberOfUpdatesSinceLastHitByBullet() < 3)//if the spaceship get hit
+        {
+            pgReference.image(spaceship.getSpriteWhite(), 0, 0);
+        } else
+        {
+            pgReference.image((color == CreateSpaceshipSprite.BLUE_SPRITE ? spaceship.getSpriteBlue() : spaceship.getSpriteRed()), 0, 0);
+        }
+
         pgReference.popMatrix();
 
-        float lineLength = 75;
-        pgReference.line(xPosInterpret, yPosInterpret,
-                xPosInterpret + lineLength * (float) Math.cos(directionInterpret), yPosInterpret + lineLength * (float) Math.sin(directionInterpret));
-        pgReference.line(xPosInterpret, yPosInterpret,
-                xPosInterpret + lineLength * spaceship.getXVelocity(), yPosInterpret + lineLength * spaceship.getYVelocity());
+//        float lineLength = 75;
+//        pgReference.line(xPosInterpret, yPosInterpret,
+//                xPosInterpret + lineLength * (float) Math.cos(directionInterpret), yPosInterpret + lineLength * (float) Math.sin(directionInterpret));
+//        pgReference.line(xPosInterpret, yPosInterpret,
+//                xPosInterpret + lineLength * spaceship.getXVelocity(), yPosInterpret + lineLength * spaceship.getYVelocity());
 
         pgReference.pushStyle();
         pgReference.textSize(14 / scale);
         String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
                 "Energy: " + (int) spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE) + "\n" +
-                "speed: " + (Math.sqrt(spaceship.getXVelocity() * spaceship.getXVelocity() + spaceship.getYVelocity() * spaceship.getYVelocity())) + "\n"
-                + "position: " + spaceship.getXPosition() + "/" + spaceship.getYPosition() + "\n";
+                "speed: " + (Math.sqrt(spaceship.getXVelocity() * spaceship.getXVelocity() + spaceship.getYVelocity() * spaceship.getYVelocity())) + "\n";
 
         pgReference.text(s, xPosInterpret, yPosInterpret + 20 + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
         pgReference.popStyle();

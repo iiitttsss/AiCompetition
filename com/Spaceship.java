@@ -30,11 +30,13 @@ public class Spaceship
     private int hitPoints;
     private PImage spriteBlue;
     private PImage spriteRed;
+    private PImage spriteWhite;
     private int overTimePoints;//when the AI takes to long to give back command, it will get a point, after a certain amount of points, it losses
     private boolean didCrash;
     private float previousXPosition;
     private float previousYPosition;
     private float previousDirection;
+    private int numberOfUpdatesSinceLastHitByBullet;
 
     public void updateBorder(float borderRadius)
     {
@@ -68,11 +70,22 @@ public class Spaceship
     public void hitByBullet(Bullet bullet)
     {
         this.setHitPoints(this.getHitPoints() - bullet.getDamage());
+        setNumberOfUpdatesSinceLastHitByBullet(0);
     }
 
     private SpaceshipStructure covertUpgradeDataToSpaceshipStructure(UpgradeData upgradeData)
     {
         return new SpaceshipStructure(upgradeData);
+    }
+
+    public int getNumberOfUpdatesSinceLastHitByBullet()
+    {
+        return numberOfUpdatesSinceLastHitByBullet;
+    }
+
+    public void setNumberOfUpdatesSinceLastHitByBullet(int numberOfUpdatesSinceLastHitByBullet)
+    {
+        this.numberOfUpdatesSinceLastHitByBullet = numberOfUpdatesSinceLastHitByBullet;
     }
 
     /**
@@ -97,6 +110,17 @@ public class Spaceship
         this.setDidCrash(false);
 
         this.setEnergy(this.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE));
+        setNumberOfUpdatesSinceLastHitByBullet(0);
+    }
+
+    public PImage getSpriteWhite()
+    {
+        return spriteWhite;
+    }
+
+    public void setSpriteWhite(PImage spriteWhite)
+    {
+        this.spriteWhite = spriteWhite;
     }
 
     /**
@@ -107,6 +131,9 @@ public class Spaceship
     private void createSprites(UpgradeData upgradeData, SpaceshipStructure spaceshipStructure)
     {
         this.setSpriteBlue(CreateSpaceshipSprite.createSpaceshipSprite(upgradeData, spaceshipStructure, CreateSpaceshipSprite.BLUE_SPRITE));
+        this.setSpriteRed(CreateSpaceshipSprite.createSpaceshipSprite(upgradeData, spaceshipStructure, CreateSpaceshipSprite.RED_SPRITE));
+        this.setSpriteWhite(CreateSpaceshipSprite.createSpaceshipSprite(upgradeData, spaceshipStructure, CreateSpaceshipSprite.WHITE_SPRITE));
+
     }
 
     /**
@@ -180,6 +207,7 @@ public class Spaceship
 
     public void updateMovement(float deltaTime)
     {
+        this.numberOfUpdatesSinceLastHitByBullet++;
         this.setXPosition(this.getXPosition() + deltaTime * this.getXVelocity());
         this.setYPosition(this.getYPosition() + deltaTime * this.getYVelocity());
     }

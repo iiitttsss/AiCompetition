@@ -99,7 +99,7 @@ public class Orbiter implements Ai
             theta -= Math.PI;
         }
         stable = false;
-        if (theta < Math.PI / 2.1)
+        if (theta < Math.PI / 2.2)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, 3));
         } else if (theta > Math.PI / 2 + Math.PI/5)

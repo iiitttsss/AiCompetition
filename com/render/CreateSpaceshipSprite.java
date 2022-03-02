@@ -14,6 +14,7 @@ public class CreateSpaceshipSprite
 
     public static final int BLUE_SPRITE = 0;
     public static final int RED_SPRITE = 1;
+    public static final int WHITE_SPRITE = 2;
     private final static int SPRITE_SIZE = 32;
     private static ArrayList<PImage> sprites;
 
@@ -55,8 +56,7 @@ public class CreateSpaceshipSprite
 
     private static PImage evaluateWingsSprite(UpgradeData upgradeData, int spriteColor)
     {
-
-        return getSpriteAt(2, 2);
+        return getSpriteAt(2 + 6 * spriteColor, 2);
     }
 
     private static PImage evaluateGunSprite(UpgradeData upgradeData, int spriteColor)

@@ -38,7 +38,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height, true);
-        match.init(new BasicAi(), new Orbiter());
+        match.init(new Orbiter(), new BasicAi());
         RenderSimulation.init(match, pg);
     }
 
@@ -50,7 +50,7 @@ public class RunMatch extends PApplet
         Global.setDeltaTime(currentTime - lastTime);
         lastTime = currentTime;
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 20; i++)
         {
             this.update();
         }
@@ -61,7 +61,7 @@ public class RunMatch extends PApplet
     {
         RenderSimulation.render(DELTA_TIME);
         image(this.getPg(), 0, 0);
-        text(1000f * numberOfUpdates / millis(), 40, 500);
+        // text(1000f * numberOfUpdates / millis(), 40, 500); // showing update FPS
     }
 
     /**
