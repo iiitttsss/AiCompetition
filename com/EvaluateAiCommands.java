@@ -14,13 +14,25 @@ public class EvaluateAiCommands implements Runnable
     private Spaceship self;
     private Spaceship other;
     private ArrayList<Bullet> bullets;
+    private float borderRadius;
 
-    public EvaluateAiCommands(Ai ai, Spaceship self, Spaceship other, ArrayList<Bullet> bullets)
+    public float getBorderRadius()
+    {
+        return borderRadius;
+    }
+
+    public void setBorderRadius(float borderRadius)
+    {
+        this.borderRadius = borderRadius;
+    }
+
+    public EvaluateAiCommands(Ai ai, Spaceship self, Spaceship other, ArrayList<Bullet> bullets, float borderRadius)
     {
         this.setAi(ai);
         this.setSelf(self);
         this.setOther(other);
         this.setBullets(bullets);
+        this.setBorderRadius(borderRadius);
     }
 
     @Override
@@ -28,8 +40,8 @@ public class EvaluateAiCommands implements Runnable
     {
         try
         {
-            this.setShootCommands(this.getAi().shootCommands(this.getSelf(), this.getOther(), this.getBullets()));
-            this.setThrustCommands(this.getAi().thrustCommands(this.getSelf(), this.getOther(), this.getBullets()));
+            this.setShootCommands(this.getAi().shootCommands(this.getSelf(), this.getOther(), this.getBullets(), borderRadius));
+            this.setThrustCommands(this.getAi().thrustCommands(this.getSelf(), this.getOther(), this.getBullets(), borderRadius));
         } catch (Exception e)
         {
             this.getSelf().setDidCrash(true);

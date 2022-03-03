@@ -1,9 +1,8 @@
 package AiCompetition.com;
 
+import AiCompetition.com.moreAis.Turret;
 import AiCompetition.com.playersAi.*;
-import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -38,7 +37,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height, true);
-        match.init(new Orbiter(), new BasicAi());
+        match.init(new OneHit(), new Orbiter());
         RenderSimulation.init(match, pg);
     }
 

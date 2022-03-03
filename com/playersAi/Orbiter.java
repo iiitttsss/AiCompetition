@@ -23,7 +23,7 @@ public class Orbiter implements Ai
     private boolean stable;
 
     @Override
-    public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         if (mySpaceship.getEnergy() > EMERGENCY_ENERGY && stable && !avoiding && inAngle && Math.random() < 0.1)
@@ -36,18 +36,24 @@ public class Orbiter implements Ai
     }
 
     @Override
-    public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
 
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
 
         this.avoidBullets(thrustCommands, mySpaceship, bulletsPositions);
 
+
+
         if (mySpaceship.getEnergy() > EMERGENCY_ENERGY)
         {
             this.distanceControl(thrustCommands, mySpaceship, otherSpaceship);
         }
-        if (!avoiding)
+        if (MathUtil.dist(0, 0, mySpaceship.getXPosition(), mySpaceship.getYPosition()) > borderRadius - 500)
+        {
+            thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, 1));
+        }
+        else if (!avoiding)
         {
             this.stabilize(thrustCommands, mySpaceship);
         }
@@ -102,7 +108,7 @@ public class Orbiter implements Ai
         if (theta < Math.PI / 2.2)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.LEFT_THRUSTER, 3));
-        } else if (theta > Math.PI / 2 + Math.PI/5)
+        } else if (theta > Math.PI / 2 + Math.PI / 5)
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, 1));
         } else

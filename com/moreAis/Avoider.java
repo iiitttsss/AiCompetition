@@ -1,4 +1,4 @@
-package AiCompetition.com.playersAi;
+package AiCompetition.com.moreAis;
 
 import AiCompetition.com.Ai;
 import AiCompetition.com.Spaceship;
@@ -14,14 +14,14 @@ public class Avoider implements Ai
 {
 
     @Override
-    public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         return shootCommands;
     }
 
     @Override
-    public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         final int power = 5;

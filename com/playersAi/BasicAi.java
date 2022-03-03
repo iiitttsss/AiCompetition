@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class BasicAi implements Ai
 {
     @Override
-    public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
         float dy = otherSpaceship.getYPosition() - mySpaceship.getYPosition();
@@ -32,7 +32,7 @@ public class BasicAi implements Ai
     }
 
     @Override
-    public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions)
+    public ArrayList<ThrustCommand> thrustCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ThrustCommand> thrustCommands = new ArrayList<>();
         float dy = otherSpaceship.getYPosition() - mySpaceship.getYPosition();

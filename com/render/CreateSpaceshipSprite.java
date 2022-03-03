@@ -20,7 +20,7 @@ public class CreateSpaceshipSprite
 
     public static void loadSprites(String fileName)
     {
-        if(sprites != null)
+        if (sprites != null)
         {
             return;
         }
@@ -56,7 +56,14 @@ public class CreateSpaceshipSprite
 
     private static PImage evaluateWingsSprite(UpgradeData upgradeData, int spriteColor)
     {
-        return getSpriteAt(2 + 6 * spriteColor, 2);
+        int level = Math.max(upgradeData.getUpgrade(UpgradeData.FRONT_THRUSTER),
+                Math.max(upgradeData.getUpgrade(UpgradeData.BACK_THRUSTER),
+                        Math.max(upgradeData.getUpgrade(UpgradeData.LEFT_THRUSTER),
+                                upgradeData.getUpgrade(UpgradeData.RIGHT_THRUSTER))));
+
+        level = Math.min(level, 24) / 6;
+
+        return getSpriteAt(level + 6 * spriteColor, 2);
     }
 
     private static PImage evaluateGunSprite(UpgradeData upgradeData, int spriteColor)
@@ -91,19 +98,19 @@ public class CreateSpaceshipSprite
         int y = 0;
 
         int level = upgradeData.getUpgrade(UpgradeData.HIT_POINTS);
-        if (level > 15)
+        if (level > 20)
         {
             x = 5;
-        } else if (level > 10)
+        } else if (level > 15)
         {
             x = 4;
-        } else if (level > 5)
+        } else if (level > 10)
         {
             x = 3;
-        } else if (level > 3)
+        } else if (level > 5)
         {
             x = 2;
-        } else if (level > 1)
+        } else if (level > 2)
         {
             x = 1;
         } else
@@ -115,7 +122,9 @@ public class CreateSpaceshipSprite
 
     private static PImage evaluateThrusterSprite(UpgradeData upgradeData, int spriteColor)
     {
+        //return getSpriteAt(x + 6 * spriteColor, y);
         return getSpriteAt(2, 6);
+
     }
 
     /**

@@ -10,8 +10,8 @@ import AiCompetition.com.render.RenderSimulation;
 
 public class Match
 {
-    public static final float START_BORDER_RADIUS = 6000;
-    public static final float BORDER_SPEED = 0.5f;
+    public static final float START_BORDER_RADIUS = 10000;
+    public static final float BORDER_SPEED = 0.3f;
     public static final int NO_SHOOT_PERIOD = 30;
     private static final int MILLIS_FOR_THREAD = 20;
     private static final int CRITICAL_MILLIS_FOR_THREAD = 50;
@@ -94,10 +94,10 @@ public class Match
 
     private void aiCommands(float deltaTime)
     {
-        EvaluateAiCommands executeAi1 = new EvaluateAiCommands(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets());
+        EvaluateAiCommands executeAi1 = new EvaluateAiCommands(this.getAi1(), this.getSpaceship1(), this.getSpaceship2(), bulletManager.getActiveBullets(), borderRadius);
         this.handleThread(executeAi1, this.getSpaceship1());
 
-        EvaluateAiCommands executeAi2 = new EvaluateAiCommands(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets());
+        EvaluateAiCommands executeAi2 = new EvaluateAiCommands(this.getAi2(), this.getSpaceship2(), this.getSpaceship1(), bulletManager.getActiveBullets(), borderRadius);
         this.handleThread(executeAi2, this.getSpaceship2());
 
         this.getSpaceship1().executeThrustCommands(deltaTime, executeAi1.getThrustCommands());
