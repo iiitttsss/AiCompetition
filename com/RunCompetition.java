@@ -23,7 +23,7 @@ public class RunCompetition
 
     public static void main(String[] args)
     {
-        final int MATCHES_PER_PAIR = 10;
+        final int MATCHES_PER_PAIR = 100;
         PApplet pro = new PApplet();
         Global.setPro(pro);
         String[] aisFileNamesArray = createAisNamesArray("src/AiCompetition/com/playersAi");
@@ -40,7 +40,7 @@ public class RunCompetition
         {
             for (String[] pair : aiPairs)
             {
-                //System.out.println(pair[0] + " vs. " + pair[1]);
+                // System.out.println(pair[0] + " vs. " + pair[1]);
 
                 //String[] testPair = {"Orbiter", "TestReflection"};
                 int winner = runMatchForPair(pair);

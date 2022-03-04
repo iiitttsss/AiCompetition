@@ -8,26 +8,21 @@ import AiCompetition.com.Match;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
 import AiCompetition.com.bullets.Bullet;
-import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PGraphics;
-import processing.core.PImage;
+import processing.core.*;
 
 public class RenderSimulation
 {
+    public static PFont font = Global.getPro().createFont("src/AiCompetition/com/fonts/Technical Forest/font.otf", 20);
     private static float centerX;
     private static float centerY;
     private static float scale;
-
     private static int startX;
     private static int endX;
     private static int startY;
     private static int endY;
     private static PImage STATIONARY_BACKGROUND;
-
     private static Match matchReference;
     private static PGraphics pgReference;
-
     private static float framePercent;
     private static int timeOfLastUpdate;
     private static float previousXCenter;
@@ -105,7 +100,7 @@ public class RenderSimulation
         renderBullets();
         pgReference.popMatrix();
         renderBorder();
-        // renderUi();
+        renderUi();
         pgReference.endDraw();
     }
 
@@ -138,14 +133,34 @@ public class RenderSimulation
 
     }
 
+    private static String spaceshipToUiString(Spaceship spaceship)
+    {
+        String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
+                "Energy: " + (int) spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE) + "\n" +
+                "speed: " + (String.format("%.2f", Math.sqrt(spaceship.getXVelocity() * spaceship.getXVelocity() + spaceship.getYVelocity() * spaceship.getYVelocity()))) + "\n";
+        return s;
+    }
+
     private static void renderUi()
     {
         //UI - life, energy, energy per turn, name
-        pgReference.text("bullets: " + matchReference.getBulletManager().getAllBullets().size() + "/" + matchReference.getBulletManager().getActiveBullets().size(), 20, 20);
-        pgReference.text("FPS: " + Global.getPro().frameRate, 20, 40);
+//        pgReference.text("bullets: " + matchReference.getBulletManager().getAllBullets().size() + "/" + matchReference.getBulletManager().getActiveBullets().size(), 20, 20);
+//        pgReference.text("FPS: " + Global.getPro().frameRate, 20, 40);
+//
+//        pgReference.text("translation: " + centerX + ", " + centerY, 20, 80);
+//        pgReference.text("scale: " + scale, 20, 100);
 
-        pgReference.text("translation: " + centerX + ", " + centerY, 20, 80);
-        pgReference.text("scale: " + scale, 20, 100);
+        pgReference.pushStyle();
+        pgReference.textFont(RenderSimulation.font);
+        pgReference.textAlign(PConstants.LEFT, PConstants.CENTER);
+        int w = 60;
+        pgReference.image(matchReference.getSpaceship1().getSpriteBlue(),w/4,w/4+10,w,w);
+        pgReference.text(spaceshipToUiString(matchReference.getSpaceship1()), (float) (1.5*w), 50+10);
+
+        pgReference.image(matchReference.getSpaceship2().getSpriteRed(),w/4,w/4+100+10,w,w);
+        pgReference.text(spaceshipToUiString(matchReference.getSpaceship2()), (float) (1.5*w), 50+100+10);
+
+        pgReference.popStyle();
     }
 
     private static void renderBullets()
@@ -222,14 +237,7 @@ public class RenderSimulation
 //        pgReference.line(xPosInterpret, yPosInterpret,
 //                xPosInterpret + lineLength * spaceship.getXVelocity(), yPosInterpret + lineLength * spaceship.getYVelocity());
 
-        pgReference.pushStyle();
-        pgReference.textSize(14 / scale);
-        String s = "HP: " + spaceship.getHitPoints() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.HIT_POINTS) + "\n" +
-                "Energy: " + (int) spaceship.getEnergy() + "/" + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.BATTERY_SIZE) + "\n" +
-                "speed: " + (Math.sqrt(spaceship.getXVelocity() * spaceship.getXVelocity() + spaceship.getYVelocity() * spaceship.getYVelocity())) + "\n";
 
-        pgReference.text(s, xPosInterpret, yPosInterpret + 20 + spaceship.getSpaceshipStructure().getAttribute(UpgradeData.RADIUS));
-        pgReference.popStyle();
     }
 
     private static void renderASpaceshipDebug(PApplet pro, PGraphics pg, Spaceship spaceship)

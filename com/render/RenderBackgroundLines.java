@@ -23,7 +23,7 @@ public class RenderBackgroundLines
     {
         RenderSimulation.getPgReference().pushStyle();
         //pg.strokeWeight(weight);
-        RenderSimulation.getPgReference().stroke(Global.getPro().color(200));
+        RenderSimulation.getPgReference().stroke(Global.getPro().color(150));
         for (int x = 0; x < endX; x += mod)
         {
             RenderSimulation.getPgReference().line(x, startY, x, endY);

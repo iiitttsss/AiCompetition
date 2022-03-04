@@ -21,12 +21,13 @@ public class Orbiter implements Ai
     private boolean inAngle;
     private boolean avoiding;
     private boolean stable;
+    private boolean avoidBorder;
 
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        if (mySpaceship.getEnergy() > EMERGENCY_ENERGY && stable && !avoiding && inAngle && Math.random() < 0.1)
+        if (mySpaceship.getEnergy() > EMERGENCY_ENERGY && !avoidBorder && stable && !avoiding && inAngle && Math.random() < 0.1)
         {
             float dist = MathUtil.dist(mySpaceship.getXPosition(), mySpaceship.getYPosition(), otherSpaceship.getXPosition(), otherSpaceship.getYPosition());
             dist = Math.min(dist + 100, 2000);
@@ -44,16 +45,16 @@ public class Orbiter implements Ai
         this.avoidBullets(thrustCommands, mySpaceship, bulletsPositions);
 
 
-
         if (mySpaceship.getEnergy() > EMERGENCY_ENERGY)
         {
             this.distanceControl(thrustCommands, mySpaceship, otherSpaceship);
         }
+        avoidBorder = false;
         if (MathUtil.dist(0, 0, mySpaceship.getXPosition(), mySpaceship.getYPosition()) > borderRadius - 500)
         {
+            avoidBorder = true;
             thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, 1));
-        }
-        else if (!avoiding)
+        } else if (!avoiding)
         {
             this.stabilize(thrustCommands, mySpaceship);
         }
