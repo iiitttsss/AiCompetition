@@ -24,7 +24,7 @@ public class RenderBorder
     public static void render(PGraphics pg)
     {
         maskImage.beginDraw();
-        maskImage.background(155);
+        maskImage.background(100); //alpha channel (lower is more transparent)
         maskImage.applyMatrix(pg.getMatrix());
         maskImage.fill(0);
         float pixelX = MathUtil.map(0, RenderSimulation.getStartX(), RenderSimulation.getEndX(), 0, pg.width);

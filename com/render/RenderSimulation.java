@@ -170,7 +170,7 @@ public class RenderSimulation
         final int BULLET_GLOW_RADIUS = 50;
         int glowLayersNumber = (int) Math.max(BULLET_GLOW_RADIUS * scale / 5, 1);
         int radiusIncreaseMultiplier = BULLET_GLOW_RADIUS / glowLayersNumber;
-        int glowAlphaValue = 150 / glowLayersNumber;
+        int glowAlphaValue = 175 / glowLayersNumber;
 
         for (Bullet b : matchReference.getBulletManager().getActiveBullets())
         {
