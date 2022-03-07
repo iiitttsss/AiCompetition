@@ -1,7 +1,11 @@
 package AiCompetition.com;
 
+import AiCompetition.com.moreAis.EmptyTemplate;
+import AiCompetition.com.moreAis.Show;
+import AiCompetition.com.playersAi.BasicAi;
 import AiCompetition.com.playersAi.OneHit;
 import AiCompetition.com.playersAi.Orbiter;
+import AiCompetition.com.playersAi.Test1;
 import AiCompetition.com.render.RenderSimulation;
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -38,7 +42,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height, true);
-        match.init(new OneHit(), new Orbiter());
+        match.init(new Orbiter(), new Orbiter());
         RenderSimulation.init(match, pg);
         //this.textFont(RenderSimulation.font);
 
