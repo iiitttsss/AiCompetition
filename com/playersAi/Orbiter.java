@@ -154,7 +154,6 @@ public class Orbiter implements Ai
         {
             thrustCommands.add(new ThrustCommand(ThrustCommand.RIGHT_THRUSTER, AVOID_POWER));
             avoiding = true;
-
         }
     }
 

@@ -1,4 +1,4 @@
-package AiCompetition.com.playersAi;
+package AiCompetition.com.moreAis;
 
 import AiCompetition.com.Ai;
 import AiCompetition.com.Spaceship;
@@ -24,14 +24,11 @@ public class Test1 implements Ai
             if(dx > 0)
             {
                 shootCommands.add(new ShootCommand(ShootCommand.BACK_GUN, 10, 10, 10, 1000));
-
             }
             else
             {
                 shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 10, 10, 10, 1000));
-
             }
-
         }
 
         return shootCommands;
@@ -76,7 +73,6 @@ public class Test1 implements Ai
         upgradeData.setUpgrade(UpgradeData.LEFT_THRUSTER, 5);
         upgradeData.setUpgrade(UpgradeData.RIGHT_THRUSTER, 5);
 
-
         upgradeData.setUpgrade(UpgradeData.FRONT_GUN_RANGE, 5);
         upgradeData.setUpgrade(UpgradeData.FRONT_GUN_SPEED, 5);
         upgradeData.setUpgrade(UpgradeData.FRONT_GUN_DAMAGE, 5);
@@ -84,7 +80,6 @@ public class Test1 implements Ai
         upgradeData.setUpgrade(UpgradeData.BACK_GUN_RANGE, 5);
         upgradeData.setUpgrade(UpgradeData.BACK_GUN_SPEED, 5);
         upgradeData.setUpgrade(UpgradeData.BACK_GUN_DAMAGE, 5);
-
 
         upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 10);
 
