@@ -24,7 +24,7 @@ public class Turret implements Ai
         }
         if (isOnShootInterval && Math.random() < 0.1)
         {
-            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 5, 10, 10, 2000));
+            shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 1, 230, 10, 2000));
         }
         return shootCommands;
     }
@@ -76,11 +76,13 @@ public class Turret implements Ai
     public UpgradeData createStructure()
     {
         UpgradeData upgradeData = new UpgradeData();
-//        upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 14);
 
-        upgradeData.setUpgrade(UpgradeData.RADIUS, 20);
-        upgradeData.setUpgrade(UpgradeData.BATTERY_SIZE, 20);
-        //upgradeData.setUpgrade(UpgradeData.RIGHT_GUN_DAMAGE, 19);
+        upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 20);
+        upgradeData.setUpgrade(UpgradeData.FRONT_GUN_DAMAGE, 10);
+        upgradeData.setUpgrade(UpgradeData.FRONT_GUN_RANGE, 10);
+        upgradeData.setUpgrade(UpgradeData.FRONT_GUN_SPEED, 10);
+
+
 
         return upgradeData;
     }

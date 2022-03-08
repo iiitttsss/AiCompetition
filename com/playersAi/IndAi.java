@@ -15,7 +15,7 @@ public class IndAi implements Ai
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        // shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 10, 10, 10, 1000));
+        shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 100, 1, 1, 1000));
         return shootCommands;
     }
 
@@ -31,7 +31,7 @@ public class IndAi implements Ai
     public UpgradeData createStructure()
     {
         UpgradeData upgradeData = new UpgradeData();
-        // upgradeData.setUpgrade(UpgradeData.HIT_POINTS, 5);
+        upgradeData.setUpgrade(UpgradeData.FRONT_GUN_RADIUS, 50);
         return upgradeData;
     }
 }

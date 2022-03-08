@@ -96,8 +96,8 @@ public class Spaceship
         SpaceshipStructure spaceshipStructure = this.covertUpgradeDataToSpaceshipStructure(upgradeData);
         this.setSpaceshipStructure(spaceshipStructure);
         //this.setDirection((float) (Math.random() * Math.PI * 2));
-        this.setXPosition((float) (Math.random() * 800 - 400));
-        this.setYPosition((float) (Math.random() * 800 - 400));
+        this.setXPosition((float) (Math.random() * 2000 - 1000));
+        this.setYPosition((float) (Math.random() * 2000 - 1000));
         this.setHitPoints(spaceshipStructure.getAttribute(UpgradeData.HIT_POINTS));
 
         if(Match.needToRender)
@@ -291,18 +291,12 @@ public class Spaceship
                     break;
                 case ThrustCommand.FRONT_THRUSTER:
                     angle = (float) (this.getDirection() + Math.PI);
-//                    xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI);
-//                    yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI);
                     break;
                 case ThrustCommand.RIGHT_THRUSTER:
                     angle = (float) (this.getDirection() - Math.PI / 2);
-//                    xAcc += thrustForce * Math.cos(this.getDirection() - Math.PI / 2);
-//                    yAcc += thrustForce * Math.sin(this.getDirection() - Math.PI / 2);
                     break;
                 case ThrustCommand.LEFT_THRUSTER:
                     angle = (float) (this.getDirection() + Math.PI / 2);
-//                    xAcc += thrustForce * Math.cos(this.getDirection() + Math.PI / 2);
-//                    yAcc += thrustForce * Math.sin(this.getDirection() + Math.PI / 2);
                     break;
                 case ThrustCommand.CLOCKWISE_THRUSTER:
                     angle = deltaTime * deltaTime * TURNING_MULTIPLIER / thrustForce;

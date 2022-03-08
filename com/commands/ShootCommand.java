@@ -31,7 +31,7 @@ public class ShootCommand extends Command
     {
         float cost = 0;
         cost += CostFunction.costFunction(radius/3f, 2f, 5);
-        cost += CostFunction.costFunction(speed/6f, 2f, 5);
+        cost += CostFunction.costFunction(speed/30f, 2f, 5);
         cost += CostFunction.costFunction(damage/10f, 2f, 5);
         cost += CostFunction.costFunction(range/300f, 2f, 5);
 

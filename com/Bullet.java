@@ -7,7 +7,6 @@ import AiCompetition.com.util.MathUtil;
 
 public class Bullet
 {
-    public static final float SPEED_MULTIPLIER = 5;
     private float xPosition;
     private float yPosition;
     private float xVelocity;
@@ -97,8 +96,8 @@ public class Bullet
      */
     protected void update(float deltaTime)
     {
-        this.setXPosition(this.getXPosition() + deltaTime * SPEED_MULTIPLIER * xVelocity);
-        this.setYPosition(this.getYPosition() + deltaTime * SPEED_MULTIPLIER * yVelocity);
+        this.setXPosition(this.getXPosition() + deltaTime * xVelocity);
+        this.setYPosition(this.getYPosition() + deltaTime * yVelocity);
         float distSq = (this.getXPosition() - this.getStartXPosition()) * (this.getXPosition() - this.getStartXPosition()) + (this.getYPosition() - this.getStartYPosition()) * (this.getYPosition() - this.getStartYPosition());
         if (distSq > this.getLifeDistance() * this.getLifeDistance())
         {

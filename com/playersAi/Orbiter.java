@@ -72,7 +72,9 @@ public class Orbiter implements Ai
         upgradeData.setUpgrade(UpgradeData.BACK_THRUSTER, 1);
         upgradeData.setUpgrade(UpgradeData.FRONT_THRUSTER, 4);
 
-        upgradeData.setUpgrade(UpgradeData.RIGHT_THRUSTER, 10);
+        upgradeData.setUpgrade(UpgradeData.RIGHT_THRUSTER, 4);
+        upgradeData.setUpgrade(UpgradeData.LEFT_THRUSTER, 4);
+
 
         upgradeData.setUpgrade(UpgradeData.FRONT_GUN_SPEED, 5);
         upgradeData.setUpgrade(UpgradeData.FRONT_GUN_RANGE, 10);
@@ -82,7 +84,7 @@ public class Orbiter implements Ai
         upgradeData.setUpgrade(UpgradeData.COUNTER_CLOCKWISE_THRUSTER, 3);
 
         upgradeData.setUpgrade(UpgradeData.ENERGY_GENERATOR, 10);
-
+        upgradeData.setUpgrade(UpgradeData.RADIUS, 2);
 
         return upgradeData;
     }
