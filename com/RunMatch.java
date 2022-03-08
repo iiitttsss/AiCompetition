@@ -8,7 +8,7 @@ import processing.core.PGraphics;
 
 public class RunMatch extends PApplet
 {
-    private static final float DELTA_TIME = 1 / 5f;
+    public static final float DELTA_TIME = 1 / 5f;
     public int numberOfUpdates = 0;
     private int lastTime = 0;
     private Match match;
