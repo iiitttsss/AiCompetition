@@ -3,8 +3,6 @@
  */
 package AiCompetition.com;
 
-import AiCompetition.com.bullets.Bullet;
-import AiCompetition.com.bullets.BulletManager;
 import AiCompetition.com.render.CreateSpaceshipSprite;
 import AiCompetition.com.render.RenderSimulation;
 

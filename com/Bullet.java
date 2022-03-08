@@ -1,10 +1,8 @@
 /**
  * this class keep the data associated with a bullet and in-charge on updating it
  */
-package AiCompetition.com.bullets;
+package AiCompetition.com;
 
-import AiCompetition.com.Spaceship;
-import AiCompetition.com.UpgradeData;
 import AiCompetition.com.util.MathUtil;
 
 public class Bullet
@@ -27,7 +25,7 @@ public class Bullet
     private float previousXPosition;
     private float previousYPosition;
 
-    public void savePreviousPosition()
+    protected void savePreviousPosition()
     {
         this.setPreviousXPosition(this.getXPosition());
         this.setPreviousYPosition(this.getYPosition());
@@ -36,7 +34,7 @@ public class Bullet
     /**
      * called when hitting a spaceship
      */
-    public void hitSpaceship()
+    protected void hitSpaceship()
     {
         this.setActive(false);
     }
@@ -78,7 +76,7 @@ public class Bullet
             float progressAtMinimum = -((xa1 - xb1) * (xa2 + xb1 - xa1 - xb2) + (ya1 - yb1) * (ya2 + yb1 - ya1 - yb2)) /
                     ((xa2 + xb1 - xa1 - xb2) * (xa2 + xb1 - xa1 - xb2) + (ya2 + yb1 - ya1 - yb2) * (ya2 + yb1 - ya1 - yb2));
 
-            if(progressAtMinimum < 0 || progressAtMinimum > 1)
+            if (progressAtMinimum < 0 || progressAtMinimum > 1)
             {
                 return false;
             }
@@ -97,10 +95,8 @@ public class Bullet
     /**
      * update the bullet
      */
-    public void update(float deltaTime)
+    protected void update(float deltaTime)
     {
-        //TODO
-
         this.setXPosition(this.getXPosition() + deltaTime * SPEED_MULTIPLIER * xVelocity);
         this.setYPosition(this.getYPosition() + deltaTime * SPEED_MULTIPLIER * yVelocity);
         float distSq = (this.getXPosition() - this.getStartXPosition()) * (this.getXPosition() - this.getStartXPosition()) + (this.getYPosition() - this.getStartYPosition()) * (this.getYPosition() - this.getStartYPosition());
@@ -120,7 +116,7 @@ public class Bullet
      * @param radius - the radius of the bullet
      * @param speed  of the bullet
      */
-    public void init(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed, int damage, int range)
+    protected void init(Spaceship owner, float xPos, float yPos, float xVel, float yVel, int radius, int speed, int damage, int range)
     {
         this.setActive(true);
         this.setOwner(owner);
@@ -144,7 +140,7 @@ public class Bullet
         return range;
     }
 
-    public void setRange(int range)
+    protected void setRange(int range)
     {
         this.range = range;
     }
@@ -154,7 +150,7 @@ public class Bullet
         return previousXPosition;
     }
 
-    public void setPreviousXPosition(float previousXPosition)
+    protected void setPreviousXPosition(float previousXPosition)
     {
         this.previousXPosition = previousXPosition;
     }
@@ -164,7 +160,7 @@ public class Bullet
         return previousYPosition;
     }
 
-    public void setPreviousYPosition(float previousYPosition)
+    protected void setPreviousYPosition(float previousYPosition)
     {
         this.previousYPosition = previousYPosition;
     }
@@ -174,7 +170,7 @@ public class Bullet
         return lifeDistance;
     }
 
-    public void setLifeDistance(int lifeDistance)
+    protected void setLifeDistance(int lifeDistance)
     {
         this.lifeDistance = lifeDistance;
     }
@@ -184,7 +180,7 @@ public class Bullet
         return startXPosition;
     }
 
-    public void setStartXPosition(float startXPosition)
+    protected void setStartXPosition(float startXPosition)
     {
         this.startXPosition = startXPosition;
     }
@@ -194,7 +190,7 @@ public class Bullet
         return startYPosition;
     }
 
-    public void setStartYPosition(float startYPosition)
+    protected void setStartYPosition(float startYPosition)
     {
         this.startYPosition = startYPosition;
     }
@@ -204,7 +200,7 @@ public class Bullet
         return damage;
     }
 
-    public void setDamage(int damage)
+    protected void setDamage(int damage)
     {
         this.damage = damage;
     }
@@ -214,7 +210,7 @@ public class Bullet
         return id;
     }
 
-    public void setId(int id)
+    protected void setId(int id)
     {
         this.id = id;
     }
@@ -224,7 +220,7 @@ public class Bullet
         return isActive;
     }
 
-    public void setActive(boolean active)
+    protected void setActive(boolean active)
     {
         isActive = active;
     }
@@ -234,7 +230,7 @@ public class Bullet
         return owner;
     }
 
-    public void setOwner(Spaceship owner)
+    protected void setOwner(Spaceship owner)
     {
         this.owner = owner;
     }
@@ -244,7 +240,7 @@ public class Bullet
         return xPosition;
     }
 
-    public void setXPosition(float xPosition)
+    protected void setXPosition(float xPosition)
     {
         this.xPosition = xPosition;
     }
@@ -254,7 +250,7 @@ public class Bullet
         return yPosition;
     }
 
-    public void setYPosition(float yPosition)
+    protected void setYPosition(float yPosition)
     {
         this.yPosition = yPosition;
     }
@@ -264,7 +260,7 @@ public class Bullet
         return xVelocity;
     }
 
-    public void setXVelocity(float xVelocity)
+    protected void setXVelocity(float xVelocity)
     {
         this.xVelocity = xVelocity;
     }
@@ -274,7 +270,7 @@ public class Bullet
         return yVelocity;
     }
 
-    public void setYVelocity(float yVelocity)
+    protected void setYVelocity(float yVelocity)
     {
         this.yVelocity = yVelocity;
     }
@@ -284,7 +280,7 @@ public class Bullet
         return radius;
     }
 
-    public void setRadius(int radius)
+    protected void setRadius(int radius)
     {
         this.radius = radius;
     }
@@ -294,9 +290,8 @@ public class Bullet
         return speed;
     }
 
-    public void setSpeed(int speed)
+    protected void setSpeed(int speed)
     {
         this.speed = speed;
     }
-
 }

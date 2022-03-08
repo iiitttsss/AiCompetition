@@ -76,7 +76,7 @@ public class SpaceshipStructure
      * @param level - the level that need to be used
      * @return - the value the component will have
      */
-    private float levelToValue(int level)
+    public static float levelToValue(int level)
     {
         return CostFunction.costFunction(level, 2, 5);
     }

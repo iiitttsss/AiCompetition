@@ -3,7 +3,6 @@
  */
 package AiCompetition.com;
 
-import AiCompetition.com.bullets.Bullet;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
 

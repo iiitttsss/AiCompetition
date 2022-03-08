@@ -1,8 +1,9 @@
 /**
  * to be more efficient, this class will handle the bullets instead of just putting them into an array
  */
-package AiCompetition.com.bullets;
+package AiCompetition.com;
 
+import AiCompetition.com.Bullet;
 import AiCompetition.com.Spaceship;
 
 import java.util.ArrayList;

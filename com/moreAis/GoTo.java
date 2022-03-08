@@ -3,7 +3,7 @@ package AiCompetition.com.moreAis;
 import AiCompetition.com.Ai;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
-import AiCompetition.com.bullets.Bullet;
+import AiCompetition.com.Bullet;
 import AiCompetition.com.commands.ShootCommand;
 import AiCompetition.com.commands.ThrustCommand;
 

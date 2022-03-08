@@ -7,7 +7,7 @@ import AiCompetition.com.Global;
 import AiCompetition.com.Match;
 import AiCompetition.com.Spaceship;
 import AiCompetition.com.UpgradeData;
-import AiCompetition.com.bullets.Bullet;
+import AiCompetition.com.Bullet;
 import processing.core.*;
 
 public class RenderSimulation
