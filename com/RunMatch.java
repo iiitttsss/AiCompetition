@@ -1,5 +1,7 @@
 package AiCompetition.com;
 
+import AiCompetition.com.moreAis.Avoider;
+import AiCompetition.com.moreAis.EmptyTemplate;
 import AiCompetition.com.moreAis.Turret;
 import AiCompetition.com.playersAi.BasicAi;
 import AiCompetition.com.playersAi.IndAi;
@@ -39,7 +41,7 @@ public class RunMatch extends PApplet
 
         this.setPg(this.createGraphics(width, height));
         match = new Match(width, height, true);
-        match.init(new Orbiter(), new Turret());
+        match.init(new IndAi(), new Avoider());
         RenderSimulation.init(match, pg);
         //this.textFont(RenderSimulation.font);
 
