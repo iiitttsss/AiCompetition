@@ -23,7 +23,7 @@ public class RunCompetition
 
     public static void main(String[] args)
     {
-        final int MATCHES_PER_PAIR = 100;
+        final int MATCHES_PER_PAIR = 5;
         PApplet pro = new PApplet();
         Global.setPro(pro);
         String[] aisFileNamesArray = createAisNamesArray("src/AiCompetition/com/playersAi");
