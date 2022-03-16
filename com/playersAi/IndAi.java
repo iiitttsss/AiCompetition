@@ -16,10 +16,6 @@ public class IndAi implements Ai
 
     public static void main(String[] args)
     {
-        float a[] = {1, 2, 5, 6, 3, 2};
-        float b[] = {44, 66, 99, 77, 33, 22, 55};
-        System.out.println("Second Largest: " + sortArrayById(a)[a.length - 2]);
-        System.out.println("Second Largest: " + sortArrayById(b)[b.length - 2]);
 
     }
 
@@ -53,73 +49,11 @@ public class IndAi implements Ai
         return arrIds;
     }
 
-    private static float minTimeForAnglePAS(float angle, Spaceship mySpaceship, Spaceship otherSpaceship)
-    {
-        float x0s = otherSpaceship.getXPosition();
-        float x0b = mySpaceship.getXPosition();
-        float vsx = otherSpaceship.getXVelocity();
-        float V = SHOT_SPEED;
-        float y0s = otherSpaceship.getYPosition();
-        float y0b = mySpaceship.getYPosition();
-        float vsy = otherSpaceship.getYVelocity();
-
-        float vCos = (float) (V * Math.cos(angle));
-        float vSin = (float) (V * Math.sin(angle));
-
-        float time = -((x0s - x0b) * (vsx - vCos) + (y0s - y0b) * (vsy - vSin)) /
-                ((vsx - vCos) * (vsx - vCos) + (vsy - vSin) * (vsy - vSin));
-
-        return Math.max(time, 0);
-    }
-
-    private static float x1sPAS(float timeOfAngle, Spaceship otherSpaceship)
-    {
-        float x0s = otherSpaceship.getXPosition();
-        float vsx = otherSpaceship.getXVelocity();
-        return x0s + vsx * timeOfAngle;
-    }
-
-    private static float y1sPAS(float timeOfAngle, Spaceship otherSpaceship)
-    {
-        float y0s = otherSpaceship.getYPosition();
-        float vsy = otherSpaceship.getYVelocity();
-        return y0s + vsy * timeOfAngle;
-    }
-
-    private static float x1bPAS(float angle, float timeOfAngle, Spaceship mySpaceship)
-    {
-        float V = SHOT_SPEED;
-        float x0b = mySpaceship.getXPosition();
-        float vbx = (float) (V * Math.cos(angle));
-        return vbx * timeOfAngle + x0b;
-    }
-
-    private static float y1bPAS(float angle, float timeOfAngle, Spaceship mySpaceship)
-    {
-        float V = SHOT_SPEED;
-        float y0b = mySpaceship.getYPosition();
-        float vby = (float) (V * Math.sin(angle));
-        return vby * timeOfAngle + y0b;
-    }
-
-    private static float closestDistanceSqGivenAnglePAS(float angle, Spaceship mySpaceship, Spaceship otherSpaceship)
-    {
-        float minTimeForAngle = minTimeForAnglePAS(angle, mySpaceship, otherSpaceship);
-        return MathUtil.distSq(x1sPAS(minTimeForAngle, otherSpaceship), y1sPAS(minTimeForAngle, otherSpaceship),
-                x1bPAS(angle, minTimeForAngle, mySpaceship), y1bPAS(angle, minTimeForAngle, mySpaceship));
-    }
-
-    private static float calculateMinimumDistance()
-    {
-        //TODO
-        return 0;
-    }
-
     @Override
     public ArrayList<ShootCommand> shootCommands(Spaceship mySpaceship, Spaceship otherSpaceship, ArrayList<Bullet> bulletsPositions, float borderRadius)
     {
         ArrayList<ShootCommand> shootCommands = new ArrayList<>();
-        // shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 100, 1, 1, 1000));
+        shootCommands.add(new ShootCommand(ShootCommand.FRONT_GUN, 100, 1, 1, 1000));
         return shootCommands;
     }
 
@@ -185,5 +119,107 @@ public class IndAi implements Ai
         upgradeData.setUpgrade(UpgradeData.LEFT_THRUSTER, 4);
 
         return upgradeData;
+    }
+
+    private static class AimingCalculations
+    {
+        private static float angle;
+        private static float x0s;
+        private static float x0b;
+        private static float vsx;
+        private static float V;
+        private static float y0s;
+        private static float y0b;
+        private static float vsy;
+
+        private static float vCos;
+        private static float vSin;
+
+        private static float minTimeForAngle;
+        private static float minTimeForAngleDerivative;
+        private static float closestDistanceGivenAngle;
+
+
+        private static void initPositions(Spaceship mySpaceship, Spaceship otherSpaceship)
+        {
+
+            x0s = otherSpaceship.getXPosition();
+            x0b = mySpaceship.getXPosition();
+            vsx = otherSpaceship.getXVelocity();
+            V = SHOT_SPEED;
+            y0s = otherSpaceship.getYPosition();
+            y0b = mySpaceship.getYPosition();
+            vsy = otherSpaceship.getYVelocity();
+        }
+
+        private static void initAngle(float angle)
+        {
+            AimingCalculations.angle = angle;
+
+            vCos = (float) (V * Math.cos(angle));
+            vSin = (float) (V * Math.sin(angle));
+
+            minTimeForAngle = minTimeForAngle();
+            minTimeForAngleDerivative = minTimeForAngleDerivative();
+            closestDistanceGivenAngle = closestDistanceGivenAngle();
+        }
+
+        /**
+         * @return - returning the time (progress) in which the distance between the bullet and the other space is at minimum for a given angle
+         */
+        private static float minTimeForAngle()
+        {
+            float time = -((x0s - x0b) * (vsx - vCos) + (y0s - y0b) * (vsy - vSin)) /
+                    ((vsx - vCos) * (vsx - vCos) + (vsy - vSin) * (vsy - vSin));
+
+            return Math.max(time, 0);
+        }
+
+        private static float minTimeForAngleDerivative()
+        {
+            float fox = ((x0s - x0b) * (vsx - vCos) + (y0s - y0b) * (vsy - vSin));
+            float gox = ((vsx - vCos) * (vsx - vCos) + (vsy - vSin) * (vsy - vSin));
+            float ftox = (x0s - x0b) * vSin - (y0s - y0b) * vCos;
+            float gtox = 2 * (vsx - vCos) * vSin - 2 * (vsy - vSin) * vCos;
+
+            return -(gox * ftox - fox * gtox) / (gox * gox);
+        }
+
+        private static float x1s()
+        {
+            return x0s + vsx * minTimeForAngle;
+        }
+
+        private static float y1s()
+        {
+            return y0s + vsy * minTimeForAngle;
+        }
+
+        private static float x1b()
+        {
+            return vCos * minTimeForAngle + x0b;
+        }
+
+        private static float y1b()
+        {
+            return vSin * minTimeForAngle + y0b;
+        }
+
+        private static float closestDistanceGivenAngle()
+        {
+            return MathUtil.dist(x1s(), y1s(), x1b(), y1b());
+        }
+
+        private static float closestDistanceGivenAngleDerivative()
+        {
+            //TODO
+            return 0;
+        }
+
+        private static float calculateMinimumDistanceFromStartPosition()
+        {
+            //TODO
+            return 0;
+        }
     }
 }
