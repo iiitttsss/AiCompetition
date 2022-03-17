@@ -137,8 +137,41 @@ public class IndAi implements Ai
 
         private static float minTimeForAngle;
         private static float minTimeForAngleDerivative;
-        private static float closestDistanceGivenAngle;
+        private static float x1s;
+        private static float y1s;
+        private static float x1b;
+        private static float y1b;
 
+        private static float closestDistanceGivenAngle;
+        private static float closestDistanceGivenAngleDerivative;
+
+        public static void main(String[] args)
+        {
+            //testClosestDistanceGivenAngle();
+            testCalculateMinimumDistanceFromStartPosition();
+        }
+
+        private static void initTestPosition()
+        {
+            x0s = 0;
+            x0b = 2;
+            vsx = 5;
+            V = 3;
+            y0s = 1;
+            y0b = 0;
+            vsy = 0;
+        }
+
+        private static void testClosestDistanceGivenAngle()
+        {
+            initTestPosition();
+
+            initAngle((float) (Math.PI * 5 / 6));
+            System.out.println(minTimeForAngle);
+            System.out.println(minTimeForAngleDerivative);
+            System.out.println(closestDistanceGivenAngle);
+            System.out.println(closestDistanceGivenAngleDerivative);
+        }
 
         private static void initPositions(Spaceship mySpaceship, Spaceship otherSpaceship)
         {
@@ -161,7 +194,14 @@ public class IndAi implements Ai
 
             minTimeForAngle = minTimeForAngle();
             minTimeForAngleDerivative = minTimeForAngleDerivative();
+
+            x1s = x1s();
+            y1s = y1s();
+            x1b = x1b();
+            y1b = y1b();
+
             closestDistanceGivenAngle = closestDistanceGivenAngle();
+            closestDistanceGivenAngleDerivative = closestDistanceGivenAngleDerivative();
         }
 
         /**
@@ -207,18 +247,42 @@ public class IndAi implements Ai
 
         private static float closestDistanceGivenAngle()
         {
-            return MathUtil.dist(x1s(), y1s(), x1b(), y1b());
+            return MathUtil.dist(x1s, y1s, x1b, y1b);
         }
 
         private static float closestDistanceGivenAngleDerivative()
         {
-            //TODO
-            return 0;
+            float xPart = (x1s - x1b) * (vsx * minTimeForAngleDerivative - (-vSin * minTimeForAngle + vCos * minTimeForAngleDerivative));
+            float yPart = (y1s - y1b) * (vsy * minTimeForAngleDerivative - (vCos * minTimeForAngle + vSin * minTimeForAngleDerivative));
+            return (xPart + yPart) / closestDistanceGivenAngle;
         }
 
-        private static float calculateMinimumDistanceFromStartPosition()
+        private static void testCalculateMinimumDistanceFromStartPosition()
         {
-            //TODO
+            initTestPosition();
+            calculateMinimumDistanceFromStartPosition((float) (Math.PI));
+
+        }
+
+        private static float calculateMinimumDistanceFromStartPosition(float startAngle)
+        {
+            float angleChange = 0.01f;
+            float testAngle = startAngle;
+            int lastSign = (closestDistanceGivenAngleDerivative > 0 ? 1 : -1);
+            do
+            {
+                initAngle(testAngle);
+                //System.out.println(closestDistanceGivenAngleDerivative);
+                testAngle += (closestDistanceGivenAngleDerivative > 0 ? -angleChange : angleChange);
+                int newSign = (closestDistanceGivenAngleDerivative > 0 ? 1 : -1);
+                if (newSign != lastSign)
+                {
+                    lastSign = newSign;
+                    angleChange /= 2;
+                }
+
+            } while (closestDistanceGivenAngle > 0.001);
+            System.out.println(testAngle);
             return 0;
         }
     }
